@@ -15,7 +15,7 @@ jobs:
           cmd: yq read .github/workflows/sync-secrets.yml jobs.sync-secrets.strategy.matrix.repo > repos.md
       - name: Import GPG key
         id: import_gpg
-        uses: crazy-max/ghaction-import-gpg@v2
+        uses: crazy-max/ghaction-import-gpg@v3.0.2
         with:
           git_user_signingkey: true
         env:

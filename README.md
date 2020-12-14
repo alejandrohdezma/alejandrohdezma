@@ -23,3 +23,5 @@ If you want to contact me:
 <!-- BLOG-POST-LIST:START -->
 - [Welcome](https://alejandrohdezma.com/welcome)
 <!-- BLOG-POST-LIST:END -->
+
+![](images/footer.png)

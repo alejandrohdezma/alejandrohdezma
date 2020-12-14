@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://alejandrohdezma.com/</id>
+    <title>Alejandro Hernández Blog</title>
+    <updated>2020-12-14T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://alejandrohdezma.com/"/>
+    <subtitle>Alejandro Hernández Blog</subtitle>
+    <icon>https://alejandrohdezma.com/img/favicon.ico</icon>
+    <rights>Copyright © 2020 Alejandro Hernández</rights>
+    <entry>
+        <title type="html"><![CDATA[Welcome]]></title>
+        <id>welcome</id>
+        <link href="https://alejandrohdezma.com/welcome"/>
+        <updated>2020-12-14T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[I will try to use this blog to talk about things that interest me or announcements about my]]></summary>
+    </entry>
+</feed>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Alejandro Hernández Blog</title>
+        <link>https://alejandrohdezma.com/</link>
+        <description>Alejandro Hernández Blog</description>
+        <lastBuildDate>Mon, 14 Dec 2020 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <copyright>Copyright © 2020 Alejandro Hernández</copyright>
+        <item>
+            <title><![CDATA[Welcome]]></title>
+            <link>https://alejandrohdezma.com/welcome</link>
+            <guid>welcome</guid>
+            <pubDate>Mon, 14 Dec 2020 00:00:00 GMT</pubDate>
+            <description><![CDATA[I will try to use this blog to talk about things that interest me or announcements about my]]></description>
+        </item>
+    </channel>
+</rss>

@@ -1,0 +1,50 @@
+name: Check and publish website
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    name: Check the website's build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - name: Test Build
+        working-directory: website
+        run: npm i && npm run build
+  gh-release:
+    name: Publish the website to Github Pages
+    needs: [checks]
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - name: Configure git
+        run: |
+          git config --global user.email "actions@gihub.com"
+          git config --global user.name "gh-actions"
+      - name: Get known_hosts
+        run: echo 'KNOWN_HOSTS='$(ssh-keyscan github.com)'' >> $GITHUB_ENV
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.GIT_DEPLOY_KEY }}
+          known_hosts: ${{ env.KNOWN_HOSTS }}
+      - name: Release to GitHub Pages
+        working-directory: website
+        env:
+          USE_SSH: true
+          GIT_USER: git
+        run: npm i && npx docusaurus deploy

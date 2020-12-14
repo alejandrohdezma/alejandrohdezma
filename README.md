@@ -17,3 +17,8 @@ If you want to contact me:
 	<a href="https://github.com/alejandrohdezma" target="_blank"><img src="https://img.icons8.com/doodle/50/000000/github.png" alt="GitHub"/></a>
 	<a href="https://twitter.com/alejandrohdezma" target="_blank"><img src="https://img.icons8.com/doodle/50/000000/twitter.png" alt="Twitter"/></a>
 </p>
+
+# :green_book: My latest blog posts
+
+<!-- BLOG-POST-LIST:START -->
+<!-- BLOG-POST-LIST:END -->

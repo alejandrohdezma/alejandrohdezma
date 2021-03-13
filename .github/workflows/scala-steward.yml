@@ -1,6 +1,9 @@
 name: Run Scala Steward on the managed repositories
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 5 * * *"
 
 jobs:
   run-scala-steward:

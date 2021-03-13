@@ -7,12 +7,6 @@ jobs:
     name: Run Scala Steward
     runs-on: ubuntu-latest
     steps:
-      - name: Checkouts the project
-        uses: actions/checkout@v2
-      - name: Create repos.md file
-        uses: mikefarah/yq@v4.6.1
-        with:
-          cmd: yq read .github/workflows/sync-secrets.yml jobs.sync-secrets.strategy.matrix.repo > repos.md
       - name: Import GPG key
         id: import_gpg
         uses: crazy-max/ghaction-import-gpg@v3.1.0
@@ -23,8 +17,9 @@ jobs:
       - name: Launch Scala Steward
         uses: scala-steward-org/scala-steward-action@v2.12.0
         with:
-          repos-file: repos.md
           github-token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
           sign-commits: true
           author-email: ${{ steps.import_gpg.outputs.email }}
           author-name: ${{ steps.import_gpg.outputs.name }}
+          github-app-id: 104853
+          github-app-key: ${{ secrets.SCALA_STEWARD_APP_PRIVATE_KEY }}

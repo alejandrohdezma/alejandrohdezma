@@ -1,0 +1,16 @@
+on: [push]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      - name: Checkouts the project
+        uses: actions/checkout@v2
+      - uses: ./actions/get-repositories
+        id: repositories
+        with:
+          github-app-id: 104853
+          github-app-key: ${{ secrets.SCALA_STEWARD_APP_PRIVATE_KEY }}
+      - run: |
+          echo "The string is: ${{ steps.repositories.outputs.repositories }}"

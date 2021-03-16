@@ -11,7 +11,7 @@ jobs:
     name: Launch Scala Steward
     steps:
       - name: Launch Scala Steward
-        uses: scala-steward-org/scala-steward-action@a81df6d07132d2773e299b6176d99952e798e4b0
+        uses: scala-steward-org/scala-steward-action@d7352520e54caa7a5deb709e63604b59ad99f5d6
         with:
           github-token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
           author-email: bot@alejandrohdezma.com

@@ -1,0 +1,18 @@
+name: scala-steward
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+jobs:
+  scala-steward:
+    runs-on: ubuntu-latest
+    name: Launch Scala Steward
+    steps:
+      - name: Launch Scala Steward
+        uses: scala-steward-org/scala-steward-action@v2
+        with:
+          github-token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+          author-email: bot@alejandrohdezma.com
+          author-name: Scala Steward

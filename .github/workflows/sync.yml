@@ -1,16 +1,70 @@
-on: [push]
+name: Sync secrets and settings to all my repositories
+
+on:
+  push:
+    paths:
+      - ".github/settings.yml"
+      - ".github/workflows/sync.yml"
+  workflow_dispatch:
 
 jobs:
-  hello_world_job:
+  get-repositories:
+    name: Get repositories managed by the GitHub App
     runs-on: ubuntu-latest
-    name: A job to say hello
     steps:
-      - name: Checkouts the project
-        uses: actions/checkout@v2
-      - uses: ./actions/get-repositories
+      - name: Get the GitHub App installation token
+        uses: jnwng/github-app-installation-token-action@v2
+        id: installation_token
+        with:
+          appId: 104853
+          installationId: 15336457
+          privateKey: ${{ secrets.SCALA_STEWARD_APP_PRIVATE_KEY }}
+      - name: Get the repositories where the GitHub App is installed
+        uses: actions/github-script@master
         id: repositories
         with:
-          github-app-id: 104853
-          github-app-key: ${{ secrets.SCALA_STEWARD_APP_PRIVATE_KEY }}
-      - run: |
-          echo "The string is: ${{ steps.repositories.outputs.repositories }}"
+          github-token: ${{ steps.installation_token.outputs.token }}
+          script: return (await github.apps.listReposAccessibleToInstallation()).data.repositories.map(r => r.full_name)
+    outputs:
+      repositories: ${{ steps.repositories.outputs.result }}
+  sync-settings:
+    name: Sync settings to ${{ matrix.repo }}
+    runs-on: ubuntu-latest
+    needs: get-repositories
+    strategy:
+      fail-fast: false
+      matrix:
+        repo: ${{ fromJson(needs.get-repositories.outputs.repositories) }}
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2.3.4
+      - name: Sync settings to ${{ matrix.repo }}
+        uses: mattsb42/repo-manager@v1
+        with:
+          github-token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+          github-repository: ${{ matrix.repo }}
+  sync-secrets:
+    name: Sync secrets to ${{ matrix.repo }}
+    runs-on: ubuntu-latest
+    needs: get-repositories
+    strategy:
+      fail-fast: false
+      matrix:
+        repo: ${{ fromJson(needs.get-repositories.outputs.repositories) }}
+    steps:
+      - name: Sync secrets to ${{ matrix.repo }}
+        uses: google/secrets-sync-action@v1.4.1
+        env:
+          PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
+          PGP_SECRET: ${{ secrets.PGP_SECRET }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          ADMIN_GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+        with:
+          secrets: |
+            ^ADMIN_GITHUB_TOKEN$
+            ^PGP.*
+            ^SONATYPE.*
+          repositories: ${{ matrix.repo }}
+          repositories_list_regex: false
+          github_token: ${{ secrets.ADMIN_GITHUB_TOKEN }}

@@ -4,29 +4,28 @@ on:
   workflow_dispatch:
     inputs:
       repository:
-        description: 'Repository to update'     
+        description: "Repository to update"
         required: false
-        default: ''
+        default: ""
   schedule:
     - cron: "0 5 * * *"
 
 jobs:
-  run-scala-steward:
-    name: Run Scala Steward
+  run-scala-steward-single-repository:
+    name: Run Scala Steward in the selected repository
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.repository != ''
     runs-on: ubuntu-latest
     steps:
       - name: Checkouts the project
         uses: actions/checkout@v2
       - name: Import GPG key
         id: import_gpg
-        if: github.event_name == 'workflow_dispatch' && github.event.inputs.repository != ''
         uses: crazy-max/ghaction-import-gpg@v3.1.0
         with:
           gpg-private-key: ${{ secrets.PGP_SECRET }}
           passphrase: ${{ secrets.PGP_PASSPHRASE }}
           git-user-signingkey: true
       - name: Launch Scala Steward in the selected repository
-        if: github.event_name == 'workflow_dispatch' && github.event.inputs.repository != ''
         uses: scala-steward-org/scala-steward-action@v2.13.2
         with:
           github-token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
@@ -34,8 +33,14 @@ jobs:
           sign-commits: true
           author-email: ${{ steps.import_gpg.outputs.email }}
           author-name: ${{ steps.import_gpg.outputs.name }}
+  run-scala-steward-all-repos:
+    name: Run Scala Steward in all the repositories managed by the GitHub App
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.repository == '')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkouts the project
+        uses: actions/checkout@v2
       - name: Get the GitHub App installation token
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.repository == '')
         uses: jnwng/github-app-installation-token-action@v2
         id: generate-token
         with:
@@ -43,7 +48,6 @@ jobs:
           installationId: 15336457
           privateKey: ${{ secrets.SCALA_STEWARD_APP_PRIVATE_KEY }}
       - name: Launch Scala Steward on all repositories managed by the Github App
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.repository == '')
         uses: scala-steward-org/scala-steward-action@v2.13.2
         with:
           github-token: ${{ steps.generate-token.outputs.token }}

@@ -64,6 +64,7 @@ jobs:
         with:
           secrets: |
             ^ADMIN_GITHUB_TOKEN$
+            ^SCALA_STEWARD_APP_PRIVATE_KEY$
             ^PGP.*
             ^SONATYPE.*
           repositories: ${{ matrix.repo }}

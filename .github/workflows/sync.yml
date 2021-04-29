@@ -53,7 +53,7 @@ jobs:
         repo: ${{ fromJson(needs.get-repositories.outputs.repositories) }}
     steps:
       - name: Sync secrets to ${{ matrix.repo }}
-        uses: google/secrets-sync-action@v1.4.1
+        uses: google/secrets-sync-action@v1.4.2
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
           PGP_SECRET: ${{ secrets.PGP_SECRET }}

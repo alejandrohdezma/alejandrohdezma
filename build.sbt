@@ -13,3 +13,10 @@ lazy val `munit` = module
   .settings(libraryDependencies += "org.http4s" %% "http4s-async-http-client" % "0.21.20" % Test)
   .settings(libraryDependencies += "org.http4s" %% "http4s-client" % "0.21.20" % Test)
   .settings(libraryDependencies += "org.http4s" %% "http4s-dsl" % "0.21.20" % Test)
+
+lazy val site = project
+  .enablePlugins(MdocPlugin)
+  .settings(mdocIn := baseDirectory.value / "docs")
+  .settings(watchTriggers ++= List(mdocIn.value.toGlob / "*.md", mdocIn.value.toGlob / "*.html"))
+  .enablePlugins(GitHubPagesPlugin)
+  .settings(gitHubPagesSiteDir := mdocOut.value)

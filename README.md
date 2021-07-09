@@ -18,6 +18,15 @@ If you want to contact me:
 	<a href="https://twitter.com/alejandrohdezma" target="_blank"><img src="https://img.icons8.com/doodle/50/000000/twitter.png" alt="Twitter"/></a>
 </p>
 
+# :octocat: Some of my Open Source Projects
+
+- [scala-steward-action](https://github.com/scala-steward-org/scala-steward-action): A Github Action to launch Scala Steward in your repository.
+- [http4s-munit](https://github.com/alejandrohdezma/http4s-munit): Integration between http4s & MUnit.
+- [sbt-github](https://github.com/alejandrohdezma/sbt-github): SBT plugin to read several settings from Github.
+- [sbt-fix](https://github.com/alejandrohdezma/sbt-fix): SBT plugin that enhances scalafix & scalafmt duo.
+- [sbt-modules](https://github.com/alejandrohdezma/sbt-modules): SBT plugin that simplifies modules creation.
+- [sbt-ci](https://github.com/alejandrohdezma/sbt-ci): Default workflow, documentation and root files for scala libraries.
+
 # :green_book: My latest blog posts
 
 - [:electric_plug: Creating an SBT plugin (In progress...)](https://alejandrohdezma.com/#/blog/creating-an-sbt-plugin)

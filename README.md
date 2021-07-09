@@ -20,8 +20,6 @@ If you want to contact me:
 
 # :green_book: My latest blog posts
 
-<!-- BLOG-POST-LIST:START -->
 - [Welcome](https://alejandrohdezma.com/welcome)
-<!-- BLOG-POST-LIST:END -->
 
 ![](site/docs/_media/footer.png)

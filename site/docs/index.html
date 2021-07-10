@@ -3,7 +3,6 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>My blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="My personal blog" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
@@ -20,15 +19,31 @@
     body[data-page="README.md"] #main>div:first-child,
     body[data-page="README.md"] .docsify-pagination-container,
     body[data-page="README.md"] .updated_at,
-    body[data-page="README.md"] .footer {
+    body[data-page="README.md"] footer {
       display: none;
+    }
+
+    body[data-page="es/README.md"] #main>div:first-child,
+    body[data-page="es/README.md"] .docsify-pagination-container,
+    body[data-page="es/README.md"] .updated_at,
+    body[data-page="es/README.md"] footer {
+      display: none;
+    }
+
+    #main {
+      padding-top: 90px;
+    }
+
+    #lang-selector {
+      width: 110px;
     }
 
     .sidebar-nav ul>li>ul {
       margin-top: 10px;
     }
 
-    .docsify-pagination-container a[href="#/"] {
+    .docsify-pagination-container a[href="#/"],
+    .docsify-pagination-container a[href="#/es/"] {
       display: none;
     }
 
@@ -45,55 +60,108 @@
 <body>
   <div id="app">Loading content...</div>
   <script>
+    const lang = location.hash.match(/#\/(es)\//);
+
+    if (lang) {
+      document.documentElement.setAttribute('lang', lang[1]);
+    }
+
     window.$docsify = {
-      name: "📘 Alex's blog",
+      name: `📘 ${document.documentElement.lang == 'es' ? 'El Blog de Alex' : 'Alex\'s blog'}`,
+      nameLink: {
+        '/es/': '/#/es/',
+        '/': '/',
+      },
       loadSidebar: true,
+      loadNavbar: true,
       subMaxLevel: 2,
       auto2top: true,
-      loadFooter: true,
       search: {
         maxAge: 86400000,
         paths: 'auto',
-        placeholder: 'Type to search',
-        noData: 'No Results',
-        depth: 3
+        placeholder: {
+          '/es/': 'Buscar',
+          '/': 'Search',
+        },
+        noData: {
+          '/es/': '¡No hay resultados!',
+          '/': 'No results!',
+        },
+        depth: 3,
+        pathNamespaces: ['/en', '/es']
       },
       pagination: {
         crossChapter: true,
         crossChapterText: true,
       },
-      count: {
-        countable: true,
-        position: 'top',
-        margin: '10px',
-        float: 'right',
-        fontsize: '0.9em',
-        color: 'rgb(90,90,90)',
-        language: 'en',
-        localization: {
-          words: "",
-          minute: ""
-        },
-        isExpected: true
-      },
       customPageTitle: {
-        prefix: 'Alex\'s Blog'
+        prefix: document.documentElement.lang == 'es' ? 'El Blog de Alex' : 'Alex\'s Blog'
       },
       alias: {
-        '/.*/_sidebar.md': '/_sidebar.md'
+        '/blog/_sidebar.md': '/_sidebar.md',
+        '/blog/_navbar.md': '/_navbar.md',
+        '/es/blog/_sidebar.md': '/es/_sidebar.md',
+        '/es/blog/_navbar.md': '/es/_navbar.md',
+        '/es/(.*)': '/es/$1',
+      },
+      'flexible-alerts': {
+        note: {
+          label: {
+            '/es/': 'Nota',
+            '/': 'Note'
+          }
+        },
+        tip: {
+          label: {
+            '/es/': 'Consejo',
+            '/': 'Tip'
+          }
+        },
+        warning: {
+          label: {
+            '/es/': 'Advertencia',
+            '/': 'Warning'
+          }
+        },
+        attention: {
+          label: {
+            '/es/': 'Atención',
+            '/': 'Attention'
+          }
+        }
       },
       formatUpdated: time => {
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        return new Date(time).toLocaleString('default', options)
+        return new Date(time).toLocaleString(document.documentElement.lang, options)
       },
       plugins: [
-        function (hook, vm) {
-          hook.beforeEach(html =>
-            html +
-            '<br><br><br>' +
-            '<div class="updated_at"><strong>:date: Updated: {docsify-updated}</strong></div>'
-          )
-        }
+        (hook, vm) => hook.beforeEach(html =>
+          html +
+          '\n\n' +
+          '<div class="updated_at"><strong>:date: ' +
+          (document.documentElement.lang == 'es' ? 'Actualizado' : 'Updated') +
+          ': {docsify-updated}</strong></div>'
+        ),
+        (hook, vm) => hook.afterEach(html => {
+          const lang = location.hash.match(/#\/(es)\//);
+
+          document.documentElement.setAttribute('lang', lang ? lang[1] : 'en');
+          vm.config.customPageTitle.prefix = lang ? 'El Blog de Alex' : 'Alex\'s Blog';
+          window.Docsify.dom.find('.app-name-link').innerHTML = `📘 ${lang ? 'El Blog de Alex' : 'Alex\'s blog'}`
+
+          let emoji = name =>
+            `<img class="emoji" src="https://github.githubassets.com/images/icons/emoji/${name}.png" alt="${name}">`;
+          let a = (url, text) => `<a href="${url}" target="_blank" rel="noopener">${text}</a>`
+
+          const twitter = `${emoji('bird')} ${a('https://twitter.com/alejandrohdezma', 'Twitter')}`
+          const github = `${emoji('octocat')} ${a('https://github.com/alejandrohdezma', 'GitHub')}`
+
+          const footer = lang ?
+            `Escrito con ${emoji('heart')} por Alejandro Hernández. Encuéntrame en ${twitter} o ${github}.` :
+            `Written with ${emoji('heart')} by Alejandro Hernández. Find me on ${twitter} or ${github}.`
+
+          return html + `\n\n<footer><p>${footer}</p></footer>`;
+        })
       ]
     };
   </script>
@@ -101,9 +169,8 @@
   <script src="//unpkg.com/docsify@4/lib/plugins/search.min.js"></script>
   <script src="//unpkg.com/docsify@4/lib/plugins/zoom-image.min.js"></script>
   <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
-  <script src="//unpkg.com/@alertbox/docsify-footer@1.0.0-0/dist/docsify-footer.min.js"></script>
   <script src="//unpkg.com/@sujaykumarh/docsify-plugin-title@1.x/dist/plugin.min.js"></script>
-  <script src="//unpkg.com/docsify-count/dist/countable.min.js"></script>
+  <script src="//unpkg.com/docsify-plugin-flexible-alerts"></script>
   <script src="//unpkg.com/prismjs@1/components/prism-bash.min.js"></script>
   <script src="//unpkg.com/prismjs@1/components/prism-java.min.js"></script>
   <script src="//unpkg.com/prismjs@1/components/prism-scala.min.js"></script>

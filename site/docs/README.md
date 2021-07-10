@@ -1,4 +1,4 @@
-![](https://alejandrohdezma.com/_media/header.png)
+![](https://alejandrohdezma.com/_media/header.png ":no-zoom")
 
 I'm an enthusiast of functional programming working mainly in Scala now. I work at [47 Degrees](https://www.47deg.com) as a Senior Scala Developer and make some Open Source around here. I'm also interested in tooling and have a crush on GitHub Actions :heart:.
 
@@ -31,4 +31,4 @@ If you want to contact me:
 
 - [:electric_plug: Creating an SBT plugin (In progress...)](https://alejandrohdezma.com/#/blog/creating-an-sbt-plugin)
 
-![](https://alejandrohdezma.com/_media/footer.png)
+![](https://alejandrohdezma.com/_media/footer.png ":no-zoom")

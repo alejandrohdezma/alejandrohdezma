@@ -11,18 +11,21 @@
   <link rel="icon" href="_media/favicon.ico" type="image/icon type">
   <style>
     :root {
-      --base-font-size: 16px;
+      --base-font-size: 20px;
       --theme-color: rgb(60, 164, 196);
       --sidebar-nav-pagelink-background-image: false;
       --sidebar-nav-pagelink-padding: 4px 0px 4px 0px;
     }
 
-    body[data-page="README.md"] #main>div:first-child {
+    body[data-page="README.md"] #main>div:first-child,
+    body[data-page="README.md"] .docsify-pagination-container,
+    body[data-page="README.md"] .updated_at,
+    body[data-page="README.md"] .footer {
       display: none;
     }
 
-    body[data-page="README.md"] .docsify-pagination-container {
-      display: none;
+    .sidebar-nav ul>li>ul {
+      margin-top: 10px;
     }
 
     .docsify-pagination-container a[href="#/"] {
@@ -31,6 +34,10 @@
 
     footer {
       margin-top: 50px;
+    }
+
+    .updated_at {
+      font-size: 0.75em;
     }
   </style>
 </head>
@@ -71,7 +78,23 @@
       },
       customPageTitle: {
         prefix: 'Alex\'s Blog'
-      }
+      },
+      alias: {
+        '/.*/_sidebar.md': '/_sidebar.md'
+      },
+      formatUpdated: time => {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(time).toLocaleString('default', options)
+      },
+      plugins: [
+        function (hook, vm) {
+          hook.beforeEach(html =>
+            html +
+            '<br><br><br>' +
+            '<div class="updated_at"><strong>:date: Updated: {docsify-updated}</strong></div>'
+          )
+        }
+      ]
     };
   </script>
   <script src="//unpkg.com/docsify@4/lib/docsify.min.js"></script>

@@ -4,8 +4,8 @@ ThisBuild / testFrameworks           += new TestFramework("munit.Framework")
 ThisBuild / Test / parallelExecution := false
 
 lazy val `munit` = module
-  .settings(libraryDependencies += "org.scalameta" %% "munit" % "0.7.22" % Test)
-  .settings(libraryDependencies += "org.scalameta" %% "munit-scalacheck" % "0.7.22" % Test)
+  .settings(libraryDependencies += "org.scalameta" %% "munit" % "0.7.27" % Test)
+  .settings(libraryDependencies += "org.scalameta" %% "munit-scalacheck" % "0.7.27" % Test)
   .settings(libraryDependencies += "org.typelevel" %% "munit-cats-effect-2" % "0.13.1" % Test)
   .settings(libraryDependencies += "com.alejandrohdezma" %% "http4s-munit" % "0.6.0" % Test)
   .settings(libraryDependencies += "com.dimafeng" %% "testcontainers-scala-munit" % "0.39.3" % Test)

@@ -34,8 +34,9 @@
       padding-top: 90px;
     }
 
-    #lang-selector {
-      width: 110px;
+    .github-corner {
+      margin-right: 20px;
+      margin-top: 20px;
     }
 
     .sidebar-nav ul>li>ul {
@@ -66,6 +67,9 @@
       document.documentElement.setAttribute('lang', lang[1]);
     }
 
+    let emoji = name =>
+      `<img class="emoji" src="https://github.githubassets.com/images/icons/emoji/${name}.png" alt="${name}">`;
+
     window.$docsify = {
       name: `📘 ${document.documentElement.lang == 'es' ? 'El Blog de Alex' : 'Alex\'s blog'}`,
       nameLink: {
@@ -73,7 +77,6 @@
         '/': '/',
       },
       loadSidebar: true,
-      loadNavbar: true,
       subMaxLevel: 2,
       auto2top: true,
       search: {
@@ -99,11 +102,10 @@
       },
       alias: {
         '/blog/_sidebar.md': '/_sidebar.md',
-        '/blog/_navbar.md': '/_navbar.md',
         '/es/blog/_sidebar.md': '/es/_sidebar.md',
-        '/es/blog/_navbar.md': '/es/_navbar.md',
         '/es/(.*)': '/es/$1',
       },
+      repo: 'true',
       'flexible-alerts': {
         note: {
           label: {
@@ -142,21 +144,25 @@
           (document.documentElement.lang == 'es' ? 'Actualizado' : 'Updated') +
           ': {docsify-updated}</strong></div>'
         ),
+        (hook, vm) => hook.mounted(() => {
+          const a = Docsify.dom.find('a.github-corner')
+          if (document.documentElement.lang == 'es') {
+            a.href = "/"
+            a.innerHTML = emoji('us')
+            a.title = 'Show english version'
+          } else {
+            a.href = "#/es/"
+            a.innerHTML = emoji('es')
+            a.title = 'Ver la versión en español'
+          }
+        }),
         (hook, vm) => hook.afterEach(html => {
-          const lang = location.hash.match(/#\/(es)\//);
-
-          document.documentElement.setAttribute('lang', lang ? lang[1] : 'en');
-          vm.config.customPageTitle.prefix = lang ? 'El Blog de Alex' : 'Alex\'s Blog';
-          window.Docsify.dom.find('.app-name-link').innerHTML = `📘 ${lang ? 'El Blog de Alex' : 'Alex\'s blog'}`
-
-          let emoji = name =>
-            `<img class="emoji" src="https://github.githubassets.com/images/icons/emoji/${name}.png" alt="${name}">`;
           let a = (url, text) => `<a href="${url}" target="_blank" rel="noopener">${text}</a>`
 
           const twitter = `${emoji('bird')} ${a('https://twitter.com/alejandrohdezma', 'Twitter')}`
           const github = `${emoji('octocat')} ${a('https://github.com/alejandrohdezma', 'GitHub')}`
 
-          const footer = lang ?
+          const footer = document.documentElement.lang == 'es' ?
             `Escrito con ${emoji('heart')} por Alejandro Hernández. Encuéntrame en ${twitter} o ${github}.` :
             `Written with ${emoji('heart')} by Alejandro Hernández. Find me on ${twitter} or ${github}.`
 

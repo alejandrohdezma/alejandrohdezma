@@ -32,8 +32,6 @@ jobs:
       github.event_name == 'pull_request' &&
       github.event.pull_request.head.repo.full_name == github.repository &&
       github.event.pull_request.user.login == 'alejandrohdezma-steward[bot]'
-    outputs:
-      changes_detected: ${{ steps.push.outputs.changes_detected }}
     steps:
       - name: Get the GitHub App installation token
         uses: jnwng/github-app-installation-token-action@v2
@@ -71,10 +69,7 @@ jobs:
           commit_message: Regenerate files with `sbt "scalafmtAll; scalafmtSbt"`
   test:
     needs: [scala-steward]
-    if: |
-      always() && 
-      github.event_name == 'pull_request' &&
-      needs.scala-steward.outputs.changes_detected != 'true'
+    if: always() && github.event_name == 'pull_request'
     name: Run "sbt ci-test"
     runs-on: ubuntu-latest
     steps:

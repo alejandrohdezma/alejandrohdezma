@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  update-prs:
+    name: Update outdated PRs to latest main
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - name: Get the GitHub App installation token
+        uses: jnwng/github-app-installation-token-action@v2
+        id: installation_token
+        with:
+          appId: 104853
+          installationId: 15336457
+          privateKey: ${{ secrets.SCALA_STEWARD_APP_PRIVATE_KEY }}
+      - name: Automatically update PR
+        uses: adRise/update-pr-branch@v0.5.1
+        with:
+          token: ${{ steps.installation_token.outputs.token }}
+          base: "main"
+          required_approval_count: 1
+          require_passed_checks: false
+  scala-steward:
+    runs-on: ubuntu-latest
+    name: "Process Scala Steward PRs: auto-approves, enable auto-merge..."
+    if: |
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.user.login == 'alejandrohdezma-steward[bot]'
+    outputs:
+      changes_detected: ${{ steps.push.outputs.changes_detected }}
+    steps:
+      - name: Get the GitHub App installation token
+        uses: jnwng/github-app-installation-token-action@v2
+        id: installation_token
+        with:
+          appId: 104853
+          installationId: 15336457
+          privateKey: ${{ secrets.SCALA_STEWARD_APP_PRIVATE_KEY }}
+      - name: Checkout project
+        uses: actions/checkout@v2.3.4
+        with:
+          token: ${{ steps.installation_token.outputs.token }}
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Enable Coursier cache
+        uses: coursier/cache-action@v6
+      - name: Setup Coursier
+        uses: laughedelic/coursier-setup@v1
+        with:
+          jvm: adopt:1.11
+          apps: sbt
+      - name: Enable auto-merge for this PR
+        uses: alexwilson/enable-github-automerge-action@main
+        with:
+          github-token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+          merge-method: "MERGE"
+      - name: Auto-approve Scala Steward PRs
+        uses: hmarr/auto-approve-action@v2
+        with:
+          github-token: "${{ secrets.ADMIN_GITHUB_TOKEN }}"
+      - run: sbt "scalafmtAll; scalafmtSbt"
+      - name: Push changes
+        id: push
+        uses: stefanzweifel/git-auto-commit-action@v4.10.0
+        with:
+          commit_message: Regenerate files with `sbt "scalafmtAll; scalafmtSbt"`
+  test:
+    needs: [scala-steward]
+    if: |
+      always() && 
+      github.event_name == 'pull_request' &&
+      needs.scala-steward.outputs.changes_detected != 'true'
+    name: Run "sbt ci-test" on JDK ${{ matrix.jdk }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2.3.4
+      - name: Enable Coursier cache
+        uses: coursier/cache-action@v6
+      - name: Setup Coursier
+        uses: laughedelic/coursier-setup@v1
+        with:
+          apps: sbt
+      - name: Run checks
+        run: sbt ci-test
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}

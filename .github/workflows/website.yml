@@ -20,7 +20,6 @@ jobs:
       - name: Setup Coursier
         uses: laughedelic/coursier-setup@v1
         with:
-          jvm: ${{ matrix.jdk }}
           apps: sbt
       - name: Release to GitHub Pages
         run: sbt mdoc publishToGitHubPages

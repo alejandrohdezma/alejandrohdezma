@@ -1,1 +1,0 @@
-[:us: Mostrar versión en inglés](/)

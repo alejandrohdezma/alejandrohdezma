@@ -75,7 +75,7 @@ jobs:
       always() && 
       github.event_name == 'pull_request' &&
       needs.scala-steward.outputs.changes_detected != 'true'
-    name: Run "sbt ci-test" on JDK ${{ matrix.jdk }}
+    name: Run "sbt ci-test"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout project

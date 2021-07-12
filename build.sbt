@@ -1,7 +1,8 @@
-ThisBuild / scalaVersion             := "2.13.4"
+ThisBuild / scalaVersion             := "2.13.6"
 ThisBuild / organization             := "com.alejandrohdezma"
-ThisBuild / testFrameworks           += new TestFramework("munit.Framework")
 ThisBuild / Test / parallelExecution := false
+
+addCommandAlias("ci-test", "scalafmtAll; scalafmtSbt; mdoc; compile")
 
 lazy val `munit` = module
   .settings(libraryDependencies += "org.scalameta" %% "munit" % "0.7.27" % Test)

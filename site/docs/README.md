@@ -1,6 +1,6 @@
-![](https://alejandrohdezma.com/_media/header.png)
+![](https://alejandrohdezma.com/_media/header.png ":no-zoom")
 
-I'm an enthusiast of functional programming working mainly in Scala now. I work at [47 Degrees](https://www.47deg.com) as a Senior Scala Developer and make some Open Source around here. I'm also interested in tooling and have a crush on GitHub Actions :heart:.
+I'm an enthusiast of functional programming working mainly in Scala now. I work at [47 Degrees](https://www.47deg.com) as a Senior Scala Developer and make some Open Source around [here](https://github.com/alejandrohdezma?tab=repositories). I'm also interested in tooling and have a crush on GitHub Actions :heart:.
 
 Some facts about me:
 
@@ -20,7 +20,7 @@ If you want to contact me:
 
 # :octocat: Some of my Open Source Projects <!-- {docsify-ignore} -->
 
-- [scala-steward-action](https://github.com/scala-steward-org/scala-steward-action): A Github Action to launch Scala Steward in your repository.
+- [scala-steward-action](https://github.com/scala-steward-org/scala-steward-action): A Github Action to launch [Scala Steward](https://github.com/scala-steward-org/scala-steward) in your repository.
 - [http4s-munit](https://github.com/alejandrohdezma/http4s-munit): Integration between http4s & MUnit.
 - [sbt-github](https://github.com/alejandrohdezma/sbt-github): SBT plugin to read several settings from Github.
 - [sbt-fix](https://github.com/alejandrohdezma/sbt-fix): SBT plugin that enhances scalafix & scalafmt duo.
@@ -31,4 +31,4 @@ If you want to contact me:
 
 - [:electric_plug: Creating an SBT plugin (In progress...)](https://alejandrohdezma.com/#/blog/creating-an-sbt-plugin)
 
-![](https://alejandrohdezma.com/_media/footer.png)
+![](https://alejandrohdezma.com/_media/footer.png ":no-zoom")

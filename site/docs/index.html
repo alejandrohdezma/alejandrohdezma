@@ -3,7 +3,6 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>My blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="My personal blog" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
@@ -11,26 +10,52 @@
   <link rel="icon" href="_media/favicon.ico" type="image/icon type">
   <style>
     :root {
-      --base-font-size: 16px;
+      --base-font-size: 20px;
       --theme-color: rgb(60, 164, 196);
       --sidebar-nav-pagelink-background-image: false;
       --sidebar-nav-pagelink-padding: 4px 0px 4px 0px;
+      --sidebar-toggle-height: 60px;
+      --sidebar-toggle-width: 60px;
     }
 
-    body[data-page="README.md"] #main>div:first-child {
+    body[data-page="README.md"] #main>div:first-child,
+    body[data-page="README.md"] .docsify-pagination-container,
+    body[data-page="README.md"] .updated_at,
+    body[data-page="README.md"] footer {
       display: none;
     }
 
-    body[data-page="README.md"] .docsify-pagination-container {
+    body[data-page="es/README.md"] #main>div:first-child,
+    body[data-page="es/README.md"] .docsify-pagination-container,
+    body[data-page="es/README.md"] .updated_at,
+    body[data-page="es/README.md"] footer {
       display: none;
     }
 
-    .docsify-pagination-container a[href="#/"] {
+    #main {
+      padding-top: 90px;
+    }
+
+    .github-corner {
+      margin-right: 20px;
+      margin-top: 20px;
+    }
+
+    .sidebar-nav ul>li>ul {
+      margin-top: 10px;
+    }
+
+    .docsify-pagination-container a[href="#/"],
+    .docsify-pagination-container a[href="#/es/"] {
       display: none;
     }
 
     footer {
       margin-top: 50px;
+    }
+
+    .updated_at {
+      font-size: 0.75em;
     }
   </style>
 </head>
@@ -38,49 +63,122 @@
 <body>
   <div id="app">Loading content...</div>
   <script>
+    const lang = location.hash.match(/#\/(es)\//);
+
+    if (lang) {
+      document.documentElement.setAttribute('lang', lang[1]);
+    }
+
+    let emoji = name =>
+      `<img class="emoji" src="https://github.githubassets.com/images/icons/emoji/${name}.png" alt="${name}">`;
+
     window.$docsify = {
-      name: "📘 Alex's blog",
+      name: `📘 ${document.documentElement.lang == 'es' ? 'El Blog de Alex' : 'Alex\'s blog'}`,
+      nameLink: {
+        '/es/': '/#/es/',
+        '/': '/',
+      },
       loadSidebar: true,
       subMaxLevel: 2,
       auto2top: true,
-      loadFooter: true,
       search: {
         maxAge: 86400000,
         paths: 'auto',
-        placeholder: 'Type to search',
-        noData: 'No Results',
-        depth: 3
+        placeholder: {
+          '/es/': 'Buscar',
+          '/': 'Search',
+        },
+        noData: {
+          '/es/': '¡No hay resultados!',
+          '/': 'No results!',
+        },
+        depth: 3,
+        pathNamespaces: ['/en', '/es']
       },
       pagination: {
         crossChapter: true,
         crossChapterText: true,
       },
-      count: {
-        countable: true,
-        position: 'top',
-        margin: '10px',
-        float: 'right',
-        fontsize: '0.9em',
-        color: 'rgb(90,90,90)',
-        language: 'en',
-        localization: {
-          words: "",
-          minute: ""
-        },
-        isExpected: true
-      },
       customPageTitle: {
-        prefix: 'Alex\'s Blog'
-      }
+        prefix: document.documentElement.lang == 'es' ? 'El Blog de Alex' : 'Alex\'s Blog'
+      },
+      alias: {
+        '/blog/_sidebar.md': '/_sidebar.md',
+        '/es/blog/_sidebar.md': '/es/_sidebar.md',
+        '/es/(.*)': '/es/$1',
+      },
+      repo: 'true',
+      'flexible-alerts': {
+        note: {
+          label: {
+            '/es/': 'Nota',
+            '/': 'Note'
+          }
+        },
+        tip: {
+          label: {
+            '/es/': 'Consejo',
+            '/': 'Tip'
+          }
+        },
+        warning: {
+          label: {
+            '/es/': 'Advertencia',
+            '/': 'Warning'
+          }
+        },
+        attention: {
+          label: {
+            '/es/': 'Atención',
+            '/': 'Attention'
+          }
+        }
+      },
+      formatUpdated: time => {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(time).toLocaleString(document.documentElement.lang, options)
+      },
+      plugins: [
+        (hook, vm) => hook.beforeEach(html =>
+          html +
+          '\n\n' +
+          '<div class="updated_at"><strong>:date: ' +
+          (document.documentElement.lang == 'es' ? 'Actualizado' : 'Updated') +
+          ': {docsify-updated}</strong></div>'
+        ),
+        (hook, vm) => hook.mounted(() => {
+          const a = Docsify.dom.find('a.github-corner')
+          if (document.documentElement.lang == 'es') {
+            a.href = "/"
+            a.innerHTML = emoji('us')
+            a.title = 'Show english version'
+          } else {
+            a.href = "#/es/"
+            a.innerHTML = emoji('es')
+            a.title = 'Ver la versión en español'
+          }
+        }),
+        (hook, vm) => hook.afterEach(html => {
+          let a = (url, text) => `<a href="${url}" target="_blank" rel="noopener">${text}</a>`
+
+          const twitter = `${emoji('bird')} ${a('https://twitter.com/alejandrohdezma', 'Twitter')}`
+          const github = `${emoji('octocat')} ${a('https://github.com/alejandrohdezma', 'GitHub')}`
+
+          const footer = document.documentElement.lang == 'es' ?
+            `Escrito con ${emoji('heart')} por Alejandro Hernández. Encuéntrame en ${twitter} o ${github}.` :
+            `Written with ${emoji('heart')} by Alejandro Hernández. Find me on ${twitter} or ${github}.`
+
+          return html + `\n\n<footer><p>${footer}</p></footer>`;
+        })
+      ]
     };
   </script>
   <script src="//unpkg.com/docsify@4/lib/docsify.min.js"></script>
   <script src="//unpkg.com/docsify@4/lib/plugins/search.min.js"></script>
   <script src="//unpkg.com/docsify@4/lib/plugins/zoom-image.min.js"></script>
   <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
-  <script src="//unpkg.com/@alertbox/docsify-footer@1.0.0-0/dist/docsify-footer.min.js"></script>
   <script src="//unpkg.com/@sujaykumarh/docsify-plugin-title@1.x/dist/plugin.min.js"></script>
-  <script src="//unpkg.com/docsify-count/dist/countable.min.js"></script>
+  <script src="//unpkg.com/docsify-plugin-flexible-alerts"></script>
   <script src="//unpkg.com/prismjs@1/components/prism-bash.min.js"></script>
   <script src="//unpkg.com/prismjs@1/components/prism-java.min.js"></script>
   <script src="//unpkg.com/prismjs@1/components/prism-scala.min.js"></script>

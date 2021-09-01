@@ -5,8 +5,8 @@ ThisBuild / Test / parallelExecution := false
 addCommandAlias("ci-test", "scalafmtAll; scalafmtSbt; mdoc; compile")
 
 lazy val `munit` = module
-  .settings(libraryDependencies += "org.scalameta" %% "munit" % "0.7.28" % Test)
-  .settings(libraryDependencies += "org.scalameta" %% "munit-scalacheck" % "0.7.28" % Test)
+  .settings(libraryDependencies += "org.scalameta" %% "munit" % "0.7.29" % Test)
+  .settings(libraryDependencies += "org.scalameta" %% "munit-scalacheck" % "0.7.29" % Test)
   .settings(libraryDependencies += "org.typelevel" %% "munit-cats-effect-2" % "1.0.5" % Test)
   .settings(libraryDependencies += "com.alejandrohdezma" %% "http4s-munit" % "0.7.0" % Test)
   .settings(libraryDependencies += "com.dimafeng" %% "testcontainers-scala-munit" % "0.39.7" % Test)

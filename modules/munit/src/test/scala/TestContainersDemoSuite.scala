@@ -1,4 +1,5 @@
 import com.dimafeng.testcontainers.GenericContainer
+
 import com.dimafeng.testcontainers.munit.TestContainerForAll
 import munit.FunSuite
 import org.testcontainers.containers.wait.strategy.Wait
@@ -31,4 +32,5 @@ object DummyHttpContainer {
           )
         )
       )
+
 }

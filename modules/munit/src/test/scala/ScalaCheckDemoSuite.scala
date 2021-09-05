@@ -1,4 +1,5 @@
 import munit.ScalaCheckSuite
+
 import org.scalacheck.Prop._
 
 class PropertyBasedSuite extends ScalaCheckSuite {

@@ -11,9 +11,9 @@ lazy val `munit` = module
   .settings(libraryDependencies += "com.alejandrohdezma" %% "http4s-munit" % "0.9.0" % Test)
   .settings(libraryDependencies += "com.dimafeng" %% "testcontainers-scala-munit" % "0.39.8" % Test)
   .settings(libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.6" % Test)
-  .settings(libraryDependencies += "org.http4s" %% "http4s-async-http-client" % "0.23.4" % Test)
-  .settings(libraryDependencies += "org.http4s" %% "http4s-client" % "0.23.4" % Test)
-  .settings(libraryDependencies += "org.http4s" %% "http4s-dsl" % "0.23.4" % Test)
+  .settings(libraryDependencies += "org.http4s" %% "http4s-async-http-client" % "0.23.6" % Test)
+  .settings(libraryDependencies += "org.http4s" %% "http4s-client" % "0.23.6" % Test)
+  .settings(libraryDependencies += "org.http4s" %% "http4s-dsl" % "0.23.6" % Test)
 
 lazy val site = project
   .enablePlugins(MdocPlugin)

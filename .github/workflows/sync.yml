@@ -20,11 +20,11 @@ jobs:
           installationId: 15336457
           privateKey: ${{ secrets.SCALA_STEWARD_APP_PRIVATE_KEY }}
       - name: Get the repositories where the GitHub App is installed
-        uses: actions/github-script@master
+        uses: actions/github-script@v5
         id: repositories
         with:
           github-token: ${{ steps.installation_token.outputs.token }}
-          script: return (await github.apps.listReposAccessibleToInstallation()).data.repositories.map(r => r.full_name)
+          script: return (await github.rest.apps.listReposAccessibleToInstallation()).data.repositories.map(r => r.full_name)
     outputs:
       repositories: ${{ steps.repositories.outputs.result }}
   sync-settings:

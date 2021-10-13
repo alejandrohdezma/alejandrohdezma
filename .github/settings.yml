@@ -26,42 +26,33 @@ branches:
           - Run "sbt ci-test" on JDK adopt:1.15
 
 labels:
-  - name: breaking-change
-    color: f0ff00
-    description: A breaking change that needs to be treated with consideration
-  - name: bug
-    color: d73a4a
-    description: Something isn't working
-  - name: dependency-update
-    color: 27d14f
-    description: A dependency version update
-  - name: documentation
-    color: 0075ca
-    description: Improvements or additions to documentation
-  - name: duplicate
-    color: cfd3d7
-    description: This issue or pull request already exists
-  - name: enhancement
-    color: a2eeef
-    description: New feature or request
-  - name: good first issue
-    color: 7057ff
-    description: Good for newcomers
-  - name: help wanted
-    color: 008672
-    description: Extra attention is needed
-  - name: invalid
-    color: e4e669
-    description: This doesn't seem right
-  - name: question
-    color: d876e3
-    description: Further information is requested
-  - name: scala-steward
-    color: c6055c
-    description: Dependency auto updates created by scala-steward
-  - name: tests
-    color: 04d1c3
-    description: Improves or modifies tests
-  - name: wontfix
-    color: ffffff
-    description: This will not be worked on
+  - name: ":beetle: bug"
+    color: B60205
+    description: Bug fixes
+  - name: ":blue_book: documentation"
+    color: 1d76db
+    description: Documentation changes
+  - name: ":broom: cleaning"
+    color: BB975B
+    description: Removing code
+  - name: ":chart_with_upwards_trend: dependency-update"
+    color: D3F026
+    description: Dependency update (possibly bot-automated)
+  - name: ":lipstick: style"
+    color: F78BFD
+    description: Style or formatting changes
+  - name: ":package: refactor"
+    color: 382A86
+    description: Refactor or renaming changes
+  - name: ":rocket: feature"
+    color: 642434
+    description: New feature or improvement
+  - name: ":test_tube: tests"
+    color: 86F89E
+    description: Test changes (fixing or adding new ones)
+  - name: ":warning: breaking"
+    color: F3DE0B
+    description: Breaking changes to the API
+  - name: ":wrench: build"
+    color: 4CBAEA
+    description: "Changes to the project's build"

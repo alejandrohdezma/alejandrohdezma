@@ -2,7 +2,10 @@ ThisBuild / scalaVersion             := "2.13.6"
 ThisBuild / organization             := "com.alejandrohdezma"
 ThisBuild / Test / parallelExecution := false
 
-addCommandAlias("ci-test", "scalafmtAll; scalafmtSbt; mdoc; compile")
+addCommandAlias("ci-test", "fix --check; mdoc; Test / compile; test")
+
+Global / filesToGenerate -= ".github/workflows/release.yml"
+Global / filesToGenerate := (Global / filesToGenerate).value.filterNot(_.startsWith("docs"))
 
 lazy val `munit` = module
   .settings(libraryDependencies += "org.scalameta" %% "munit" % "0.7.29" % Test)

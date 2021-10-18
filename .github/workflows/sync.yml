@@ -37,7 +37,7 @@ jobs:
         repo: ${{ fromJson(needs.get-repositories.outputs.repositories) }}
     steps:
       - name: Checkout project
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.3.5
       - name: Sync settings to ${{ matrix.repo }}
         uses: mattsb42/repo-manager@v1.1
         with:

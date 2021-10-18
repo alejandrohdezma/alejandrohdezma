@@ -1,1 +1,1 @@
-site/docs/en/README.md
+site/docs/README.md

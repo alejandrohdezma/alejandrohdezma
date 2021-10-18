@@ -11,7 +11,7 @@ class TestContainersDemoSuite extends FunSuite with TestContainerForAll {
   test("Ping-pong")(withContainers { container =>
     val url = s"http://${container.host}:${container.mappedPort(80)}/ping"
 
-    val result = scala.io.Source.fromURL(url).mkString
+    val result = scala.io.Source.fromURL(url).mkString // scalafix:ok
 
     assertEquals(result, "pong")
   })

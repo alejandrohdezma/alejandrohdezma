@@ -13,7 +13,7 @@ class Http4sDemoSuite extends Http4sHttpRoutesSuite {
     case GET -> Root / "hello" / name => Ok(s"Hi $name")
   }
 
-  test(GET(uri"hello" / "gutiory")) { response =>
+  test(GET(uri"/hello" / "gutiory")) { response =>
     assertIO(response.as[String], "Hi gutiory")
   }
 

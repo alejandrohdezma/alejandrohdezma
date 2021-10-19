@@ -1,3 +1,5 @@
+package com.alejandrohdezma.talks.munit
+
 import cats.effect.IO
 
 import munit._

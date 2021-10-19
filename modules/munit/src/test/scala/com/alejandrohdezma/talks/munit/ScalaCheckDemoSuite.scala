@@ -1,5 +1,6 @@
-import munit.ScalaCheckSuite
+package com.alejandrohdezma.talks.munit
 
+import munit.ScalaCheckSuite
 import org.scalacheck.Prop._
 
 class PropertyBasedSuite extends ScalaCheckSuite {

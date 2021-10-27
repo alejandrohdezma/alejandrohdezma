@@ -18,21 +18,20 @@ jobs:
     steps:
       - name: Checkouts the project
         uses: actions/checkout@v2.3.5
-      - name: Import GPG key
-        id: import_gpg
-        uses: crazy-max/ghaction-import-gpg@v4
+      - name: Get the GitHub App installation token
+        uses: jnwng/github-app-installation-token-action@v2
+        id: generate-token
         with:
-          gpg_private_key: ${{ secrets.PGP_SECRET }}
-          passphrase: ${{ secrets.PGP_PASSPHRASE }}
-          git_user_signingkey: true
+          appId: 104853
+          installationId: 15336457
+          privateKey: ${{ secrets.SCALA_STEWARD_APP_PRIVATE_KEY }}
       - name: Launch Scala Steward in the selected repository
         uses: scala-steward-org/scala-steward-action@v2.13.6
         with:
-          github-token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+          github-token: ${{ steps.generate-token.outputs.token }}
           github-repository: ${{ github.event.inputs.repository }}
-          sign-commits: true
-          author-email: ${{ steps.import_gpg.outputs.email }}
-          author-name: ${{ steps.import_gpg.outputs.name }}
+          author-email: 80571129+alejandrohdezma-steward[bot]@users.noreply.github.com
+          author-name: alejandrohdezma-steward[bot]
   run-scala-steward-all-repos:
     name: Run Scala Steward in all the repositories managed by the GitHub App
     if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.repository == '')

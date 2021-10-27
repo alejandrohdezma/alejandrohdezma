@@ -12,6 +12,7 @@ repository:
 branches:
   - name: main
     protection:
+      required_pull_request_reviews: null
       restrictions: null
       enforce_admins: false
       required_status_checks:

@@ -47,7 +47,13 @@ jobs:
           github-token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
           destination: ${{ matrix.repo }}
       - name: Sync secrets to ${{ matrix.repo }}
-        uses: google/secrets-sync-action@v1.6.0
+        run:
+          gh secret set PGP_PASSPHRASE -b"${PGP_PASSPHRASE}" --repo ${{ matrix.repo }}
+          gh secret set PGP_SECRET -b"${PGP_SECRET}" --repo ${{ matrix.repo }}
+          gh secret set SCALA_STEWARD_APP_PRIVATE_KEY -b"${SCALA_STEWARD_APP_PRIVATE_KEY}" --repo ${{ matrix.repo }}
+          gh secret set SONATYPE_PASSWORD -b"${SONATYPE_PASSWORD}" --repo ${{ matrix.repo }}
+          gh secret set SONATYPE_USERNAME -b"${SONATYPE_USERNAME}" --repo ${{ matrix.repo }}
+          gh secret set ADMIN_GITHUB_TOKEN -b"${ADMIN_GITHUB_TOKEN}" --repo ${{ matrix.repo }}
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
           PGP_SECRET: ${{ secrets.PGP_SECRET }}
@@ -55,12 +61,4 @@ jobs:
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           ADMIN_GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
-        with:
-          secrets: |
-            ^ADMIN_GITHUB_TOKEN$
-            ^SCALA_STEWARD_APP_PRIVATE_KEY$
-            ^PGP.*
-            ^SONATYPE.*
-          repositories: ${{ matrix.repo }}
-          repositories_list_regex: false
-          github_token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}

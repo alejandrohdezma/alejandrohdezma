@@ -26,7 +26,7 @@ jobs:
     outputs:
       repositories: ${{ steps.repositories.outputs.result }}
   sync:
-    name: Sync settings, labels and secrets to ${{ matrix.repo }}
+    name: ${{ matrix.repo }} - Sync settings, labels and secrets
     runs-on: ubuntu-latest
     needs: get-repositories
     strategy:

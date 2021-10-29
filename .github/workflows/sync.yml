@@ -13,22 +13,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get the GitHub App installation token
-        uses: jnwng/github-app-installation-token-action@v2
-        id: installation_token
+        uses: alejandrohdezma/actions/alejandrohdezma-steward-token@main
+        id: github_app
         with:
-          appId: 104853
-          installationId: 15336457
-          privateKey: ${{ secrets.SCALA_STEWARD_APP_PRIVATE_KEY }}
+          private-key: ${{ secrets.SCALA_STEWARD_APP_PRIVATE_KEY }}
       - name: Get the repositories where the GitHub App is installed
         uses: actions/github-script@v5
         id: repositories
         with:
-          github-token: ${{ steps.installation_token.outputs.token }}
+          github-token: ${{ steps.github_app.outputs.token }}
           script: return (await github.rest.apps.listReposAccessibleToInstallation()).data.repositories.map(r => r.full_name)
     outputs:
       repositories: ${{ steps.repositories.outputs.result }}
-  sync-settings:
-    name: Sync settings to ${{ matrix.repo }}
+  sync:
+    name: Sync settings, labels and secrets to ${{ matrix.repo }}
     runs-on: ubuntu-latest
     needs: get-repositories
     strategy:
@@ -43,41 +41,11 @@ jobs:
         with:
           github-token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
           github-repository: ${{ matrix.repo }}
-  sync-labels:
-    name: Sync labels to ${{ matrix.repo }}
-    runs-on: ubuntu-latest
-    needs: [get-repositories]
-    strategy:
-      fail-fast: false
-      matrix:
-        repo: ${{ fromJson(needs.get-repositories.outputs.repositories) }}
-    steps:
-      - name: Delete every label on ${{ matrix.repo }} not present in this repo
-        env:
-          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
-        run: |
-          gh api '/repos/${{ matrix.repo }}/labels' --paginate |
-          jq --argjson labels "$(gh api '/repos/alejandrohdezma/alejandrohdezma/labels' --paginate -q '. |=sort_by(.name) | map(.name)')" \
-            'map(select(.name as $name | $labels | index($name) | not)) | .[].name' |
-          xargs -t -I % gh api -X DELETE '/repos/${{ matrix.repo }}/labels/%'
-      - name: Propagate labels in this repo to ${{ matrix.repo }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
-        run: |
-          gh api '/repos/alejandrohdezma/alejandrohdezma/labels' --paginate |
-          jq -c --argjson labels "$(gh api '/repos/${{ matrix.repo }}/labels' --paginate -q '. |=sort_by(.name) | map(.name)')" \
-            'map(select(.name as $name | $labels | index($name) | not)) | .[] | {name:.name, color:.color, description:.description}' |
-          sed 's/"/\\"/g' |
-          xargs -L1 -I {} sh -c "echo '{}' | gh api -X POST '/repos/${{ matrix.repo }}/labels' --input -"
-  sync-secrets:
-    name: Sync secrets to ${{ matrix.repo }}
-    runs-on: ubuntu-latest
-    needs: get-repositories
-    strategy:
-      fail-fast: false
-      matrix:
-        repo: ${{ fromJson(needs.get-repositories.outputs.repositories) }}
-    steps:
+      - name: Sync labels between this repo and ${{ matrix.repo }}
+        uses: alejandrohdezma/actions/sync-labels@main
+        with:
+          github-token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+          destination: ${{ matrix.repo }}
       - name: Sync secrets to ${{ matrix.repo }}
         uses: google/secrets-sync-action@v1.6.0
         env:

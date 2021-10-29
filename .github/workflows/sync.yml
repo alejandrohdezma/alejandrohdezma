@@ -46,6 +46,8 @@ jobs:
             "allow_squash_merge": false,
             "allow_rebase_merge": false
           }'
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
       - name: Sync branch protection to ${{ matrix.repo }}
         run: |
           default_branch=$(gh api /repos/${{ matrix.repo }} --jq '.default_branch')
@@ -64,6 +66,8 @@ jobs:
               "required_conversation_resolution": true,
               "restrictions": null
           }'
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
       - name: Sync labels between this repo and ${{ matrix.repo }}
         uses: alejandrohdezma/actions/sync-labels@main
         with:

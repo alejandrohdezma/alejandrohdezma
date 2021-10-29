@@ -3,8 +3,7 @@ name: Sync secrets and settings to all my repositories
 on:
   push:
     paths:
-      - ".github/settings.yml"
-      - ".github/workflows/sync.yml"
+      - .github/workflows/sync.yml
   workflow_dispatch:
 
 jobs:
@@ -37,10 +36,34 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v2.3.5
       - name: Sync settings to ${{ matrix.repo }}
-        uses: mattsb42/repo-manager@v1.1
-        with:
-          github-token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
-          github-repository: ${{ matrix.repo }}
+        run: |
+          gh api -X PATCH /repos/${{ matrix.repo }} --input - <<< '{
+            "has_wiki": false,
+            "has_projects": false,
+            "delete_branch_on_merge": true,
+            "allow_auto_merge": true,
+            "allow_merge_commit": true,
+            "allow_squash_merge": false,
+            "allow_rebase_merge": false
+          }'
+      - name: Sync branch protection to ${{ matrix.repo }}
+        run: |
+          default_branch=$(gh api /repos/${{ matrix.repo }} --jq '.default_branch')
+
+          gh api -X PUT "/repos/${{ matrix.repo }}/branches/$default_branch/protection" --input - <<< '{
+              "required_status_checks": {
+                  "strict": true,
+                  "contexts": [
+                      "Run \"sbt ci-test\" on JDK adopt:1.8",
+                      "Run \"sbt ci-test\" on JDK adopt:1.11",
+                      "Run \"sbt ci-test\" on JDK adopt:1.15"
+                  ]
+              },
+              "enforce_admins": false,
+              "required_pull_request_reviews": null,
+              "required_conversation_resolution": true,
+              "restrictions": null
+          }'
       - name: Sync labels between this repo and ${{ matrix.repo }}
         uses: alejandrohdezma/actions/sync-labels@main
         with:

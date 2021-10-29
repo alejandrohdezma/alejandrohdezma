@@ -47,7 +47,7 @@ jobs:
           github-token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
           destination: ${{ matrix.repo }}
       - name: Sync secrets to ${{ matrix.repo }}
-        run:
+        run: |
           gh secret set PGP_PASSPHRASE -b"${PGP_PASSPHRASE}" --repo ${{ matrix.repo }}
           gh secret set PGP_SECRET -b"${PGP_SECRET}" --repo ${{ matrix.repo }}
           gh secret set SCALA_STEWARD_APP_PRIVATE_KEY -b"${SCALA_STEWARD_APP_PRIVATE_KEY}" --repo ${{ matrix.repo }}

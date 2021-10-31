@@ -77,14 +77,14 @@ jobs:
         run: |
           gh secret set PGP_PASSPHRASE -b"${PGP_PASSPHRASE}" --repo ${{ matrix.repo }}
           gh secret set PGP_SECRET -b"${PGP_SECRET}" --repo ${{ matrix.repo }}
-          gh secret set SCALA_STEWARD_APP_PRIVATE_KEY -b"${SCALA_STEWARD_APP_PRIVATE_KEY}" --repo ${{ matrix.repo }}
+          gh secret set GH_APP_TOKEN -b"${GH_APP_TOKEN}" --repo ${{ matrix.repo }}
           gh secret set SONATYPE_PASSWORD -b"${SONATYPE_PASSWORD}" --repo ${{ matrix.repo }}
           gh secret set SONATYPE_USERNAME -b"${SONATYPE_USERNAME}" --repo ${{ matrix.repo }}
           gh secret set ADMIN_GITHUB_TOKEN -b"${ADMIN_GITHUB_TOKEN}" --repo ${{ matrix.repo }}
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
           PGP_SECRET: ${{ secrets.PGP_SECRET }}
-          SCALA_STEWARD_APP_PRIVATE_KEY: ${{ secrets.SCALA_STEWARD_APP_PRIVATE_KEY }}
+          GH_APP_TOKEN: ${{ secrets.GH_APP_TOKEN }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           ADMIN_GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}

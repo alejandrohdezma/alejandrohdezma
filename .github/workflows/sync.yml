@@ -1,29 +1,40 @@
 name: Sync secrets and settings to all my repositories
 
 on:
-  push:
-    paths:
-      - .github/workflows/sync.yml
   workflow_dispatch:
+    inputs:
+      type:
+        description: "Type of sync to perform: `labels`, `settings`, `secrets` or `all`"
+        required: true
+      repository:
+        description: Repository to synchronize
+        required: false
+        default: ""
 
 jobs:
   get-repositories:
-    name: Get repositories managed by the GitHub App
+    name: Create repo-matrix depending on whether the `repository` input is filled or not
     runs-on: ubuntu-latest
+    outputs:
+      repositories: ${{ steps.repositories.outputs.repositories }}
     steps:
       - name: Get the GitHub App installation token
-        uses: alejandrohdezma/actions/alejandrohdezma-steward-token@main
+        uses: alejandrohdezma/actions/github-app-token@v1
         id: github_app
         with:
-          private-key: ${{ secrets.SCALA_STEWARD_APP_PRIVATE_KEY }}
-      - name: Get the repositories where the GitHub App is installed
-        uses: actions/github-script@v5
+          token: ${{ secrets.GH_APP_TOKEN }}
+
+      - name: Select repositories to update
         id: repositories
-        with:
-          github-token: ${{ steps.github_app.outputs.token }}
-          script: return (await github.rest.apps.listReposAccessibleToInstallation()).data.repositories.map(r => r.full_name)
-    outputs:
-      repositories: ${{ steps.repositories.outputs.result }}
+        run: |
+          if [[ "${{ github.event.inputs.repository }}" ]]; then
+            echo "::set-output name=repositories::[\"alejandrohdezma/${{ github.event.inputs.repository }}\"]"
+          else
+            echo "::set-output name=repositories::$(gh api installation/repositories -q '.repositories | map(.full_name)')"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ steps.github_app.outputs.token }}
+
   sync:
     name: ${{ matrix.repo }} - Sync settings, labels and secrets
     runs-on: ubuntu-latest
@@ -32,27 +43,33 @@ jobs:
       fail-fast: false
       matrix:
         repo: ${{ fromJson(needs.get-repositories.outputs.repositories) }}
+        exclude:
+          - repo: alejandrohdezma/alejandrohdezma
     steps:
-      - name: Checkout project
-        uses: actions/checkout@v2.3.5
+      - name: Get the GitHub App installation token
+        uses: alejandrohdezma/actions/github-app-token@v1
+        id: github_app
+        with:
+          token: ${{ secrets.GH_APP_TOKEN }}
+
       - name: Sync settings to ${{ matrix.repo }}
         run: |
           gh api --silent -X PATCH /repos/${{ matrix.repo }} --input - <<< '{
             "has_wiki": false,
             "has_projects": false,
             "delete_branch_on_merge": true,
+            "default_branch": "main",
             "allow_auto_merge": true,
             "allow_merge_commit": true,
             "allow_squash_merge": false,
             "allow_rebase_merge": false
           }'
         env:
-          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.github_app.outputs.token }}
+
       - name: Sync branch protection to ${{ matrix.repo }}
         run: |
-          default_branch=$(gh api /repos/${{ matrix.repo }} --jq '.default_branch')
-
-          gh api --silent -X PUT "/repos/${{ matrix.repo }}/branches/$default_branch/protection" --input - <<< '{
+          gh api --silent -X PUT "/repos/${{ matrix.repo }}/branches/main/protection" --input - <<< '{
               "required_status_checks": {
                   "strict": true,
                   "contexts": [
@@ -67,12 +84,14 @@ jobs:
               "restrictions": null
           }'
         env:
-          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.github_app.outputs.token }}
+
       - name: Sync labels between this repo and ${{ matrix.repo }}
-        uses: alejandrohdezma/actions/sync-labels@main
+        uses: alejandrohdezma/actions/sync-labels@v1
         with:
-          github-token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+          github-token: ${{ steps.github_app.outputs.token }}
           destination: ${{ matrix.repo }}
+
       - name: Sync secrets to ${{ matrix.repo }}
         run: |
           gh secret set PGP_PASSPHRASE -b"${PGP_PASSPHRASE}" --repo ${{ matrix.repo }}
@@ -88,4 +107,4 @@ jobs:
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           ADMIN_GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.github_app.outputs.token }}

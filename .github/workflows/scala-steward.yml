@@ -44,7 +44,7 @@ jobs:
       - name: Create `repos.md`
         run: |
           gh api installation/repositories |
-          jq '.repositories | map(.full_name) | map(select(. != "alejandrohdezma/actions")) | .[] | "- " + .' > repos.md
+            jq -r '.repositories | map(.full_name) | map(select(. != "alejandrohdezma/actions")) | .[] | "- " + .'
         env:
           GITHUB_TOKEN: ${{ steps.github_app.outputs.token }}
 

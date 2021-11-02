@@ -42,7 +42,9 @@ jobs:
           token: ${{ secrets.GH_APP_TOKEN }}
 
       - name: Create `repos.md`
-        run: gh api installation/repositories -q '.repositories[] | "- " + .full_name' > repos.md
+        run: |
+          gh api installation/repositories |
+          jq '.repositories | map(select(. == "alejandrohdezma/actions")) | .[] | "- " + .full_name' > repos.md
         env:
           GITHUB_TOKEN: ${{ steps.github_app.outputs.token }}
 

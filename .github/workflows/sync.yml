@@ -5,11 +5,12 @@ on:
     inputs:
       type:
         description: "Type of sync to perform: `labels`, `settings`, `secrets` or `all`"
-        required: true
-      repository:
-        description: Repository to synchronize
         required: false
-        default: ""
+        default: "all"
+      repository:
+        description: Repository to synchronize. Select `all` to sync every repo managed by the GitHub App.
+        required: false
+        default: "all"
 
 jobs:
   get-repositories:
@@ -27,7 +28,7 @@ jobs:
       - name: Select repositories to update
         id: repositories
         run: |
-          if [[ "${{ github.event.inputs.repository }}" ]]; then
+          if [ "${{ github.event.inputs.repository }}" != "all" ]; then
             echo "::set-output name=repositories::[\"alejandrohdezma/${{ github.event.inputs.repository }}\"]"
           else
             echo "::set-output name=repositories::$(gh api installation/repositories -q '.repositories | map(.full_name)')"
@@ -74,8 +75,7 @@ jobs:
                   "strict": true,
                   "contexts": [
                       "Run \"sbt ci-test\" on JDK adopt:1.8",
-                      "Run \"sbt ci-test\" on JDK adopt:1.11",
-                      "Run \"sbt ci-test\" on JDK adopt:1.15"
+                      "Run \"sbt ci-test\" on JDK adopt:1.11"
                   ]
               },
               "enforce_admins": false,

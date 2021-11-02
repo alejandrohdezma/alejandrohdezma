@@ -74,8 +74,7 @@ jobs:
               "required_status_checks": {
                   "strict": true,
                   "contexts": [
-                      "Run \"sbt ci-test\" on JDK adopt:1.8",
-                      "Run \"sbt ci-test\" on JDK adopt:1.11"
+                      "Run \"sbt ci-test\" on JDK adopt:1.8"
                   ]
               },
               "enforce_admins": false,

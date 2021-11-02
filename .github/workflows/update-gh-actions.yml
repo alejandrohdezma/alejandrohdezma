@@ -12,9 +12,16 @@ jobs:
     if: ${{ github.actor == 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
+      - name: Get `alejandrohdezma-steward` token
+        uses: ./github-app-token
+        id: github_app
+        with:
+          token: ${{ secrets.GH_APP_TOKEN }}
+
       - name: Checkout project
         uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # v2.3.4
         with:
+          token: ${{ steps.github_app.outputs.token }}
           ref: ${{ github.head_ref }}
 
       - name: Update action comments

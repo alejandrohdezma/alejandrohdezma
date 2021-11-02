@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get `alejandrohdezma-steward` token
-        uses: ./github-app-token
+        uses: alejandrohdezma/actions/github-app-token@v1
         id: github_app
         with:
           token: ${{ secrets.GH_APP_TOKEN }}

@@ -1,0 +1,29 @@
+name: Update GitHub Actions comments on Dependabot PRs
+
+on:
+  pull_request_target:
+
+permissions:
+  pull-requests: write
+
+jobs:
+  update-github-actions-comments:
+    name: Update GitHub Actions comments
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # v2.3.4
+
+      - name: Update action comments
+        id: update-github-actions
+        uses: alejandrohdezma/actions/update-github-actions@v1
+
+      - name: Commit new changes
+        uses: alejandrohdezma/actions/commit-and-push@v1
+        with:
+          message: >
+            Update ${{ steps.update-github-actions.outputs.action }}
+            from ${{ steps.update-github-actions.outputs.old-version }}
+            to ${{ steps.update-github-actions.outputs.new-version }}
+            in comments

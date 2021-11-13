@@ -1,4 +1,4 @@
-name: Sync secrets and settings to all my repositories
+name: Sync labels, settings and secrets to one or all my repositories
 
 on:
   workflow_dispatch:
@@ -8,7 +8,9 @@ on:
         required: false
         default: "all"
       repository:
-        description: Repository to synchronize. Select `all` to sync every repo managed by the GitHub App.
+        description: >
+          Repository to synchronize. Select `all` to sync every repo where the
+          alejandrohdezma-steward GitHub App is installed
         required: false
         default: "all"
 
@@ -37,7 +39,7 @@ jobs:
           GITHUB_TOKEN: ${{ steps.github_app.outputs.token }}
 
   sync:
-    name: ${{ matrix.repo }} - Sync settings, labels and secrets
+    name: ${{ matrix.repo }} - Sync labels, settings and secrets
     runs-on: ubuntu-latest
     needs: get-repositories
     strategy:
@@ -54,6 +56,7 @@ jobs:
           token: ${{ secrets.GH_APP_TOKEN }}
 
       - name: Sync settings to ${{ matrix.repo }}
+        if: github.event.inputs.type == 'settings' || github.event.inputs.type == 'all'
         run: |
           gh api --silent -X PATCH /repos/${{ matrix.repo }} --input - <<< '{
             "has_wiki": false,
@@ -68,6 +71,7 @@ jobs:
           GITHUB_TOKEN: ${{ steps.github_app.outputs.token }}
 
       - name: Sync branch protection to ${{ matrix.repo }}
+        if: github.event.inputs.type == 'settings' || github.event.inputs.type == 'all'
         run: |
           default_branch=$(gh api /repos/${{ matrix.repo }} --jq '.default_branch')
           gh api --silent -X PUT "/repos/${{ matrix.repo }}/branches/$default_branch/protection" --input - <<< '{
@@ -87,13 +91,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.github_app.outputs.token }}
 
-      - name: Sync labels between this repo and ${{ matrix.repo }}
-        uses: alejandrohdezma/actions/sync-labels@v1
+      - name: Initialize labels in ${{ matrix.repo }}
+        if: github.event.inputs.type == 'labels' || github.event.inputs.type == 'all'
+        uses: alejandrohdezma/actions/init-labels@v1
         with:
           github-token: ${{ steps.github_app.outputs.token }}
-          destination: ${{ matrix.repo }}
+          target-repo: ${{ matrix.repo }}
 
       - name: Sync secrets to ${{ matrix.repo }}
+        if: github.event.inputs.type == 'secrets' || github.event.inputs.type == 'all'
         run: |
           gh secret set PGP_PASSPHRASE -b"${PGP_PASSPHRASE}" --repo ${{ matrix.repo }}
           gh secret set PGP_SECRET -b"${PGP_SECRET}" --repo ${{ matrix.repo }}
@@ -108,4 +114,4 @@ jobs:
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           ADMIN_GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
-          GITHUB_TOKEN: ${{ steps.github_app.outputs.token }}
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}

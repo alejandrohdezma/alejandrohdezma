@@ -1,4 +1,4 @@
 {
   "origins": ["https://alejandrohdezma.com"],
-  "originsRegex": ["http://localhost:[0-9]+"]
+  "originsRegex": ["http://localhost:[0-9]+", "localhost:[0-9]+"]
 }

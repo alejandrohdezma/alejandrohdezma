@@ -3,4 +3,4 @@
 <br>
 
 **Artículos**
-- [:electric_plug: Creando un plugin SBT](es/blog/creando-un-plugin-sbt.md)
+- [:robot: Actualizando repositorios con Scala Steward](es/blog/updating-multiple-repos-with-scala-steward.md)

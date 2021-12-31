@@ -1,6 +1,6 @@
 ![](https://alejandrohdezma.com/_media/header_es.png ":no-zoom")
 
-Soy un entusiasta de la programación funcional, ahora trabajando principalmente en Scala. Trabajo en [47 Degrees](https://www.47deg.com) como Desarrollador Scala Senior y hago algo de Open Source por [aquí](https://github.com/alejandrohdezma?tab=repositories). También estoy interesado en todo el mundillo del "tooling" para desarrolladores, especialmente en "GitHub Actions" :heart:.
+Soy un entusiasta de la programación funcional, ahora trabajando principalmente en Scala. Trabajo en [47 Degrees](https://www.47deg.com) como Desarrollador Scala Senior y hago algo de Open Source por [aquí](https://github.com/alejandrohdezma?tab=repositories). También estoy interesado en todo el mundillo del "tooling" para desarrolladores, especialmente en SBT y GitHub Actions.
 
 Algunos datos sobre mí:
 
@@ -29,6 +29,6 @@ Si quieres ponerte en contacto conmigo:
 
 # :green_book: Mis últimos artículos <!-- {docsify-ignore} -->
 
-- [:electric_plug: Creando un plugin SBT (En progreso...)](https://alejandrohdezma.com/#/es/blog/creando-un-plugin-sbt)
+- <a href="https://alejandrohdezma.com/#/es/blog/updating-multiple-repos-with-scala-steward" target="_self" rel="noopener">:robot: Actualizando repositorios con Scala Steward</a>
 
 ![](https://alejandrohdezma.com/_media/footer.png ":no-zoom")

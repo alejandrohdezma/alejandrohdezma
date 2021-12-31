@@ -3,4 +3,4 @@
 <br>
 
 **Articles**
-- [:electric_plug: Creating an SBT plugin](blog/creating-an-sbt-plugin.md)
+- [:robot: Updating multiple repos with Scala Steward](blog/updating-multiple-repos-with-scala-steward.md)

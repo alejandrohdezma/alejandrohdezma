@@ -23,7 +23,7 @@ jobs:
           token: ${{ secrets.GH_APP_TOKEN }}
 
       - name: Launch Scala Steward in the selected repository
-        uses: scala-steward-org/scala-steward-action@1cde595f2b60e461a28b86f1a8a89cb19a3d95e4 # v2.14.0
+        uses: scala-steward-org/scala-steward-action@58c99f90edbe1f1e42c8dae422d80a70599c12bf # v2.14.0
         with:
           github-token: ${{ steps.github_app.outputs.token }}
           github-repository: alejandrohdezma/${{ github.event.inputs.repository }}
@@ -49,7 +49,7 @@ jobs:
           GITHUB_TOKEN: ${{ steps.github_app.outputs.token }}
 
       - name: Launch Scala Steward on all repositories managed by the Github App
-        uses: scala-steward-org/scala-steward-action@1cde595f2b60e461a28b86f1a8a89cb19a3d95e4 # v2.14.0
+        uses: scala-steward-org/scala-steward-action@58c99f90edbe1f1e42c8dae422d80a70599c12bf # v2.14.0
         with:
           github-token: ${{ steps.github_app.outputs.token }}
           author-email: 80571129+alejandrohdezma-steward[bot]@users.noreply.github.com

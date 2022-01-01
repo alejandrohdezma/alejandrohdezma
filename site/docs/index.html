@@ -198,7 +198,7 @@
         (hook, vm) => hook.beforeEach(html =>
           html +
           '\n\n' +
-          '<div class="updated_at"><strong>:date: ' +
+          '<div class="updated_at"><strong><i class="far fa-calendar"></i> ' +
           (document.documentElement.lang == 'es' ? 'Actualizado' : 'Updated') +
           ': {docsify-updated}</strong></div>'
         ),

@@ -136,6 +136,7 @@
       loadSidebar: true,
       subMaxLevel: 2,
       auto2top: true,
+      executeScript: true,
       search: {
         maxAge: 86400000,
         paths: 'auto',
@@ -213,6 +214,29 @@
             a.title = 'Ver la versión en español'
           }
         }),
+        (hook, vm) => hook.doneEach(() => {
+          if (vm.route.file.includes("README")) next(html)
+          else {
+            const article = Docsify.dom.find('article#main')
+
+            const script = document.createElement('script')
+
+            script.async = 'async';
+            script.src = "https://giscus.app/client.js"
+            script.setAttribute('data-repo', "alejandrohdezma/alejandrohdezma");
+            script.setAttribute('data-repo-id', "MDEwOlJlcG9zaXRvcnkzMTY5NDkzOTY=");
+            script.setAttribute('data-category', "Blog");
+            script.setAttribute('data-category-id', "DIC_kwDOEuRDlM4CAfTC");
+            script.setAttribute('data-mapping', "title");
+            script.setAttribute('data-reactions-enabled', "1");
+            script.setAttribute('data-emit-metadata', "0");
+            script.setAttribute('data-theme', "light");
+            script.setAttribute('data-lang', document.documentElement.lang);
+            script.setAttribute('crossorigin', "anonymous");
+
+            article.appendChild(script)
+          }
+        }),
         (hook, vm) => hook.afterEach((html, next) => {
           if (vm.route.file.includes("README")) next(html)
           else {
@@ -227,21 +251,7 @@
               `Escrito con ${emoji('heart')} por Alejandro Hernández. <br>Encuéntrame en ${twitter} o ${github}.` :
               `Written with ${emoji('heart')} by Alejandro Hernández. <br>Find me on ${twitter} or ${github}.`
 
-            const comments = `<script src="https://giscus.app/client.js" \
-              data-repo="alejandrohdezma/alejandrohdezma" \
-              data-repo-id="MDEwOlJlcG9zaXRvcnkzMTY5NDkzOTY=" \
-              data-category="Blog" \
-              data-category-id="DIC_kwDOEuRDlM4CAfTC" \
-              data-mapping="url" \
-              data-reactions-enabled="1" \
-              data-emit-metadata="0" \
-              data-theme="light" \
-              data-lang="${document.documentElement.lang}" \
-              crossorigin="anonymous" \
-              async
-            />`
-
-            next(html + `\n\n<footer>${avatar}<p style="margin: 0">${footer}</p></footer>${comments}`)
+            next(html + `\n\n<footer>${avatar}<p style="margin: 0">${footer}</p></footer>`)
           }
         })
       ]

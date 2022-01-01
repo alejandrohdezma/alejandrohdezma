@@ -7,8 +7,7 @@
     <meta name="description" content="My personal blog" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="icon" href="_media/favicon.ico" type="image/icon type">
     <link rel="stylesheet" href="_style/index.css">
 </head>
@@ -95,72 +94,14 @@
                     day: 'numeric'
                 }
                 return new Date(time).toLocaleString(document.documentElement.lang, options)
-            },
-            plugins: [
-                (hook, vm) => hook.beforeEach(html =>
-                    html +
-                    '\n\n' +
-                    '<div class="updated_at"><strong><i class="far fa-calendar"></i> ' +
-                    (document.documentElement.lang == 'es' ? 'Actualizado' : 'Updated') +
-                    ': {docsify-updated}</strong></div>'
-                ),
-                (hook, vm) => hook.doneEach(() => {
-                    const a = Docsify.dom.find('a.github-corner')
-                    let emoji = name => `<img class="emoji" src="https://github.githubassets.com/images/icons/emoji/${name}.png">`
-
-                    if (document.documentElement.lang == 'es') {
-                        a.href = `${window.location.origin}/#${vm.route.path.slice(3)}`
-                        a.innerHTML = `${emoji('es')} <i class="fas fa-arrow-right"></i> ${emoji('us')}`
-                        a.title = 'Show english version'
-                    } else {
-                        a.href = `${window.location.origin}/#/es${vm.route.path}`
-                        a.innerHTML = `${emoji('us')} <i class="fas fa-arrow-right"></i> ${emoji('es')}`
-                        a.title = 'Ver la versión en español'
-                    }
-                }),
-                (hook, vm) => hook.doneEach(() => {
-                    if (!vm.route.file.includes("README") && !window.origin.includes("localhost")) {
-                        const article = Docsify.dom.find('article#main')
-
-                        const script = document.createElement('script')
-
-                        script.async = 'async'
-                        script.src = "https://giscus.app/client.js"
-                        script.setAttribute('data-repo', "alejandrohdezma/alejandrohdezma")
-                        script.setAttribute('data-repo-id', "MDEwOlJlcG9zaXRvcnkzMTY5NDkzOTY=")
-                        script.setAttribute('data-category', "Blog")
-                        script.setAttribute('data-category-id', "DIC_kwDOEuRDlM4CAfTC")
-                        script.setAttribute('data-mapping', "title")
-                        script.setAttribute('data-reactions-enabled', "1")
-                        script.setAttribute('data-emit-metadata', "0")
-                        script.setAttribute('data-theme', "light")
-                        script.setAttribute('data-lang', document.documentElement.lang)
-                        script.setAttribute('crossorigin', "anonymous")
-
-                        article.appendChild(script)
-                    }
-                }),
-                (hook, vm) => hook.afterEach((html, next) => {
-                    if (vm.route.file.includes("README")) next(html)
-                    else {
-                        let a = (url, text) => `<a href="${url}" target="_blank" rel="noopener">${text}</a>`
-
-                        const twitter = '<a target="_blank" href="https://twitter.com/alejandrohdezma"><i class="fab fa-twitter"></i></a>'
-                        const github = '<a target="_blank" href="https://github.com/alejandrohdezma"><i class="fab fa-github"></i></a>'
-
-                        const avatar = '<div class="avatar-wrapper"><img class="avatar" src="https://avatars.githubusercontent.com/u/9027541?v=4"/></div>'
-
-                        const footer = document.documentElement.lang == 'es' ?
-                            `Escrito con <i class="fas fa-heart"></i> por Alejandro Hernández. <br>Encuéntrame en ${twitter} o ${github}.` :
-                            `Written with <i class="fas fa-heart"></i> by Alejandro Hernández. <br>Find me on ${twitter} or ${github}.`
-
-                        next(html + `\n\n<footer>${avatar}<p style="margin: 0">${footer}</p></footer>`)
-                    }
-                })
-            ]
+            }
         }
     </script>
     <script src="//unpkg.com/docsify@4/lib/docsify.min.js"></script>
+    <script src="_script/footer.js"></script>
+    <script src="_script/language_changer.js"></script>
+    <script src="_script/giscus.js"></script>
+    <script src="_script/updated.js"></script>
     <script src="//unpkg.com/docsify@4/lib/plugins/emoji.min.js"></script>
     <script src="//unpkg.com/docsify@4/lib/plugins/search.min.js"></script>
     <script src="//unpkg.com/docsify@4/lib/plugins/external-script.min.js"></script>

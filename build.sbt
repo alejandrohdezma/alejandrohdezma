@@ -24,6 +24,7 @@ lazy val site = project
   .settings(mdocIn := baseDirectory.value / "docs")
   .settings(watchTriggers += mdocIn.value.toGlob / "*.md")
   .settings(watchTriggers += mdocIn.value.toGlob / "*.html")
+  .settings(watchTriggers += mdocIn.value.toGlob / "*.js")
   .settings(watchTriggers += mdocIn.value.toGlob / "*.css")
   .enablePlugins(GitHubPagesPlugin)
   .settings(gitHubPagesSiteDir := mdocOut.value)

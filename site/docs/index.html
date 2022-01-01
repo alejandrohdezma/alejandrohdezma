@@ -62,10 +62,6 @@
       margin-top: 50px;
     }
 
-    footer>p {
-      line-height: 0;
-    }
-
     .avatar-wrapper {
       position: relative;
       overflow: hidden;
@@ -247,8 +243,8 @@
             const avatar = '<div class="avatar-wrapper"><img class="avatar" src="https://avatars.githubusercontent.com/u/9027541?v=4"/></div>'
 
             const footer = document.documentElement.lang == 'es' ?
-              `Escrito con ${emoji('heart')} por Alejandro Hernández. <br>Encuéntrame en ${twitter} o ${github}.` :
-              `Written with ${emoji('heart')} by Alejandro Hernández. <br>Find me on ${twitter} or ${github}.`
+              `Escrito con <i class="fas fa-heart"></i> por Alejandro Hernández. <br>Encuéntrame en ${twitter} o ${github}.` :
+              `Written with <i class="fas fa-heart"></i> by Alejandro Hernández. <br>Find me on ${twitter} or ${github}.`
 
             next(html + `\n\n<footer>${avatar}<p style="margin: 0">${footer}</p></footer>`)
           }

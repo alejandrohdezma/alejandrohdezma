@@ -44,11 +44,13 @@
                     '/': 'No results!',
                 },
                 depth: 3,
-                pathNamespaces: ['/en', '/es']
+                pathNamespaces: ['/', '/es']
             },
             pagination: {
                 crossChapter: true,
                 crossChapterText: true,
+                nextText: document.documentElement.lang == 'es' ? 'SIGUIENTE' : 'NEXT',
+                previousText: document.documentElement.lang == 'es' ? 'ANTERIOR' : 'PREVIOUS'
             },
             customPageTitle: {
                 prefix: document.documentElement.lang == 'es' ? 'El Blog de Alex' : 'Alex\'s Blog'

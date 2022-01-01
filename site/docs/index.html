@@ -215,8 +215,7 @@
           }
         }),
         (hook, vm) => hook.doneEach(() => {
-          if (vm.route.file.includes("README")) next(html)
-          else {
+          if (!vm.route.file.includes("README") && !window.origin.includes("localhost")) {
             const article = Docsify.dom.find('article#main')
 
             const script = document.createElement('script')

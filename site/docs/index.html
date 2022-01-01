@@ -114,14 +114,11 @@
 <body>
   <div id="app">Loading content...</div>
   <script>
-    const lang = location.hash.match(/#\/(es)\//);
+    const lang = location.hash.match(/#\/(es)\//)
 
     if (lang) {
-      document.documentElement.setAttribute('lang', lang[1]);
+      document.documentElement.setAttribute('lang', lang[1])
     }
-
-    let emoji = name =>
-      `<img class="emoji" src="https://github.githubassets.com/images/icons/emoji/${name}.png" alt="${name}">`;
 
     window.$docsify = {
       name: `📘 ${document.documentElement.lang == 'es' ? 'El Blog de Alex' : 'Alex\'s blog'}`,
@@ -187,7 +184,7 @@
         }
       },
       formatUpdated: time => {
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
         return new Date(time).toLocaleString(document.documentElement.lang, options)
       },
       plugins: [
@@ -200,6 +197,8 @@
         ),
         (hook, vm) => hook.doneEach(() => {
           const a = Docsify.dom.find('a.github-corner')
+          let emoji = name => `<img class="emoji" src="https://github.githubassets.com/images/icons/emoji/${name}.png">`
+
           if (document.documentElement.lang == 'es') {
             a.href = `${window.location.origin}/#${vm.route.path.slice(3)}`
             a.innerHTML = `${emoji('es')} <i class="fas fa-arrow-right"></i> ${emoji('us')}`
@@ -216,18 +215,18 @@
 
             const script = document.createElement('script')
 
-            script.async = 'async';
+            script.async = 'async'
             script.src = "https://giscus.app/client.js"
-            script.setAttribute('data-repo', "alejandrohdezma/alejandrohdezma");
-            script.setAttribute('data-repo-id', "MDEwOlJlcG9zaXRvcnkzMTY5NDkzOTY=");
-            script.setAttribute('data-category', "Blog");
-            script.setAttribute('data-category-id', "DIC_kwDOEuRDlM4CAfTC");
-            script.setAttribute('data-mapping', "title");
-            script.setAttribute('data-reactions-enabled', "1");
-            script.setAttribute('data-emit-metadata', "0");
-            script.setAttribute('data-theme', "light");
-            script.setAttribute('data-lang', document.documentElement.lang);
-            script.setAttribute('crossorigin', "anonymous");
+            script.setAttribute('data-repo', "alejandrohdezma/alejandrohdezma")
+            script.setAttribute('data-repo-id', "MDEwOlJlcG9zaXRvcnkzMTY5NDkzOTY=")
+            script.setAttribute('data-category', "Blog")
+            script.setAttribute('data-category-id', "DIC_kwDOEuRDlM4CAfTC")
+            script.setAttribute('data-mapping', "title")
+            script.setAttribute('data-reactions-enabled', "1")
+            script.setAttribute('data-emit-metadata', "0")
+            script.setAttribute('data-theme', "light")
+            script.setAttribute('data-lang', document.documentElement.lang)
+            script.setAttribute('crossorigin', "anonymous")
 
             article.appendChild(script)
           }
@@ -250,7 +249,7 @@
           }
         })
       ]
-    };
+    }
   </script>
   <script src="//unpkg.com/docsify@4/lib/docsify.min.js"></script>
   <script src="//unpkg.com/docsify@4/lib/plugins/emoji.min.js"></script>

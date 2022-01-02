@@ -1,4 +1,4 @@
-function plugin(hook, vm) {
+function footer(hook, vm) {
     hook.afterEach((html, next) => {
         if (vm.route.file.includes("README")) next(html)
         else {
@@ -11,9 +11,9 @@ function plugin(hook, vm) {
                 `Escrito con <i class="fas fa-heart"></i> por Alejandro Hernández. <br>Encuéntrame en ${twitter} o ${github}.` :
                 `Written with <i class="fas fa-heart"></i> by Alejandro Hernández. <br>Find me on ${twitter} or ${github}.`
 
-            next(html + `\n\n<footer>${avatar}<p style="margin: 0">${footer}</p></footer>`)
+            next(html + `\n\n<hr/><footer>${avatar}<p style="margin: 0">${footer}</p></footer>`)
         }
     })
 }
 
-window.$docsify.plugins = [].concat(plugin, window.$docsify.plugins)
+window.$docsify.plugins = [].concat(footer, window.$docsify.plugins)

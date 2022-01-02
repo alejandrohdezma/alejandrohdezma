@@ -1,4 +1,4 @@
-function plugin(hook, vm) {
+function giscus(hook, vm) {
     hook.doneEach(() => {
         if (!vm.route.file.includes("README") && !window.origin.includes("localhost")) {
             const article = Docsify.dom.find('article#main')
@@ -23,4 +23,4 @@ function plugin(hook, vm) {
     })
 }
 
-window.$docsify.plugins = [].concat(plugin, window.$docsify.plugins)
+window.$docsify.plugins = [].concat(giscus, window.$docsify.plugins)

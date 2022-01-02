@@ -1,4 +1,4 @@
-function plugin(hook, vm) {
+function languageChanger(hook, vm) {
     hook.doneEach(() => {
         const a = Docsify.dom.find('a.github-corner')
         let emoji = name => `<img class="emoji" src="https://github.githubassets.com/images/icons/emoji/${name}.png">`
@@ -15,4 +15,4 @@ function plugin(hook, vm) {
     })
 }
 
-window.$docsify.plugins = [].concat(plugin, window.$docsify.plugins)
+window.$docsify.plugins = [].concat(languageChanger, window.$docsify.plugins)

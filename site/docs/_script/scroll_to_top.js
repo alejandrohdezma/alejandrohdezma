@@ -1,4 +1,4 @@
-function plugin(hook, vm) {
+function scrollToTop(hook, vm) {
     hook.mounted(() => {
         const button = document.createElement('button')
         button.className = 'scroll-to-top'
@@ -34,4 +34,4 @@ function plugin(hook, vm) {
     })
 }
 
-window.$docsify.plugins = [].concat(plugin, window.$docsify.plugins)
+window.$docsify.plugins = [].concat(scrollToTop, window.$docsify.plugins)

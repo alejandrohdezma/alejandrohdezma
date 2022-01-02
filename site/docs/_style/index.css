@@ -10,13 +10,11 @@
 
 body[data-page="README.md"] #main>div:first-child,
 body[data-page="README.md"] .docsify-pagination-container,
-body[data-page="README.md"] .updated_at {
     display: none;
 }
 
 body[data-page="es/README.md"] #main>div:first-child,
 body[data-page="es/README.md"] .docsify-pagination-container,
-body[data-page="es/README.md"] .updated_at {
     display: none;
 }
 
@@ -75,8 +73,17 @@ footer {
     border-radius: 50%;
 }
 
-.updated_at {
-    font-size: 0.75em;
+.updated-at {
+    font-size: 0.9em;
+    font-weight: bold;
+    float: left;
+    margin-bottom: 1em;
+}
+
+.reading-count {
+    float: right;
+    font-size: 0.9em;
+    color: rgb(90, 90, 90);
 }
 
 .github-corner {

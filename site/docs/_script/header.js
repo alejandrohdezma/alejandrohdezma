@@ -9,18 +9,19 @@ function header(hook, vm) {
     hook.beforeEach((html, next) => {
         if (vm.route.file.includes("README")) next(html)
         else {
-            const div = `<div style="margin-top:10px">
-                <span class="updated-at">
-                    <i class="far fa-calendar"></i>
-                    ${(document.documentElement.lang == 'es' ? 'Actualizado' : 'Updated')}
-                    : {docsify-updated}
-                </span>
-                <span class="reading-count">
-                    ${wordsCount + (document.documentElement.lang == 'es' ? ' palabras' : ' words')}
-                    &nbsp; | &nbsp;${Math.ceil(wordsCount / 400) + (document.documentElement.lang == 'es' ? ' minutos' : ' minutes')}
-                </span>
-                <div style="clear: both"></div>
-            </div>`
+            const time = Math.ceil(wordsCount / 400)
+            const div = '<div style="margin-top:10px">' +
+                '<span class="updated-at">' +
+                '<i class="far fa-calendar"></i>&nbsp;' +
+                (document.documentElement.lang == 'es' ? 'Actualizado' : 'Updated') +
+                ': {docsify-updated}' +
+                '</span>' +
+                '<span class="reading-count">' +
+                wordsCount + (document.documentElement.lang == 'es' ? ' palabras' : ' words') +
+                '&nbsp; | &nbsp;' + time + (document.documentElement.lang == 'es' ? ' minutos' : ' minutes') +
+                '</span>' +
+                '<div style="clear: both"></div>' +
+                '</div>'
 
             next(`${div}\n\n${html}`)
         }

@@ -11,7 +11,7 @@ function footer(hook, vm) {
                 `Escrito con <i class="fas fa-heart"></i> por Alejandro Hernández. <br>Encuéntrame en ${twitter} o ${github}.` :
                 `Written with <i class="fas fa-heart"></i> by Alejandro Hernández. <br>Find me on ${twitter} or ${github}.`
 
-            next(html + `\n\n<hr/><footer>${avatar}<p style="margin: 0">${footer}</p></footer>`)
+            next(html + `<hr/><footer>${avatar}<p style="margin: 0">${footer}</p></footer>`)
         }
     })
 }

@@ -9,12 +9,14 @@
 }
 
 body[data-page="README.md"] #main>div:first-child,
-body[data-page="README.md"] .docsify-pagination-container,
     display: none;
 }
 
 body[data-page="es/README.md"] #main>div:first-child,
-body[data-page="es/README.md"] .docsify-pagination-container,
+    display: none;
+}
+
+body .docsify-pagination-container {
     display: none;
 }
 

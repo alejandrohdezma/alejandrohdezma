@@ -1,5 +1,4 @@
 :root {
-    --accent: #3f3f3f;
     --accent-bg: transparent;
     --base-fontsize: 18px;
 }
@@ -58,6 +57,10 @@ main {
     padding: 2rem .5rem 0 .5rem;
 }
 
+a, a:visited {
+    color: var(--text)
+}
+
 a:hover {
     color: rgb(19, 212, 193)
 }
@@ -69,10 +72,6 @@ main>section {
 
 main>section>a {
     text-decoration: none;
-}
-
-main>section>a:hover {
-    color: var(--text);
 }
 
 address {

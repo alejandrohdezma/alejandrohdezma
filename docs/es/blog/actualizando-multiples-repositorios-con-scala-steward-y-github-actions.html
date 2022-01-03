@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Actualizando múltiples repositorios con Scala Steward y GitHub Actions</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="icon" href="../../images/favicon.ico" type="image/icon type">
+    <script type="text/javascript" src="https://livejs.com/live.js"></script>
+</head>
+
+<body>
+    <header>
+        <img src="../../images/header.png">
+        <nav>
+            <a href="/es/blog">Volver atrás</a>
+            <a href="/blog/updating-multiple-repositories-with-scala-steward-and-github-actions" hreflang="en" lang="en"
+                aria-label="cambiar a inglés">
+                <span></span>
+                <img src="https://github.githubassets.com/images/icons/emoji/es.png">
+                <i class="fas fa-arrow-right"></i>
+                <img src="https://github.githubassets.com/images/icons/emoji/us.png">
+            </a>
+        </nav>
+    </header>
+    <main>
+        <article>
+            <img src="../../images/scala_steward_with_github_badge.png">
+            <h1>Actualizando múltiples repositorios con Scala Steward y GitHub Actions</h1>
+            <time datetime="2022-01-03T10:40:00+02:00">Lunes, 3 de Enero de 2022</time>
+            <p><span id="time"></span> minutos</p>
+
+            <hr>
+
+            En construcción
+
+            <!-- <section>
+
+                <p>Si trabajas habitualmente con Scala, probablemente conozcas <a
+                        href="https://github.com/scala-steward-org/scala-steward" target="_blank" rel="noopener">Scala
+                        Steward</a>. Si no sabes lo que es, este extracto del propio repositorio lo resume bastante
+                    bien:
+                </p>
+
+                <blockquote>
+                    <img src="../../images/scala_steward_avatar.png" width="60" style="float:left; margin: 1em 1em 0 0">
+                    <p><em>"Scala Steward is a bot that helps you keep your library dependencies, sbt plugins, and Scala
+                            and
+                            sbt versions up-to-date."</em></p>
+                    <p><strong>Scala Steward es un bot que te ayuda a mantener las dependencias de tus librerías, los
+                            plugins
+                            de SBT y las versiones de Scala y SBT actualizadas.</strong></p>
+                </blockquote>
+                <p>Se puede usar en cualquier proyecto público de Scala hospedado en GitHub, GitLab o BitBucket que use
+                    <a href="https://www.scala-sbt.org" target="_blank" rel="noopener">SBT</a> o <a
+                        href="https://com-lihaoyi.github.io/mill/mill/Intro_to_Mill.html" target="_blank"
+                        rel="noopener">Mill</a> simplemente añadiendo dicho repositorio a
+                    <a href="#/repos">este archivo
+                    </a>. Poco tiempo después empezarás a recibir "Pull Requests".
+                </p>
+                <p>Hay ya más de 1500 repositorios utilizando esta instancia pública de Scala Steward que <a
+                        href="https://github.com/fthomas" target="_blank" rel="noopener">Frank
+                        Thomas</a> (el creador de Scala Steward) tiene desplegado como un servicio gratuito para todo el
+                    ecosistema "Open-Source" de Scala.</p>
+                <p>Pero las posibilidades no se quedan ahí, también se puede lanzar una instancia propia usando <a
+                        href="https://github.com/scala-steward-org/scala-steward-action" target="_blank"
+                        rel="noopener">GitHub
+                        Actions</a>, <a href="https://hub.docker.com/r/fthomas/scala-steward/" target="_blank"
+                        rel="noopener">Docker</a> o incluso <a href="https://get-coursier.io" target="_blank"
+                        rel="noopener">Coursier</a>:</p>
+                <pre v-pre="" data-lang="bash"><code class="lang-bash">cs launch --contrib scala-steward</code></pre>
+            </section>
+
+            <section>
+                <h2 id="el-infierno-de-las-actualizaciones"><a
+                        href="#/es/blog/updating-multiple-repos-with-scala-steward?id=el-infierno-de-las-actualizaciones"
+                        data-id="el-infierno-de-las-actualizaciones" class="anchor"><span>El infierno de las
+                            actualizaciones</span></a></h2>
+                <p>De acuerdo, ahora que sabemos lo que es Scala Steward, seguramente, si trabajas en una organización
+                    con múltiples repositorios escritos en Scala y con Scala Steward a cargo de mantener todo
+                    actualizado, tu equipo habrá descubierto el conocido
+                    como "infierno de las actualizaciones" que no es otra cosa que empezar tu jornada laboral teniendo
+                    que revisar, aprobar y "mergear" cientos de "Pull Request" de actualizaciones creadas por Scala
+                    Steward.
+                </p>
+                <p>Si ya has echado un vistazo a las "<a
+                        href="https://github.com/scala-steward-org/scala-steward/blob/master/docs/faq.md#how-can-scala-stewards-prs-be-merged-automatically"
+                        target="_blank" rel="noopener">FAQ</a>" de Scala Steward, habrás
+                    visto que una opción para gestionar esto es "mergear" automáticamente dichas actualizaciones usando
+                    apps como
+                    <a href="https://mergify.com" target="_blank" rel="noopener">Mergify</a>, GitHub Actions como <a
+                        href="https://github.com/marketplace/actions/merge-dependency-update-prs" target="_blank"
+                        rel="noopener">ésta</a> o habilitando el "
+                    <a href="https://docs.github.com/es/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/automatically-merging-a-pull-request"
+                        target="_blank" rel="noopener">auto-merge</a>" en dichas "PRs".
+                </p>
+                <p>Aunque el "auto-mergeo" puede ser una opción muy válida, es probable que, como yo, te hayas
+                    encontrado que no lo es tanto para tu caso, bien porque tu organización no permita el "mergeo"
+                    automático de "PRs, o quizá porque tus "PRs" tienen
+                    que seguir un flujo concreto que impide que lleguen a la rama por defecto de tu repositorio
+                    (comúnmente
+                    <code>main</code> <a href="https://twitter.com/mislav/status/1270388510684598272" target="_blank"
+                        rel="noopener"><del>o
+                            <code>master</code></del></a>).
+                </p>
+            </section> -->
+        </article>
+
+        <script async src="https://giscus.app/client.js" data-repo="alejandrohdezma/alejandrohdezma"
+            data-repo-id="MDEwOlJlcG9zaXRvcnkzMTY5NDkzOTY=" data-category="Blog" data-category-id="DIC_kwDOEuRDlM4CAfTC"
+            data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-theme="light" data-lang="es"
+            crossorigin="anonymous"></script>
+    </main>
+
+    <footer>
+        <p>Escrito con <i class="fas fa-heart"></i> por Alejandro Hernández.</p>
+        <p>Encuéntrame en
+            <a target="_blank" href="https://twitter.com/alejandrohdezma"><i class="fab fa-twitter"></i></a> o <a
+                target="_blank" href="https://github.com/alejandrohdezma"><i class="fab fa-github"></i></a>.
+        </p>
+        <img src="../../images/footer.png">
+    </footer>
+
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>

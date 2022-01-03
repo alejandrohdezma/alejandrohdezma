@@ -42,6 +42,7 @@ header>nav {
 [ aria-label="change to spanish"]> img,
 [ aria-label="cambiar a inglés"]> img {
     vertical-align: middle;
+    opacity: 1;
     height: 35px;
 }
 

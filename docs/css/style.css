@@ -98,7 +98,7 @@ footer>img {
 #scroll-to-top {
     background-color: #222;
     border-radius: 4px;
-    border-style: none;
+    border: 1px solid white;
     box-sizing: border-box;
     color: #fff;
     cursor: pointer;
@@ -121,6 +121,13 @@ footer>img {
 #scroll-to-top:hover,
 #scroll-to-top:focus {
     opacity: .75;
+}
+
+@media (prefers-color-scheme: dark) {
+    #scroll-to-top:hover,
+    #scroll-to-top:focus {
+        background-color: #3f3f3f;
+    }
 }
 
 .progress-wrapper {

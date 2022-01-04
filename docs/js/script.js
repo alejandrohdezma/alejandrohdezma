@@ -1,12 +1,6 @@
 // scroll-to-top
-const button = document.createElement('button')
-button.id = 'scroll-to-top'
-button.role = 'button'
+const button = document.getElementById('scroll-to-top')
 
-const arrow = document.createElement('i')
-arrow.className = "fas fa-arrow-up"
-
-button.appendChild(arrow)
 button.onclick = event => {
     event.stopPropagation()
     const step = window.scrollY / 15
@@ -21,23 +15,12 @@ button.onclick = event => {
     scroll()
 }
 
-document.body.appendChild(button)
-
 window.addEventListener('scroll', e => {
     const offset = document.documentElement.scrollTop
-    const button = document.getElementById('scroll-to-top')
     button.style.display = offset >= 500 ? "inline-block" : "none"
 })
 
 // progress-bar
-
-const progressWrapper = document.createElement('div')
-progressWrapper.className = "progress-wrapper"
-const progressDisplay = document.createElement('div')
-progressDisplay.id = "progress-display"
-progressWrapper.appendChild(progressDisplay)
-
-document.body.appendChild(progressWrapper)
 
 window.addEventListener("scroll", e => {
     let limit = Math.max(document.body.scrollHeight, document.body.offsetHeight,

@@ -12,7 +12,8 @@ header {
 }
 
 header>img {
-    max-width: 100%;
+    width: 100%;
+    height: auto;
 }
 
 header>nav {
@@ -43,7 +44,6 @@ header>nav {
 [ aria-label="cambiar a inglés"]> img {
     vertical-align: middle;
     opacity: 1;
-    height: 35px;
 }
 
 [aria-current="page"] {
@@ -92,7 +92,8 @@ footer:before {
 }
 
 footer>img {
-    max-width: 100%;
+    width: 100%;
+    height: auto;
 }
 
 #scroll-to-top {

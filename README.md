@@ -5,7 +5,7 @@ I'm an enthusiast of functional programming working mainly in Scala now. I work 
 Some facts about me:
 
 - I love tabletop games :game_die:
-- I have two cats :cat2: :cat2:
+- I have a cat named Zelda :cat2:
 - I'm currently living in Zaragoza, Spain :house:
 - I listen to all kind of music :musical_note:
 - I play video-games on Nintendo Switch :video_game:

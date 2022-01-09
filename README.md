@@ -1,4 +1,4 @@
-![](docs/images/header_us.png)
+![](docs/images/header_us.webp)
 
 I'm an enthusiast of functional programming working mainly in Scala now. I work at [47 Degrees](https://www.47deg.com) as a Senior Scala Developer and make some Open Source around [here](https://github.com/alejandrohdezma?tab=repositories). I'm very interested in tooling, particularly SBT and GitHub Actions.
 
@@ -33,4 +33,4 @@ If you want to contact me:
   href="https://alejandrohdezma.com/blog/updating-multiple-repositories-with-scala-steward-and-github-actions"
   target="_self" rel="noopener">:robot: Updating multiple repos with Scala Steward and GitHub Actions</a>
 
-![](docs/images/footer.png)
+![](docs/images/footer.webp)

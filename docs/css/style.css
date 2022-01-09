@@ -135,6 +135,10 @@ footer>img {
     #scroll-to-top:focus {
         background-color: #3f3f3f;
     }
+
+    main>section {
+        border: 1px solid rgb(46, 46, 46);
+    }
 }
 
 .progress-wrapper {

@@ -21,6 +21,12 @@ header>nav {
     font-size: 1.1em;
 }
 
+nav>a.active, nav>a.active:hover, nav>a.active:focus, nav>a.active:active {
+    background-color: var(--accent);
+    color: var(--accent-light) !important;
+    pointer-events: none;
+}
+
 [ aria-label="change to spanish"],
 [ aria-label="cambiar a inglés"] {
     padding: 0rem .4rem .1rem .1rem;
@@ -59,11 +65,11 @@ main {
 }
 
 a, a:visited {
-    color: var(--text)
+    color: var(--text);
 }
 
 a:hover {
-    color: rgb(19, 212, 193)
+    color: var(--accent);
 }
 
 main>section {

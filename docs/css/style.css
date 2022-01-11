@@ -72,12 +72,18 @@ a:hover {
     color: var(--accent);
 }
 
-main>section {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    padding: 2rem;
+#blog-posts {
+    padding: 0;
+    list-style-type: none;
 }
 
-main>section>a {
+#blog-posts>li {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+#blog-posts a {
     text-decoration: none;
 }
 

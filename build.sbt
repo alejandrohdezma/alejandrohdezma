@@ -2,7 +2,7 @@ ThisBuild / scalaVersion             := "2.13.7"
 ThisBuild / organization             := "com.alejandrohdezma"
 ThisBuild / Test / parallelExecution := false
 
-addCommandAlias("ci-test", "fix --check; mdoc; Test / compile; test")
+addCommandAlias("ci-test", "fix --check; headerCheckAll; test")
 
 Global / filesToGenerate := (Global / filesToGenerate).value
   .filterNot(_.startsWith("docs"))

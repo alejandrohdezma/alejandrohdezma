@@ -25,6 +25,9 @@ nav>a.active, nav>a.active:hover, nav>a.active:focus, nav>a.active:active {
     background-color: var(--accent);
     color: var(--accent-light) !important;
     pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+    opacity: 0.75;
 }
 
 [ aria-label="change to spanish"],
@@ -52,14 +55,6 @@ nav>a.active, nav>a.active:hover, nav>a.active:focus, nav>a.active:active {
     opacity: 1;
 }
 
-[aria-current="page"] {
-    pointer-events: none;
-    cursor: default;
-    text-decoration: none;
-    background-color: #3f3f3f;
-    color: #FFFFFF !important;
-}
-
 main {
     padding: 2rem .5rem 0 .5rem;
 }
@@ -83,8 +78,16 @@ a:hover {
     margin-bottom: 2rem;
 }
 
+#blog-posts>li .time {
+    font-weight: 500;
+}
+
 #blog-posts a {
     text-decoration: none;
+}
+
+#time {
+    font-style: italic;
 }
 
 address {
@@ -106,6 +109,10 @@ footer:before {
 footer>img {
     width: 100%;
     height: auto;
+}
+
+footer>a {
+    font-size: 2em;
 }
 
 #scroll-to-top {

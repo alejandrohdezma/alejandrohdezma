@@ -38,8 +38,9 @@ window.addEventListener("scroll", e => {
 
 // reading-time
 
+const lang = document.documentElement.lang
+
 const text = document.getElementsByTagName("article")[0].innerText;
-const wpm = 225;
-const words = text.trim().split(/\s+/).length;
-const time = Math.ceil(words / wpm);
-document.getElementById("time").innerText = time;
+const time = Math.ceil(text.trim().split(/\s+/).length / 225);
+
+document.getElementById("time").innerText = lang == 'es' ? `${time} minutos` : `${minutos} minutes`;

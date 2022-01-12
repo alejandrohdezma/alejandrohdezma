@@ -87,6 +87,10 @@ a:hover {
     text-decoration: none;
 }
 
+#time {
+    font-style: italic;
+}
+
 address {
     text-align: center;
     font-size: 2em;

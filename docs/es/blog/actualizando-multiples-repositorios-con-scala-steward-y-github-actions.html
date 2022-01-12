@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
 <head>
     <title>Actualizando múltiples repositorios con Scala Steward y GitHub Actions</title>
     <meta charset="UTF-8">
@@ -9,36 +7,29 @@
     <meta name="description" content="¿Trabajas habitualmente con Scala Steward y gestionas múltiples repositorios Scala? En este post desarrollo una forma de mantener actualizados tus repositorios Scala usando Scala Steward sin volverte loco en un infierno de Pull Requests.">
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
     <link rel="stylesheet" type="text/css" href="../../css/style.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<link rel="icon" href="../../images/favicon.ico" type="image/icon type">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" href="../../images/favicon.ico" type="image/icon type">
 </head>
 
 <body>
     <header>
         <img width=2000 height=469 src="../../images/header.webp">
         <nav>
-            
             <a href="/es/blog/">Volver atrás</a>
-            
-            
-<a href="/blog/updating-multiple-repositories-with-scala-steward-and-github-actions.html" hreflang="en" lang="en" aria-label="cambiar a inglés">
-    <span></span>
-    <img width="35" height="35" src="https://github.githubassets.com/images/icons/emoji/es.png">
-    <i class="fas fa-arrow-right"></i>
-    <img width="35" height="35" src="https://github.githubassets.com/images/icons/emoji/us.png">
-</a>
-
+            <a href="/blog/updating-multiple-repositories-with-scala-steward-and-github-actions.html" hreflang="en" lang="en" aria-label="cambiar a inglés">
+                <span></span>
+                <img width="35" height="35" src="https://github.githubassets.com/images/icons/emoji/es.png">
+                <i class="fas fa-arrow-right"></i>
+                <img width="35" height="35" src="https://github.githubassets.com/images/icons/emoji/us.png">
+            </a>
         </nav>
     </header>
+
     <main>
         <article>
-            
             <img src="../../images/scala_steward_with_github_badge.png">
-            
             <p><i class="far fa-calendar"></i> 3 de enero de 2022</p>
-            
             <p><i><span id="time"></span> minutos</i></p>
-            
             <hr>
             <h1 id="actualizando-múltiples-repositorios-con-scala-steward-y-github-actions" class="title">Actualizando múltiples repositorios con Scala Steward y GitHub Actions</h1>
             <p>Si trabajas habitualmente con Scala, probablemente conozcas <a href="https://github.com/scala-steward-org/scala-steward">Scala Steward</a>. Si no sabes lo que es, este extracto del propio repositorio lo resume bastante bien:</p>
@@ -58,32 +49,23 @@
             <p>Aunque el &quot;auto-mergeo&quot; puede ser una opción muy válida, es probable que, como yo, te hayas encontrado que no lo es tanto para tu caso, bien porque tu organización no permita el &quot;mergeo&quot; automático de &quot;PRs, o quizá porque tus &quot;PRs&quot; tienen que seguir un flujo concreto que impide que lleguen a la rama por defecto de tu repositorio (comúnmente <code>main</code> <a href="https://twitter.com/mislav/status/1270388510684598272"><del>o <code>master</code></del></a>).</p>
         </article>
 
-        
-            <script async src="https://giscus.app/client.js" data-repo="alejandrohdezma/alejandrohdezma"
-                data-repo-id="MDEwOlJlcG9zaXRvcnkzMTY5NDkzOTY=" data-category="Blog"
-                data-category-id="DIC_kwDOEuRDlM4CAfTC" data-mapping="title" data-reactions-enabled="1"
-                data-emit-metadata="0" data-theme="preferred_color_scheme" data-lang="es"
-                crossorigin="anonymous"></script>
-            
+        <script async src="https://giscus.app/client.js" data-repo="alejandrohdezma/alejandrohdezma"
+            data-repo-id="MDEwOlJlcG9zaXRvcnkzMTY5NDkzOTY=" data-category="Blog" data-category-id="DIC_kwDOEuRDlM4CAfTC"
+            data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-theme="preferred_color_scheme"
+            data-lang="es" crossorigin="anonymous"></script>
     </main>
 
     <footer>
-    
-    <p>Escrito con <i class="fas fa-heart"></i> por Alejandro Hernández.</p>
-    <p>Encuéntrame en
-    
-        <a target="_blank" href="https://twitter.com/alejandrohdezma"><i class="fab fa-twitter"></i></a> or <a
-            target="_blank" href="https://github.com/alejandrohdezma"><i class="fab fa-github"></i></a>.
-    </p>
-    <img width=2000 height=405 src="../../images/footer.webp">
-</footer>
+        <p>&copy; 2021 Alejandro Hernández</p>
+        <a target="_blank" href="https://twitter.com/alejandrohdezma"><i class="fab fa-twitter"></i></a>
+        <a target="_blank" href="https://github.com/alejandrohdezma"><i class="fab fa-github"></i></a>
+        <img width=2000 height=405 src="../../images/footer.webp">
+    </footer>
 
-        <button id="scroll-to-top" role="button"><i class="fas fa-arrow-up"></i></button>
-        <div class="progress-wrapper">
-            <div id="progress-display"></div>
-        </div>
+    <button id="scroll-to-top" role="button"><i class="fas fa-arrow-up"></i></button>
+    <div class="progress-wrapper"><div id="progress-display"></div></div>
 
-        <script src="../../js/script.js"></script>
+    <script src="../../js/script.js"></script>
 </body>
 
 </html>

@@ -108,6 +108,10 @@ footer>img {
     height: auto;
 }
 
+footer>a {
+    font-size: 2em;
+}
+
 #scroll-to-top {
     background-color: #222;
     border-radius: 4px;

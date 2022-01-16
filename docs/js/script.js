@@ -43,4 +43,4 @@ const lang = document.documentElement.lang
 const text = document.getElementsByTagName("article")[0].innerText;
 const time = Math.ceil(text.trim().split(/\s+/).length / 225);
 
-document.getElementById("time").innerText = lang == 'es' ? `${time} minutos` : `${minutos} minutes`;
+document.getElementById("time").innerText = lang == 'es' ? `${time} minutos` : `${time} minutes`;

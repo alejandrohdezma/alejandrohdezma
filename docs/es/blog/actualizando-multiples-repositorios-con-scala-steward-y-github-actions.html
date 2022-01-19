@@ -46,8 +46,70 @@
             
             <h2 id="el-infierno-de-las-actualizaciones" class="section">El infierno de las actualizaciones</h2>
             <p>De acuerdo, ahora que sabemos lo que es Scala Steward, seguramente, si trabajas en una organización con múltiples repositorios escritos en Scala y con Scala Steward a cargo de mantener todo actualizado, tu equipo habrá descubierto el conocido como &quot;infierno de las actualizaciones&quot; que no es otra cosa que empezar tu jornada laboral teniendo que revisar, aprobar y &quot;mergear&quot; cientos de &quot;Pull Request&quot; de actualizaciones creadas por Scala Steward.</p>
-            <p>Si ya has echado un vistazo a las &quot;<a href="https://github.com/scala-steward-org/scala-steward/blob/master/docs/faq.md#how-can-scala-stewards-prs-be-merged-automatically">FAQ</a>&quot; de Scala Steward, habrás visto que una opción para gestionar esto es &quot;mergear&quot; automáticamente dichas actualizaciones usando apps como <a href="https://mergify.com">Mergify</a>, GitHub Actions como <a href="https://github.com/marketplace/actions/merge-dependency-update-prs">ésta</a> o habilitando el &quot; <a href="https://docs.github.com/es/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/automatically-merging-a-pull-request">auto-merge</a>&quot; en dichas &quot;PRs&quot;.</p>
-            <p>Aunque el &quot;auto-mergeo&quot; puede ser una opción muy válida, es probable que, como yo, te hayas encontrado que no lo es tanto para tu caso, bien porque tu organización no permita el &quot;mergeo&quot; automático de &quot;PRs, o quizá porque tus &quot;PRs&quot; tienen que seguir un flujo concreto que impide que lleguen a la rama por defecto de tu repositorio (comúnmente <code>main</code> <a href="https://twitter.com/mislav/status/1270388510684598272"><del>o <code>master</code></del></a>).</p>
+            <p>Si ya has echado un vistazo a las &quot;<a href="https://github.com/scala-steward-org/scala-steward/blob/master/docs/faq.md#how-can-scala-stewards-prs-be-merged-automatically">FAQ</a>&quot; de Scala Steward, habrás visto que una opción para gestionar esto es &quot;mergear&quot; automáticamente dichas actualizaciones usando apps como <a href="https://mergify.com">Mergify</a>, GitHub Actions como <a href="https://github.com/marketplace/actions/merge-dependency-update-prs">ésta</a> o habilitando el &quot;<a href="https://docs.github.com/es/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/automatically-merging-a-pull-request">auto-merge</a>&quot; en dichas &quot;PRs&quot;.</p>
+            <p>Aunque el &quot;auto-mergeo&quot; puede ser una opción muy válida, es probable que, como yo, te hayas encontrado que no lo es tanto para tu caso, bien porque tu organización no permita el &quot;mergeo&quot; automático de &quot;PRs&quot;, o quizá porque tus &quot;PRs&quot; tienen que seguir un flujo concreto que impide que lleguen a la rama por defecto de tu repositorio (comúnmente <code>main</code> <a href="https://twitter.com/mislav/status/1270388510684598272"><del>o <code>master</code></del></a>).</p>
+            <p>Para estos casos, te traigo una solución que (al menos en mi equipo) está funcionando muy bien. Cómo resúmen te diré que consiste en instruir a Scala Steward a que actualice una rama distina a la de por defecto de forma automática (la típica rama <code>develop</code>, si sigues &quot;<a href="https://nvie.com/posts/a-successful-git-branching-model/">GitFlow</a>&quot;), y crear una &quot;PR&quot; desde esa rama a tu rama por defecto cada cierto tiempo. Ahora bien, ¿cómo hacemos eso? pues con GitHub Actions.</p>
+            
+            <h2 id="scala-steward-olvídate-del-main" class="section">Scala Steward, olvídate del <em>main</em></h2>
+            <p>El primer paso para huir del infierno de las actualizaciones es decirle a Scala Steward que en vez de actualizar la rama por defecto de nuestro repositorio, actualice una rama distina. Para ello, tenemos dos opciones, dependiendo de como estemos lanzando Scala Steward.</p>
+            <details><summary>Si estás usando `repos.json`</summary>
+            
+            <p>Localiza la línea correspondiente a tu repositorio y añade <code>:rama</code> detrás.</p>
+            <pre>- miorganizacion/mirepo:develop</pre>
+            
+            </details>
+            <details><summary>Si estás usando la <a href="https://github.com/scala-steward-org/scala-steward-action" target="_blank" rel="external">GitHub Action de Scala Steward</a></summary>
+            
+            <p>Añade un nuevo parámetro <code>branches</code> a la acción con el nombre de la rama a actualizar.</p>
+            <pre>
+- name: Launch Scala Steward
+  uses: scala-steward-org/scala-steward-action@v2
+  with:
+    github-token: ${{ github.token }}
+    branches: develop
+</pre>
+            
+            </details>
+            <p>¡Y ya está! No necesitas hacer nada más para este paso.</p>
+            
+            <h2 id="colega-dónde-está-mi-rama" class="section">Colega, ¿dónde está mi rama?</h2>
+            <p>Una vez terminado el paso anterior, Scala Steward empezará a enviar PRs actualizando esa rama que le hemos indicado, en vez de la rama por defecto del repositorio. El problema está en si, como es lógico dicha rama no existe. Para que todo esto funcione, necesitamos asegurarnos de dos cosas:</p>
+            <ul>
+              <li>Por un lado, que exista una rama <code>develop</code>.</li>
+              <li>Por otro, que dicha rama se mantenga actualizada con los últimos cambios en nuestra rama por defecto.</li>
+            </ul>
+            <p>Pues venga, manos a la obra. Vamos a crear un &quot;workflow&quot; de GitHub Actions que se encargue de hacer el &quot;upsert&quot; de la rama <code>develop</code>.</p>
+            <pre><code class="nohighlight"><span class="attribute-name">name</span><span>: </span><span class="string-literal">Upsert `develop` branch</span><span>
+
+</span><span class="attribute-name">on</span><span>:
+  </span><span class="attribute-name">push</span><span>:
+    </span><span class="attribute-name">branches</span><span>: </span><span class="string-literal">main</span><span>
+
+</span><span class="attribute-name">jobs</span><span>:
+  </span><span class="attribute-name">upsert-develop-branch</span><span>:
+    </span><span class="attribute-name">runs-on</span><span>: </span><span class="string-literal">ubuntu-latest</span><span>
+    </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create `develop` branch or rebase it to latest `main`</span><span>
+    </span><span class="attribute-name">steps</span><span>:
+      - </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create `develop` branch (if it does not exists)</span><span>
+        </span><span class="attribute-name">run</span><span>: </span><span class="string-literal">|</span><span>
+            gh api --silent \
+                /repos/${{ github.repository }}/git/refs \
+                -f ref=&quot;refs/heads/develop&quot; \
+                -f sha=&quot;${{ github.sha}}&quot;
+
+      - </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Checkout develop branch</span><span>
+        </span><span class="attribute-name">uses</span><span>: </span><span class="string-literal">actions/checkout@v2</span><span>
+        </span><span class="attribute-name">with</span><span>:
+          </span><span class="attribute-name">ref</span><span>: </span><span class="string-literal">develop</span><span>
+          </span><span class="attribute-name">fetch-depth</span><span>: </span><span class="number-literal">0</span><span>
+
+      - </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Rebase `develop` branch to latest `main`</span><span>
+        </span><span class="attribute-name">env</span><span>:
+            </span><span class="attribute-name">GIT_AUTHOR_NAME</span><span>: </span><span class="string-literal">github-actions</span><span>
+            </span><span class="attribute-name">GIT_AUTHOR_EMAIL</span><span>: </span><span class="number-literal">41898282</span><span>+github-actions[bot]@users.noreply.github.com
+        </span><span class="attribute-name">run</span><span>: </span><span class="string-literal">|</span><span>
+            git rebase origin/main
+            git push -f -u origin develop</span></code></pre>
         </article>
         <p>
         <img width=80 style="float:left; margin-right: 1rem;" src="https://storage.ko-fi.com/cdn/cup-border.png" />

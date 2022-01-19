@@ -96,45 +96,6 @@ footer>a {
     font-size: 2em;
 }
 
-#scroll-to-top {
-    background-color: #222;
-    border-radius: 4px;
-    border: 1px solid white;
-    box-sizing: border-box;
-    color: #fff;
-    cursor: pointer;
-    display: none;
-    font-size: 20px;
-    height: 40px;
-    width: 40px;
-    outline: none;
-    padding: 5px;
-    position: fixed;
-    right: 30px;
-    bottom: 30px;
-    text-align: center;
-    text-transform: none;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-}
-
-#scroll-to-top:hover,
-#scroll-to-top:focus {
-    opacity: .75;
-}
-
-@media (prefers-color-scheme: dark) {
-    #scroll-to-top:hover,
-    #scroll-to-top:focus {
-        background-color: #3f3f3f;
-    }
-
-    main>section {
-        border: 1px solid rgb(46, 46, 46);
-    }
-}
-
 .progress-wrapper {
     position: fixed;
     width: 100%;

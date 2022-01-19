@@ -1,25 +1,3 @@
-// scroll-to-top
-const button = document.getElementById('scroll-to-top')
-
-button.onclick = event => {
-    event.stopPropagation()
-    const step = window.scrollY / 15
-
-    const scroll = () => {
-        window.scrollTo(0, window.scrollY - step)
-        if (window.scrollY > 0) {
-            setTimeout(scroll, 15)
-        }
-    }
-
-    scroll()
-}
-
-window.addEventListener('scroll', e => {
-    const offset = document.documentElement.scrollTop
-    button.style.display = offset >= 500 ? "inline-block" : "none"
-})
-
 // progress-bar
 
 window.addEventListener("scroll", e => {

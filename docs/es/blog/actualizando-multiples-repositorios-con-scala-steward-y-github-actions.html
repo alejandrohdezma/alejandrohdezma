@@ -91,6 +91,8 @@
     </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create `develop` branch or rebase it to latest `main`</span><span>
     </span><span class="attribute-name">steps</span><span>:
       - </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create `develop` branch (if it does not exists)</span><span>
+        </span><span class="attribute-name">env</span><span>:
+          </span><span class="attribute-name">GITHUB_TOKEN</span><span>: </span><span class="string-literal">${{ github.token }}</span><span>
         </span><span class="attribute-name">run</span><span>: </span><span class="string-literal">|</span><span>
             gh api --silent \
                 /repos/${{ github.repository }}/git/refs \

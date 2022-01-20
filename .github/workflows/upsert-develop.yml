@@ -1,0 +1,31 @@
+name: Upsert `develop` branch
+
+on:
+  push:
+    branches: main
+
+jobs:
+  upsert-develop-branch:
+    runs-on: ubuntu-latest
+    name: Create `develop` branch or rebase it to latest `main`
+    steps:
+      - name: Create `develop` branch (if it does not exists)
+        run: |
+            gh api --silent \
+                /repos/${{ github.repository }}/git/refs \
+                -f ref="refs/heads/develop" \
+                -f sha="${{ github.sha}}"
+
+      - name: Checkout develop branch
+        uses: actions/checkout@v2
+        with:
+          ref: develop
+          fetch-depth: 0
+
+      - name: Rebase `develop` branch to latest `origin/main`
+        env:
+            GIT_AUTHOR_NAME: github-actions
+            GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+        run: |
+            git rebase origin/main
+            git push -f -u origin develop

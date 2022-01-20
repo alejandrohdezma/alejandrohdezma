@@ -47,12 +47,20 @@
             
             <h2 id="el-infierno-de-las-actualizaciones" class="section">El infierno de las actualizaciones</h2>
             <p>Seguramente, si trabajas en una organización con múltiples repositorios y con Scala Steward a cargo de mantener todo actualizado, tu equipo habrá descubierto el conocido como &quot;infierno de las actualizaciones&quot;. ¿Y qué es esto? Pues no es otra cosa que empezar tu jornada laboral teniendo que revisar, aprobar y &quot;mergear&quot; cientos de &quot;Pull Request&quot; de actualizaciones creadas por Scala Steward.</p>
+            <figure>
+              <img src="https://media.giphy.com/media/Lopx9eUi34rbq/giphy.gif"/>
+              <figcaption><a rel="external" target="_blank" href="https://giphy.com/gifs/token-Lopx9eUi34rbq">Proporcionado por GIPHY</a></figcaption>
+            </figure>
             <p>Si ya has echado un vistazo a las &quot;<a href="https://github.com/scala-steward-org/scala-steward/blob/master/docs/faq.md#how-can-scala-stewards-prs-be-merged-automatically">FAQ</a>&quot; de Scala Steward, habrás visto que una opción para gestionar esto es &quot;mergear&quot; automáticamente dichas actualizaciones usando apps como <a href="https://mergify.com">Mergify</a>, GitHub Actions como <a href="https://github.com/marketplace/actions/merge-dependency-update-prs">esta</a> o habilitando el &quot;<a href="https://docs.github.com/es/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/automatically-merging-a-pull-request">auto-merge</a>&quot; en dichas &quot;PR&quot;.</p>
             <p>Aunque el &quot;auto-mergeo&quot; puede ser una opción muy válida, es probable que, como yo, te hayas encontrado que no lo es tanto para tu caso. Bien porque tu organización no permita el &quot;mergeo&quot; automático de &quot;PR&quot;, o quizá porque tus &quot;PR&quot; tienen que seguir un flujo concreto que impide que lleguen a la rama por defecto de tu repositorio (comúnmente <code>main</code> <a href="https://twitter.com/mislav/status/1270388510684598272"><del>o <code>master</code></del></a>).</p>
             <p>Para estos casos, te traigo una solución que (al menos en mi equipo) está funcionando muy bien. Cómo resumen te diré que consiste en instruir a Scala Steward a que actualice una rama distinta a la de por defecto de forma automática (la típica rama <code>develop</code>, si sigues &quot;<a href="https://nvie.com/posts/a-successful-git-branching-model/">GitFlow</a>&quot;), y crear una &quot;PR&quot; desde esa rama a tu rama por defecto cada cierto tiempo. Ahora bien, ¿cómo hacemos eso? pues con GitHub Actions.</p>
             
             <h2 id="scala-steward-olvídate-del-main" class="section">Scala Steward, olvídate del <em>main</em></h2>
             <p>El primer paso para huir del infierno de las actualizaciones es decirle a Scala Steward que en vez de actualizar la rama por defecto de nuestro repositorio, actualice una rama distinta. Para ello, tenemos dos opciones, dependiendo de como estemos lanzando Scala Steward.</p>
+            <figure>
+              <img src="https://media.giphy.com/media/mrBEVU9zQIsZa/giphy.gif"/>
+              <figcaption><a rel="external" target="_blank" href="https://giphy.com/gifs/off-showed-mrBEVU9zQIsZa">Proporcionado por GIPHY</a></figcaption>
+            </figure>
             <details><summary>Si estás usando `repos.json`</summary>
             
             <p>Localiza la línea correspondiente a tu repositorio y añade <code>:rama</code> detrás.</p>
@@ -79,6 +87,10 @@
               <li>Por un lado, que exista una rama <code>develop</code>.</li>
               <li>Por otro, que dicha rama se mantenga actualizada con los últimos cambios en nuestra rama por defecto.</li>
             </ul>
+            <figure>
+              <img src="https://media.giphy.com/media/l0MYBtZdU9ZrOiQCc/giphy.gif"/>
+              <figcaption><a rel="external" target="_blank" href="https://giphy.com/gifs/teamcoco-conan-obrien-ashton-kutcher-l0MYBtZdU9ZrOiQCc">Proporcionado por GIPHY</a></figcaption>
+            </figure>
             <p>Pues venga, manos a la obra. Vamos a crear un &quot;workflow&quot; de GitHub Actions que se encargue de hacer el &quot;upsert&quot; de la rama <code>develop</code>.</p>
             <pre><code class="language-yaml">name: Upsert `develop` branch
 

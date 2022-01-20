@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
     @:linkCSS
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/atom-one-dark-reasonable.min.css">
     @:if(livereload)<script type="text/javascript" src="http://livejs.com/live.js"></script>@:@
     <link rel="icon" href="@:path(../images/favicon.ico)" type="image/icon type">
 </head>
@@ -59,6 +60,8 @@
     <div class="progress-wrapper"><div id="progress-display"></div></div>
 
     @:linkJS
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </body>
 
 </html>

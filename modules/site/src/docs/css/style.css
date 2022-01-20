@@ -76,6 +76,14 @@ address {
     font-size: 2em;
 }
 
+pre {
+    padding: 0;
+}
+
+pre code {
+    border-radius: 5px;
+}
+
 footer {
     border-top: 0;
 }

@@ -73,7 +73,7 @@ Una vez terminado el paso anterior, Scala Steward empezará a enviar PR actualiz
 
 Pues venga, manos a la obra. Vamos a crear un "workflow" de GitHub Actions que se encargue de hacer el "upsert" de la rama `develop`.
 
-```yml
+```language-yaml
 name: Upsert `develop` branch
 
 on:

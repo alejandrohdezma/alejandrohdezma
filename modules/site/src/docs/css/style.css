@@ -76,6 +76,10 @@ address {
     font-size: 2em;
 }
 
+figure {
+    text-align: center;
+}
+
 pre {
     padding: 0;
 }

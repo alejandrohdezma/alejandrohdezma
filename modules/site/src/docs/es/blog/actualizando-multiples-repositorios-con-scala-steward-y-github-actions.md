@@ -92,8 +92,8 @@ jobs:
             gh api --silent \
                 /repos/${{ github.repository }}/git/refs \
                 -f ref="refs/heads/develop" \
-                -f sha="${{ github.sha}}"
-
+                -f sha="${{ github.sha}}" ||
+                echo '`develop` branch already exists on ${{ github.repository }}'
       - name: Checkout develop branch
         uses: actions/checkout@v2
         with:
@@ -101,10 +101,9 @@ jobs:
           fetch-depth: 0
 
       - name: Rebase `develop` branch to latest `origin/main`
-        env:
-            GIT_AUTHOR_NAME: github-actions
-            GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
         run: |
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git config user.name "github-actions[bot]"
             git rebase origin/main
             git push -f -u origin develop
 ```

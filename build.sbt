@@ -1,6 +1,5 @@
 ThisBuild / scalaVersion             := "2.13.8"
 ThisBuild / organization             := "com.alejandrohdezma"
-ThisBuild / Test / parallelExecution := false
 
 addCommandAlias("ci-test", "fix --check; test")
 

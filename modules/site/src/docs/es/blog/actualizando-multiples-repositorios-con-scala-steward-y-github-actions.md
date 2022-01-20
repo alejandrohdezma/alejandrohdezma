@@ -18,9 +18,9 @@ Si trabajas habitualmente con Scala, probablemente conozcas [Scala Steward](http
 > 
 > **Scala Steward es un bot que te ayuda a mantener las dependencias de tus librerías, los plugins de SBT y las versiones de Scala y SBT actualizadas.**
 
-Se puede usar en cualquier proyecto público de Scala hospedado en GitHub, GitLab o BitBucket que use [SBT](https://www.scala-sbt.org) o [Mill](https://com-lihaoyi.github.io/mill/mill/Intro_to_Mill.html) simplemente añadiendo dicho repositorio a [este archivo](https://github.com/scala-steward-org/repos/blob/main/repos-github.md). Poco tiempo después empezarás a recibir "Pull Requests".
+Se puede utilizar en cualquier proyecto público de Scala hospedado en GitHub, GitLab o BitBucket que utilice [SBT](https://www.scala-sbt.org) o [Mill](https://com-lihaoyi.github.io/mill/mill/Intro_to_Mill.html) simplemente añadiendo dicho repositorio a [este archivo](https://github.com/scala-steward-org/repos/blob/main/repos-github.md). Poco tiempo después empezarás a recibir "Pull Requests".
 
-Hay ya más de 1500 repositorios utilizando esta instancia pública de Scala Steward que [Frank Thomas](https://github.com/fthomas) (el creador de Scala Steward) tiene desplegado como un servicio gratuito para todo el ecosistema "Open-Source" de Scala.
+Hay ya más de 1500 repositorios empleando esta instancia pública de Scala Steward que [Frank Thomas](https://github.com/fthomas) (el creador de Scala Steward) tiene desplegado como un servicio gratuito para todo el ecosistema "Open-Source" de Scala.
 
 Pero las posibilidades no se quedan ahí, también se puede lanzar una instancia propia usando [GitHub Actions](https://github.com/scala-steward-org/scala-steward-action), [Docker](https://hub.docker.com/r/fthomas/scala-steward/) o incluso [Coursier](https://get-coursier.io):
 
@@ -30,17 +30,17 @@ cs launch --contrib scala-steward
 
 ## El infierno de las actualizaciones
 
-De acuerdo, ahora que sabemos lo que es Scala Steward, seguramente, si trabajas en una organización con múltiples repositorios escritos en Scala y con Scala Steward a cargo de mantener todo actualizado, tu equipo habrá descubierto el conocido como "infierno de las actualizaciones" que no es otra cosa que empezar tu jornada laboral teniendo que revisar, aprobar y "mergear" cientos de "Pull Request" de actualizaciones creadas por Scala Steward.
+Seguramente, si trabajas en una organización con múltiples repositorios y con Scala Steward a cargo de mantener todo actualizado, tu equipo habrá descubierto el conocido como "infierno de las actualizaciones". ¿Y qué es esto? Pues no es otra cosa que empezar tu jornada laboral teniendo que revisar, aprobar y "mergear" cientos de "Pull Request" de actualizaciones creadas por Scala Steward.
 
-Si ya has echado un vistazo a las "[FAQ](https://github.com/scala-steward-org/scala-steward/blob/master/docs/faq.md#how-can-scala-stewards-prs-be-merged-automatically)" de Scala Steward, habrás visto que una opción para gestionar esto es "mergear" automáticamente dichas actualizaciones usando apps como [Mergify](https://mergify.com), GitHub Actions como [ésta](https://github.com/marketplace/actions/merge-dependency-update-prs) o habilitando el "[auto-merge](https://docs.github.com/es/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/automatically-merging-a-pull-request)" en dichas "PRs".
+Si ya has echado un vistazo a las "[FAQ](https://github.com/scala-steward-org/scala-steward/blob/master/docs/faq.md#how-can-scala-stewards-prs-be-merged-automatically)" de Scala Steward, habrás visto que una opción para gestionar esto es "mergear" automáticamente dichas actualizaciones usando apps como [Mergify](https://mergify.com), GitHub Actions como [esta](https://github.com/marketplace/actions/merge-dependency-update-prs) o habilitando el "[auto-merge](https://docs.github.com/es/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/automatically-merging-a-pull-request)" en dichas "PR".
 
-Aunque el "auto-mergeo" puede ser una opción muy válida, es probable que, como yo, te hayas encontrado que no lo es tanto para tu caso, bien porque tu organización no permita el "mergeo" automático de "PRs", o quizá porque tus "PRs" tienen que seguir un flujo concreto que impide que lleguen a la rama por defecto de tu repositorio (comúnmente `main` [<del>o `master`</del>](https://twitter.com/mislav/status/1270388510684598272)).
+Aunque el "auto-mergeo" puede ser una opción muy válida, es probable que, como yo, te hayas encontrado que no lo es tanto para tu caso. Bien porque tu organización no permita el "mergeo" automático de "PR", o quizá porque tus "PR" tienen que seguir un flujo concreto que impide que lleguen a la rama por defecto de tu repositorio (comúnmente `main` [<del>o `master`</del>](https://twitter.com/mislav/status/1270388510684598272)).
 
-Para estos casos, te traigo una solución que (al menos en mi equipo) está funcionando muy bien. Cómo resúmen te diré que consiste en instruir a Scala Steward a que actualice una rama distina a la de por defecto de forma automática (la típica rama `develop`, si sigues "[GitFlow](https://nvie.com/posts/a-successful-git-branching-model/)"), y crear una "PR" desde esa rama a tu rama por defecto cada cierto tiempo. Ahora bien, ¿cómo hacemos eso? pues con GitHub Actions.
+Para estos casos, te traigo una solución que (al menos en mi equipo) está funcionando muy bien. Cómo resumen te diré que consiste en instruir a Scala Steward a que actualice una rama distinta a la de por defecto de forma automática (la típica rama `develop`, si sigues "[GitFlow](https://nvie.com/posts/a-successful-git-branching-model/)"), y crear una "PR" desde esa rama a tu rama por defecto cada cierto tiempo. Ahora bien, ¿cómo hacemos eso? pues con GitHub Actions.
 
 ## Scala Steward, olvídate del _main_
 
-El primer paso para huir del infierno de las actualizaciones es decirle a Scala Steward que en vez de actualizar la rama por defecto de nuestro repositorio, actualice una rama distina. Para ello, tenemos dos opciones, dependiendo de como estemos lanzando Scala Steward.
+El primer paso para huir del infierno de las actualizaciones es decirle a Scala Steward que en vez de actualizar la rama por defecto de nuestro repositorio, actualice una rama distinta. Para ello, tenemos dos opciones, dependiendo de como estemos lanzando Scala Steward.
 
 <details><summary>Si estás usando `repos.json`</summary>
 
@@ -66,7 +66,7 @@ El primer paso para huir del infierno de las actualizaciones es decirle a Scala 
 
 ## Colega, ¿dónde está mi rama?
 
-Una vez terminado el paso anterior, Scala Steward empezará a enviar PRs actualizando esa rama que le hemos indicado, en vez de la rama por defecto del repositorio. El problema está en si, como es lógico dicha rama no existe. Para que todo esto funcione, necesitamos asegurarnos de dos cosas:
+Una vez terminado el paso anterior, Scala Steward empezará a enviar PR actualizando esa rama que le hemos indicado, en vez de la rama por defecto del repositorio. El problema está en sí, como es lógico dicha rama no existe. Para que todo esto funcione, necesitamos asegurarnos de dos cosas:
 
 - Por un lado, que exista una rama `develop`.
 - Por otro, que dicha rama se mantenga actualizada con los últimos cambios en nuestra rama por defecto.

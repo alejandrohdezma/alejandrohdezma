@@ -16,7 +16,8 @@ jobs:
             gh api --silent \
                 /repos/${{ github.repository }}/git/refs \
                 -f ref="refs/heads/develop" \
-                -f sha="${{ github.sha}}"
+                -f sha="${{ github.sha}}" ||
+                echo '`develop` branch already exists on ${{ github.repository }}'
 
       - name: Checkout develop branch
         uses: actions/checkout@v2

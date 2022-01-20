@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
     <link rel="stylesheet" type="text/css" href="../../css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/atom-one-dark-reasonable.min.css">
     
     <link rel="icon" href="../../images/favicon.ico" type="image/icon type">
 </head>
@@ -79,38 +80,38 @@
               <li>Por otro, que dicha rama se mantenga actualizada con los últimos cambios en nuestra rama por defecto.</li>
             </ul>
             <p>Pues venga, manos a la obra. Vamos a crear un &quot;workflow&quot; de GitHub Actions que se encargue de hacer el &quot;upsert&quot; de la rama <code>develop</code>.</p>
-            <pre><code class="nohighlight"><span class="attribute-name">name</span><span>: </span><span class="string-literal">Upsert `develop` branch</span><span>
+            <pre><code class="language-yaml">name: Upsert `develop` branch
 
-</span><span class="attribute-name">on</span><span>:
-  </span><span class="attribute-name">push</span><span>:
-    </span><span class="attribute-name">branches</span><span>: </span><span class="string-literal">main</span><span>
+on:
+  push:
+    branches: main
 
-</span><span class="attribute-name">jobs</span><span>:
-  </span><span class="attribute-name">upsert-develop-branch</span><span>:
-    </span><span class="attribute-name">runs-on</span><span>: </span><span class="string-literal">ubuntu-latest</span><span>
-    </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create `develop` branch or rebase it to latest `main`</span><span>
-    </span><span class="attribute-name">steps</span><span>:
-      - </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create `develop` branch (if it does not exists)</span><span>
-        </span><span class="attribute-name">env</span><span>:
-          </span><span class="attribute-name">GITHUB_TOKEN</span><span>: </span><span class="string-literal">${{ github.token }}</span><span>
-        </span><span class="attribute-name">run</span><span>: </span><span class="string-literal">|</span><span>
+jobs:
+  upsert-develop-branch:
+    runs-on: ubuntu-latest
+    name: Create `develop` branch or rebase it to latest `main`
+    steps:
+      - name: Create `develop` branch (if it does not exists)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
             gh api --silent \
                 /repos/${{ github.repository }}/git/refs \
                 -f ref=&quot;refs/heads/develop&quot; \
                 -f sha=&quot;${{ github.sha}}&quot; ||
                 echo &#39;`develop` branch already exists on ${{ github.repository }}&#39;
-      - </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Checkout develop branch</span><span>
-        </span><span class="attribute-name">uses</span><span>: </span><span class="string-literal">actions/checkout@v2</span><span>
-        </span><span class="attribute-name">with</span><span>:
-          </span><span class="attribute-name">ref</span><span>: </span><span class="string-literal">develop</span><span>
-          </span><span class="attribute-name">fetch-depth</span><span>: </span><span class="number-literal">0</span><span>
+      - name: Checkout develop branch
+        uses: actions/checkout@v2
+        with:
+          ref: develop
+          fetch-depth: 0
 
-      - </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Rebase `develop` branch to latest `origin/main`</span><span>
-        </span><span class="attribute-name">run</span><span>: </span><span class="string-literal">|</span><span>
+      - name: Rebase `develop` branch to latest `origin/main`
+        run: |
             git config user.email &quot;41898282+github-actions[bot]@users.noreply.github.com&quot;
             git config user.name &quot;github-actions[bot]&quot;
             git rebase origin/main
-            git push -f -u origin develop</span></code></pre>
+            git push -f -u origin develop</code></pre>
         </article>
         <p>
         <img width=80 style="float:left; margin-right: 1rem;" src="https://storage.ko-fi.com/cdn/cup-border.png" />
@@ -137,6 +138,8 @@
     <div class="progress-wrapper"><div id="progress-display"></div></div>
 
     <script src="../../js/script.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </body>
 
 </html>

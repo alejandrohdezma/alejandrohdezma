@@ -97,8 +97,8 @@
             gh api --silent \
                 /repos/${{ github.repository }}/git/refs \
                 -f ref=&quot;refs/heads/develop&quot; \
-                -f sha=&quot;${{ github.sha}}&quot;
-
+                -f sha=&quot;${{ github.sha}}&quot; ||
+                echo &#39;`develop` branch already exists on ${{ github.repository }}&#39;
       - </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Checkout develop branch</span><span>
         </span><span class="attribute-name">uses</span><span>: </span><span class="string-literal">actions/checkout@v2</span><span>
         </span><span class="attribute-name">with</span><span>:
@@ -106,10 +106,9 @@
           </span><span class="attribute-name">fetch-depth</span><span>: </span><span class="number-literal">0</span><span>
 
       - </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Rebase `develop` branch to latest `origin/main`</span><span>
-        </span><span class="attribute-name">env</span><span>:
-            </span><span class="attribute-name">GIT_AUTHOR_NAME</span><span>: </span><span class="string-literal">github-actions</span><span>
-            </span><span class="attribute-name">GIT_AUTHOR_EMAIL</span><span>: </span><span class="number-literal">41898282</span><span>+github-actions[bot]@users.noreply.github.com
         </span><span class="attribute-name">run</span><span>: </span><span class="string-literal">|</span><span>
+            git config user.email &quot;41898282+github-actions[bot]@users.noreply.github.com&quot;
+            git config user.name &quot;github-actions[bot]&quot;
             git rebase origin/main
             git push -f -u origin develop</span></code></pre>
         </article>

@@ -1,5 +1,5 @@
-ThisBuild / scalaVersion             := "2.13.8"
-ThisBuild / organization             := "com.alejandrohdezma"
+ThisBuild / scalaVersion := "2.13.8"
+ThisBuild / organization := "com.alejandrohdezma"
 
 addCommandAlias("ci-test", "fix --check; test")
 
@@ -17,3 +17,16 @@ lazy val `munit` = module
   .settings(libraryDependencies += "org.http4s" %% "http4s-async-http-client" % "0.23.7" % Test)
   .settings(libraryDependencies += "org.http4s" %% "http4s-client" % "0.23.7" % Test)
   .settings(libraryDependencies += "org.http4s" %% "http4s-dsl" % "0.23.7" % Test)
+
+lazy val site = module
+  .enablePlugins(LaikaPlugin)
+  .settings(laikaSite / target := file("docs"))
+  .settings(laikaTheme := laika.theme.Theme.empty)
+  .settings(laikaConfig := LaikaConfig.defaults.withRawContent.withConfigValue("livereload", !sys.env.contains("CI")))
+  .settings(laikaExtensions += laika.markdown.github.GitHubFlavor)
+  .settings(laikaExtensions += laika.parse.code.SyntaxHighlighting)
+  .settings(laikaExtensions += BlogDirectives)
+  .settings(watchTriggers += baseDirectory.value.toGlob / "**" / "*.html")
+  .settings(watchTriggers += baseDirectory.value.toGlob / "**" / "*.md")
+  .settings(watchTriggers += baseDirectory.value.toGlob / "**" / "*.css")
+  .settings(watchTriggers += baseDirectory.value.toGlob / "**" / "*.js")

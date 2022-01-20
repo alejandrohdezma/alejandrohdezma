@@ -98,7 +98,7 @@ jobs:
           ref: develop
           fetch-depth: 0
 
-      - name: Rebase `develop` branch to latest `main`
+      - name: Rebase `develop` branch to latest `origin/main`
         env:
             GIT_AUTHOR_NAME: github-actions
             GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com

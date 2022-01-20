@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+@:if(document.spanish)<html lang="es">@:else<html lang="en">@:@
+<head>
+    <title>${document.title}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="${document.description}">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    @:linkCSS
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    @:if(livereload)<script type="text/javascript" src="http://livejs.com/live.js"></script>@:@
+    <link rel="icon" href="@:path(../images/favicon.ico)" type="image/icon type">
+</head>
+
+<body>
+    <header>
+        @:if(document.spanish)<img width=2000 heigth=804 src="@:path(../images/header_es.webp)">@:else<img width=2000 height=804 src="@:path(../images/header_us.webp)">@:@
+        <nav>
+            @:if(document.spanish)<a href="/es/">Sobre mí</a>@:else<a href="/">About me</a>@:@
+            @:if(document.spanish)<a href="/es/cv">Mi CV</a>@:else<a href="/cv">My CV</a>@:@
+            @:if(document.spanish)<a href="/es/blog/">Blog</a>@:else<a href="/blog/">Blog</a>@:@
+        </nav>
+    </header>
+
+    <main>
+        @:include(language.changer.template.html)
+        ${cursor.currentDocument.content}
+    </main>
+
+    <footer>
+        <p>&copy; 2021 Alejandro Hernández</p>
+        <a target="_blank" rel="external" title="Twitter" href="https://twitter.com/alejandrohdezma"><i class="fab fa-twitter"></i></a>
+        <a target="_blank" rel="external" title="GitHub" href="https://github.com/alejandrohdezma"><i class="fab fa-github"></i></a>
+        <a target="_blank" rel="external" title="Ko-fi" href="https://ko-fi.com/alejandrohdezma"><i class="fas fa-coffee"></i></i></a>
+        <img width=2000 height=405 src="@:path(../images/footer.webp)">
+    </footer>
+
+    <script>
+        document
+            .getElementsByTagName('nav')[0]
+            .querySelectorAll('a[href="' + window.location.pathname + '"]')[0]
+            .classList
+            .add('active')
+    </script>
+</body>
+
+</html>

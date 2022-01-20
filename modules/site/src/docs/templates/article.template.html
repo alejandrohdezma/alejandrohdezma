@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+@:if(document.spanish)<html lang="es">@:else<html lang="en">@:@
+<head>
+    <title>${document.title}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="${document.description}">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    @:linkCSS
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    @:if(livereload)<script type="text/javascript" src="http://livejs.com/live.js"></script>@:@
+    <link rel="icon" href="@:path(../images/favicon.ico)" type="image/icon type">
+</head>
+
+<body>
+    <header>
+        <img width=2000 height=469 src="@:path(../images/header.webp)">
+        <nav>
+            @:if(document.spanish)<a href="/es/blog/">Volver atrás</a>@:else<a href="/blog/">Go back</a>@:@
+        </nav>
+    </header>
+
+    <main>
+        @:include(language.changer.template.html)
+        <article style="margin-top: 1rem; margin-bottom: 3rem;">
+            <img src="@:if(document.spanish)../@:@../images/${document.header}">
+            <p><i class="far fa-calendar"></i> @:date</p>
+            <p><span id="time"></span></p>
+            <hr>
+            ${cursor.currentDocument.content}
+        </article>
+        <p>
+        <img width=80 style="float:left; margin-right: 1rem;" src="https://storage.ko-fi.com/cdn/cup-border.png" />
+        @:if(document.spanish)
+        <i>¿Te ha gustado el artículo?</i><br>
+        <i>Si quieres, <a href="https://ko-fi.com/alejandrohdezma" target="_blank" rel="external">puedes invitarme a un café</a></i>
+        </p>
+        <p><i><sub>¿Has encontrado una errata en el artículo? <a href="https://github.com/alejandrohdezma/alejandrohdezma/edit/main/modules/site/src/docs${cursor.currentDocument.path}" target="_blank" rel="external">¡Envíame una PR!</a></sub></i></p>
+        @:else
+        <i>Did you enjoy the article?</i><br>
+        <i>If you want, <a href="https://ko-fi.com/alejandrohdezma" target="_blank" rel="external">you can buy me a coffee</a></i>
+        </p>
+        <p><i><sub>Did you find any misprint or error? Please, <a href="https://github.com/alejandrohdezma/alejandrohdezma/edit/main/modules/site/src/docs${cursor.currentDocument.path}" target="_blank" rel="external">send me a PR!</a></sub></i></p>
+        @:@
+        <script async src="https://giscus.app/client.js" data-repo="alejandrohdezma/alejandrohdezma"
+            data-repo-id="MDEwOlJlcG9zaXRvcnkzMTY5NDkzOTY=" data-category="Blog" data-category-id="DIC_kwDOEuRDlM4CAfTC"
+            data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-theme="preferred_color_scheme"
+            data-lang=@:if(document.spanish)"es"@:else"en"@:@ crossorigin="anonymous"></script>
+    </main>
+
+    <footer>
+        <p>&copy; 2021 Alejandro Hernández</p>
+        <a target="_blank" rel="external" title="Twitter" href="https://twitter.com/alejandrohdezma"><i class="fab fa-twitter"></i></a>
+        <a target="_blank" rel="external" title="GitHub" href="https://github.com/alejandrohdezma"><i class="fab fa-github"></i></a>
+        <a target="_blank" rel="external" title="Ko-fi" href="https://ko-fi.com/alejandrohdezma"><i class="fas fa-coffee"></i></i></a>
+        <img width=2000 height=405 src="@:path(../images/footer.webp)">
+    </footer>
+
+    <div class="progress-wrapper"><div id="progress-display"></div></div>
+
+    @:linkJS
+</body>
+
+</html>

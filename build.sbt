@@ -26,6 +26,7 @@ lazy val site = module
   .settings(laikaExtensions += laika.markdown.github.GitHubFlavor)
   .settings(laikaExtensions += laika.parse.code.SyntaxHighlighting)
   .settings(laikaExtensions += BlogDirectives)
+  .settings(laikaExtensions += HTMLRenderers)
   .settings(watchTriggers += baseDirectory.value.toGlob / "**" / "*.html")
   .settings(watchTriggers += baseDirectory.value.toGlob / "**" / "*.md")
   .settings(watchTriggers += baseDirectory.value.toGlob / "**" / "*.css")

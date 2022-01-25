@@ -59,7 +59,7 @@ El primer paso para huir del infierno de las actualizaciones es decirle a Scala 
 
 </details>
 
-<details><summary>Si estás usando la <a href="https://github.com/scala-steward-org/scala-steward-action" target="_blank" rel="external">GitHub Action de Scala Steward</a></summary>
+<details><summary>Si estás usando la [GitHub Action de Scala Steward](https://github.com/scala-steward-org/scala-steward-action" rel="external)</summary>
 
 <p>Añade un nuevo parámetro <code>branches</code> a la acción con el nombre de la rama a actualizar.</p>
 <pre>

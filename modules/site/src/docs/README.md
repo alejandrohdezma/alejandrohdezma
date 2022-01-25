@@ -5,7 +5,7 @@
 	document.spanish = false
 %}
 
-I'm an enthusiast of functional programming working mainly in Scala now. I work at <a href="https://www.47deg.com" rel="external" target="_blank">47 Degrees</a> as a Senior Scala Developer and make some Open Source around <a href="https://github.com/alejandrohdezma?tab=repositories" rel="external" target="_blank">here</a>. I'm very interested in tooling, particularly SBT and GitHub Actions.
+I'm an enthusiast of functional programming working mainly in Scala now. I work at [47 Degrees](https://www.47deg.com) as a Senior Scala Developer and make some Open Source around [here](https://github.com/alejandrohdezma?tab=repositories). I'm very interested in tooling, particularly SBT and GitHub Actions.
 
 Some facts about me:
 
@@ -27,9 +27,9 @@ If you want to contact me:
 
 **<i class="fab fa-github"></i> Some of my Open Source Projects**
 
-- <a href="https://github.com/scala-steward-org/scala-steward-action" rel="external" target="_blank">scala-steward-action</a>: A Github Action to launch <a href="https://github.com/scala-steward-org/scala-steward" rel="external" target="_blank">Scala Steward</a> in your repository.
-- <a href="https://github.com/alejandrohdezma/http4s-munit" rel="external" target="_blank">http4s-munit</a>: Integration between http4s & MUnit.
-- <a href="https://github.com/alejandrohdezma/sbt-github" rel="external" target="_blank">sbt-github</a>: SBT plugin to read several settings from Github.
-- <a href="https://github.com/alejandrohdezma/sbt-fix" rel="external" target="_blank">sbt-fix</a>: SBT plugin that enhances scalafix & scalafmt duo.
-- <a href="https://github.com/alejandrohdezma/sbt-modules" rel="external" target="_blank">sbt-modules</a>: SBT plugin that simplifies modules creation.
-- <a href="https://github.com/alejandrohdezma/sbt-ci" rel="external" target="_blank">sbt-ci</a>: Default workflow, documentation and root files for scala libraries.
+- [scala-steward-action](https://github.com/scala-steward-org/scala-steward-action): A Github Action to launch [Scala Steward](https://github.com/scala-steward-org/scala-steward) in your repository.
+- [http4s-munit](https://github.com/alejandrohdezma/http4s-munit): Integration between http4s & MUnit.
+- [sbt-github](https://github.com/alejandrohdezma/sbt-github): SBT plugin to read several settings from Github.
+- [sbt-fix](https://github.com/alejandrohdezma/sbt-fix): SBT plugin that enhances scalafix & scalafmt duo.
+- [sbt-modules](https://github.com/alejandrohdezma/sbt-modules): SBT plugin that simplifies modules creation.
+- [sbt-ci](https://github.com/alejandrohdezma/sbt-ci): Default workflow, documentation and root files for scala libraries.

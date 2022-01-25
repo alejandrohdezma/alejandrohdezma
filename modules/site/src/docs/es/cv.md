@@ -10,7 +10,7 @@
 
 ## <img width="35" height="35" src="https://github.githubassets.com/images/icons/emoji/computer.png"> Experiencia
 
-### <a href="https://www.47deg.com" target="_blank">47 Degrees</a>
+### [47 Degrees](https://www.47deg.com)
 
 <i class="fas fa-user-tag"></i> **Ingeniero Scala & DevOps**
 
@@ -18,7 +18,7 @@
 
 ○ Micro-servicios (tanto HTTP como gRPC)
 
-○ Librerías con las que he trabajado: ecosistema <a href="https://typelevel.org" rel="external" target="_blank">Typelevel</a> (cats, http4s, doobie), Tapir, Refined...
+○ Librerías con las que he trabajado: ecosistema [Typelevel](https://typelevel.org) (cats, http4s, doobie), Tapir, Refined...
 
 ○ He trabajo en múltiples talleres y sesiones de aprendizaje internos sobre varios temas: APIs HTTP, SBT (y desarrollo de plugins), Scala 3...
 
@@ -32,7 +32,7 @@
 
 ---
 
-### <a href="https://www.liferay.com" target="_blank">Liferay S.L.</a>
+### [Liferay S.L.](https://www.liferay.com)
 
 <i class="fas fa-user-tag"></i> Ingeniero Backend (Java)
 
@@ -46,7 +46,7 @@
 
 ---
 
-### <a href="https://www.liferay.com" target="_blank">Liferay S.L.</a>
+### [Liferay S.L.](https://www.liferay.com)
 
 <i class="fas fa-user-tag"></i> Ingeniero Móvil (Java, Kotlin & Swift)
 
@@ -56,7 +56,7 @@ Contribuí al desarrollo de nuevos componentes para la librería de componentes 
 
 ---
 
-### <a href="https://www.functionalhub.com" target="_blank">FunctionalHub.com</a>
+### [FunctionalHub.com](https://www.functionalhub.com)
 
 <i class="fas fa-user-tag"></i> Co-fundador, guionista, y locutor
 
@@ -70,7 +70,7 @@ Co-fundé el lanzamiento de una flataforma online para el aprendizaje de lenguaj
 
 ### Máster universitario en informática móvil
 
-<i class="fas fa-university"></i> <a target="_blank" href="https://www.upsa.es">Universidad Pontificia de Salamanca</a>
+<i class="fas fa-university"></i> [Universidad Pontificia de Salamanca](https://www.upsa.es)
 
 <i class="fas fa-calendar-alt"></i> 2015 - 2016
 
@@ -78,6 +78,6 @@ Co-fundé el lanzamiento de una flataforma online para el aprendizaje de lenguaj
 
 ### Grado en Ingeniería Informática en Sistemas de Información
 
-<i class="fas fa-university"></i> <a target="_blank" href="https://www.usal.es">Universidad de Salamanca</a>
+<i class="fas fa-university"></i> [Universidad de Salamanca](https://www.usal.es)
 
 <i class="fas fa-calendar-alt"></i> 2010 - 2015

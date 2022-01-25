@@ -5,7 +5,7 @@
 	document.spanish = true
 %}
 
-Soy un entusiasta de la programación funcional, trabajando ahora principalmente en Scala. Trabajo en <a href="https://www.47deg.com" rel="external" target="_blank">47 Degrees</a> como Desarrollador Scala Senior y hago algo de Open Source por <a href="https://github.com/alejandrohdezma?tab=repositories" rel="external" target="_blank">aquí</a>. También estoy interesado en todo el mundillo del "tooling" para desarrolladores, especialmente en SBT y GitHub Actions.
+Soy un entusiasta de la programación funcional, trabajando ahora principalmente en Scala. Trabajo en [47 Degrees](https://www.47deg.com) como Desarrollador Scala Senior y hago algo de Open Source por [aquí](https://github.com/alejandrohdezma?tab=repositories). También estoy interesado en todo el mundillo del "tooling" para desarrolladores, especialmente en SBT y GitHub Actions.
 
 Algunos datos sobre mí:
 
@@ -27,9 +27,9 @@ Si quieres ponerte en contacto conmigo:
 
 **<i class="fab fa-github"></i> Algunos de mis proyectos Open Source**
 
-- <a href="https://github.com/scala-steward-org/scala-steward-action" rel="external" target="_blank">scala-steward-action</a></a>: Una "Github Action" para lanzar [Scala Steward](https://github.com/scala-steward-org/scala-steward) en tus propios repositorios.
-- <a href="https://github.com/alejandrohdezma/http4s-munit" rel="external" target="_blank">http4s-munit</a>: Integración entre http4s & MUnit.
-- <a href="https://github.com/alejandrohdezma/sbt-github" rel="external" target="_blank">sbt-github</a>: Plugin SBT para leer "settings" como `license` o `developers` de GitHub.
-- <a href="https://github.com/alejandrohdezma/sbt-fix" rel="external" target="_blank">sbt-fix</a>: Plugin SBT para mejorar el dúo "scalafix" & "scalafmt".
-- <a href="https://github.com/alejandrohdezma/sbt-modules" rel="external" target="_blank">sbt-modules</a>: Plugin SBT para simplificar la creación de módulos dentro de un proyecto.
-- <a href="https://github.com/alejandrohdezma/sbt-ci" rel="external" target="_blank">sbt-ci</a>: Un set de archivos, plantillas de documentación y "workflows" de "GitHub Actions" para librerías Scala.
+- [scala-steward-action](https://github.com/scala-steward-org/scala-steward-action)</a>: Una "Github Action" para lanzar [Scala Steward](https://github.com/scala-steward-org/scala-steward) en tus propios repositorios.
+- [http4s-munit](https://github.com/alejandrohdezma/http4s-munit): Integración entre http4s & MUnit.
+- [sbt-github](https://github.com/alejandrohdezma/sbt-github): Plugin SBT para leer "settings" como `license` o `developers` de GitHub.
+- [sbt-fix](https://github.com/alejandrohdezma/sbt-fix): Plugin SBT para mejorar el dúo "scalafix" & "scalafmt".
+- [sbt-modules](https://github.com/alejandrohdezma/sbt-modules): Plugin SBT para simplificar la creación de módulos dentro de un proyecto.
+- [sbt-ci](https://github.com/alejandrohdezma/sbt-ci): Un set de archivos, plantillas de documentación y "workflows" de "GitHub Actions" para librerías Scala.

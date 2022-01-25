@@ -10,7 +10,7 @@
 
 ## <img width="35" height="35" src="https://github.githubassets.com/images/icons/emoji/computer.png"> Experience
 
-### <a href="https://www.47deg.com" target="_blank">47 Degrees</a>
+### [47 Degrees](https://www.47deg.com)
 
 <i class="fas fa-user-tag"></i> **Scala & DevOps Engineer**
 
@@ -32,7 +32,7 @@
 
 ---
 
-### <a href="https://www.liferay.com" target="_blank">Liferay S.L.</a>
+### [Liferay S.L.](https://www.liferay.com)
 
 <i class="fas fa-user-tag"></i> Backend Engineer (Java)
 
@@ -46,7 +46,7 @@
 
 ---
 
-### <a href="https://www.liferay.com" target="_blank">Liferay S.L.</a>
+### [Liferay S.L.](https://www.liferay.com)
 
 <i class="fas fa-user-tag"></i> Mobile Engineer (Java, Kotlin & Swift)
 
@@ -56,7 +56,7 @@ Contributed to the development of new components for the company's mobile compon
 
 ---
 
-### <a href="https://www.functionalhub.com" target="_blank">FunctionalHub.com</a>
+### [FunctionalHub.com](https://www.functionalhub.com)
 
 <i class="fas fa-user-tag"></i> Co-Founder, Scriptwriter, and Speaker
 
@@ -70,7 +70,7 @@ Co-Founded and launched an online learning platform for functional languages and
 
 ### Master's degree in Mobile Computing
 
-<i class="fas fa-university"></i> <a target="_blank" href="https://www.upsa.es">Universidad Pontificia de Salamanca</a>
+<i class="fas fa-university"></i> [Universidad Pontificia de Salamanca](https://www.upsa.es)
 
 <i class="fas fa-calendar-alt"></i> 2015 - 2016
 
@@ -78,6 +78,6 @@ Co-Founded and launched an online learning platform for functional languages and
 
 ### Degree in Computer Engineering in Information Systems
 
-<i class="fas fa-university"></i> <a target="_blank" href="https://www.usal.es">Universidad de Salamanca</a>
+<i class="fas fa-university"></i> [Universidad de Salamanca](https://www.usal.es)
 
 <i class="fas fa-calendar-alt"></i> 2010 - 2015

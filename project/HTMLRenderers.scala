@@ -43,6 +43,10 @@ object HTMLRenderers extends ExtensionBundle {
       )
     case (fmt, Paragraph(caption, Style.caption)) =>
       fmt.indentedElement("figcaption", Options(), caption)
+    case (fmt, BlockSequence(content, Id("details"))) =>
+      fmt.indentedElement("details", Options(), content)
+    case (fmt, Paragraph(summary, Id("summary"))) =>
+      fmt.element("summary", Options(), summary)
   })
 
 }

@@ -52,25 +52,29 @@ El primer paso para huir del infierno de las actualizaciones es decirle a Scala 
   caption-link = "https://giphy.com/gifs/off-showed-mrBEVU9zQIsZa"
 }
 
-<details><summary>Si estás usando `repos.json`</summary>
+@:details
+  Si estás usando `repos.json`
 
-<p>Localiza la línea correspondiente a tu repositorio y añade <code>:rama</code> detrás.</p>
-<pre>- miorganizacion/mirepo:develop</pre>
+  Localiza la línea correspondiente a tu repositorio y añade `:rama` detrás.
 
-</details>
+  ```language-markdown
+  - miorganizacion/mirepo:develop
+  ```
+@:@
 
-<details><summary>Si estás usando la [GitHub Action de Scala Steward](https://github.com/scala-steward-org/scala-steward-action" rel="external)</summary>
+@:details
+  Si estás usando la [GitHub Action de Scala Steward](https://github.com/scala-steward-org/scala-steward-action)
 
-<p>Añade un nuevo parámetro <code>branches</code> a la acción con el nombre de la rama a actualizar.</p>
-<pre>
-- name: Launch Scala Steward
-  uses: scala-steward-org/scala-steward-action@v2
-  with:
-    github-token: ${{ github.token }}
-    branches: develop
-</pre>
+  Añade un nuevo parámetro `branches` a la acción con el nombre de la rama a actualizar.
 
-</details>
+  ```language-yaml
+  - name: Launch Scala Steward
+    uses: scala-steward-org/scala-steward-action@v2
+    with:
+      github-token: ${{ github.token }}
+      branches: develop
+  ```
+@:@
 
 ¡Y ya está! No necesitas hacer nada más para este paso.
 

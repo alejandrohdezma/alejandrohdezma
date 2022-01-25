@@ -61,6 +61,16 @@ case object BlogDirectives extends DirectiveRegistry {
     }
   }
 
+  val detailsDirective = Blocks.create("details") {
+    import Blocks.dsl._
+
+    parsedBody.evalMap {
+      case Paragraph(summary, _) :: content if content.size >= 1 =>
+        Right(BlockSequence(Paragraph(summary, Id("summary")) +: content, Id("details")))
+      case _ => Left("A details block must contains two inner blocks: the summary (header) and the content (body).")
+    }
+  }
+
   /** Use it in templates as `@:date` to create a text span with the article's localized date. */
   val dateDirective = Templates.create("date") {
     laika.directive.Templates.dsl.cursor
@@ -76,7 +86,7 @@ case object BlogDirectives extends DirectiveRegistry {
 
   val spanDirectives = Nil
 
-  val blockDirectives = List(blogDirective, figureDirective)
+  val blockDirectives = List(blogDirective, figureDirective, detailsDirective)
 
   val templateDirectives = List(dateDirective)
 

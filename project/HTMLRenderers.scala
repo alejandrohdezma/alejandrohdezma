@@ -35,6 +35,14 @@ object HTMLRenderers extends ExtensionBundle {
           "target" -> Some("_blank")
         ): _*
       )
+    case (fmt, Figure(img, caption, _, opt)) =>
+      fmt.indentedElement(
+        "figure",
+        opt,
+        List(SpanSequence(img), Paragraph(caption, Style.caption))
+      )
+    case (fmt, Paragraph(caption, Style.caption)) =>
+      fmt.indentedElement("figcaption", Options(), caption)
   })
 
 }

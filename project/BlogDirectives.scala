@@ -12,8 +12,10 @@ import java.time.format.FormatStyle
 import java.util.Locale
 import laika.directive.Templates
 import laika.directive.Spans
+import laika.sbt.LaikaPlugin.autoImport._
+import org.apache.batik.svggen.ImageCacher.External
 
-object BlogDirectives extends DirectiveRegistry {
+case object BlogDirectives extends DirectiveRegistry {
 
   /** Use it in templates as `@:blog` to create an `<ul>` with the list of articles in that folder. */
   val blogDirective = Blocks.create("blog") {
@@ -49,6 +51,16 @@ object BlogDirectives extends DirectiveRegistry {
     }
   }
 
+  val figureDirective = Blocks.create("figure") {
+    import Blocks.dsl._
+
+    (attribute(0).as[String].widen, attribute("caption").as[String], attribute("caption-link").as[String]).mapN {
+      (src, caption, captionLink) =>
+        Figure(Image(ExternalTarget(src)), Seq(SpanLink(Seq(Text(caption)), ExternalTarget(captionLink))), Nil)
+
+    }
+  }
+
   /** Use it in templates as `@:date` to create a text span with the article's localized date. */
   val dateDirective = Templates.create("date") {
     laika.directive.Templates.dsl.cursor
@@ -64,7 +76,7 @@ object BlogDirectives extends DirectiveRegistry {
 
   val spanDirectives = Nil
 
-  val blockDirectives = List(blogDirective)
+  val blockDirectives = List(blogDirective, figureDirective)
 
   val templateDirectives = List(dateDirective)
 

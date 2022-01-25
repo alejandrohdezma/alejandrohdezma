@@ -32,10 +32,10 @@ cs launch --contrib scala-steward
 
 Seguramente, si trabajas en una organización con múltiples repositorios y con Scala Steward a cargo de mantener todo actualizado, tu equipo habrá descubierto el conocido como "infierno de las actualizaciones". ¿Y qué es esto? Pues no es otra cosa que empezar tu jornada laboral teniendo que revisar, aprobar y "mergear" cientos de "Pull Request" de actualizaciones creadas por Scala Steward.
 
-<figure>
-  <img src="https://media.giphy.com/media/Lopx9eUi34rbq/giphy.gif" />
-  <figcaption><a rel="external" target="_blank" href="https://giphy.com/gifs/token-Lopx9eUi34rbq">Proporcionado por GIPHY</a></figcaption>
-</figure>
+@:figure(https://media.giphy.com/media/Lopx9eUi34rbq/giphy.gif) {
+  caption = "Proporcionado por GIPHY"
+  caption-link = "https://giphy.com/gifs/token-Lopx9eUi34rbq"
+}
 
 Si ya has echado un vistazo a las "[FAQ](https://github.com/scala-steward-org/scala-steward/blob/master/docs/faq.md#how-can-scala-stewards-prs-be-merged-automatically)" de Scala Steward, habrás visto que una opción para gestionar esto es "mergear" automáticamente dichas actualizaciones usando apps como [Mergify](https://mergify.com), GitHub Actions como [esta](https://github.com/marketplace/actions/merge-dependency-update-prs) o habilitando el "[auto-merge](https://docs.github.com/es/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/automatically-merging-a-pull-request)" en dichas "PR".
 
@@ -47,10 +47,10 @@ Para estos casos, te traigo una solución que (al menos en mi equipo) está func
 
 El primer paso para huir del infierno de las actualizaciones es decirle a Scala Steward que en vez de actualizar la rama por defecto de nuestro repositorio, actualice una rama distinta. Para ello, tenemos dos opciones, dependiendo de como estemos lanzando Scala Steward.
 
-<figure>
-  <img src="https://media.giphy.com/media/mrBEVU9zQIsZa/giphy.gif" />
-  <figcaption><a rel="external" target="_blank" href="https://giphy.com/gifs/off-showed-mrBEVU9zQIsZa">Proporcionado por GIPHY</a></figcaption>
-</figure>
+@:figure(https://media.giphy.com/media/mrBEVU9zQIsZa/giphy.gif) {
+  caption = "Proporcionado por GIPHY"
+  caption-link = "https://giphy.com/gifs/off-showed-mrBEVU9zQIsZa"
+}
 
 <details><summary>Si estás usando `repos.json`</summary>
 
@@ -81,11 +81,10 @@ Una vez terminado el paso anterior, Scala Steward empezará a enviar PR actualiz
 - Por un lado, que exista una rama `develop`.
 - Por otro, que dicha rama se mantenga actualizada con los últimos cambios en nuestra rama por defecto.
 
-<figure>
-  <img src="https://media.giphy.com/media/l0MYBtZdU9ZrOiQCc/giphy.gif" />
-  <figcaption><a rel="external" target="_blank" href="https://giphy.com/gifs/teamcoco-conan-obrien-ashton-kutcher-l0MYBtZdU9ZrOiQCc">Proporcionado por GIPHY</a></figcaption>
-</figure>
-
+@:figure(https://media.giphy.com/media/l0MYBtZdU9ZrOiQCc/giphy.gif) {
+  caption = "Proporcionado por GIPHY"
+  caption-link = "https://giphy.com/gifs/teamcoco-conan-obrien-ashton-kutcher-l0MYBtZdU9ZrOiQCc"
+}
 
 Pues venga, manos a la obra. Vamos a crear un "workflow" de GitHub Actions que se encargue de hacer el "upsert" de la rama `develop`.
 

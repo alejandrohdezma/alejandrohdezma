@@ -39,7 +39,7 @@ case object BlogDirectives extends DirectiveRegistry {
               BlockSequence(
                 BlockSequence(article.link(Image(AbsoluteInternalTarget(Path(List("images", article.header)))))),
                 Header(3, article.link(Text(article.title.toUpperCase()))),
-                Paragraph(Text(article.formattedDate, Options(styles = Set("time")))),
+                Paragraph(Text(article.formattedDate, Styles("time"))),
                 Paragraph(Text(article.description))
               )
             ),
@@ -47,7 +47,7 @@ case object BlogDirectives extends DirectiveRegistry {
           )
         }
 
-      BulletList(articles, StringBullet(""), Options(Some("blog-posts")))
+      BulletList(articles, StringBullet(""), Id("blog-posts"))
     }
   }
 

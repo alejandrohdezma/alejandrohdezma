@@ -3,7 +3,7 @@
     --base-fontsize: 18px;
 }
 
-header {
+body > header {
     grid-column: 2;
     padding: 1rem 0.5rem;
     border-bottom: 0;
@@ -12,6 +12,7 @@ header {
 header>img {
     width: 100%;
     height: auto;
+    opacity: 1;
 }
 
 header>nav {

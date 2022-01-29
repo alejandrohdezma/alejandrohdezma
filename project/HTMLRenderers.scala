@@ -41,6 +41,15 @@ object HTMLRenderers extends ExtensionBundle {
         opt,
         List(SpanSequence(img), Paragraph(caption, Style.caption))
       )
+    case (fmt, cb @ CodeBlock(lang, content, _, opt)) =>
+      fmt.rawElement(
+        "pre",
+        opt,
+        fmt.withoutIndentation { innerFmt =>
+          innerFmt.element("button", Options(), Seq(IconStyle("far fa-copy"))) +
+            innerFmt.element("code", Styles(s"language-$lang"), content)
+        }
+      )
     case (fmt, Paragraph(caption, Style.caption)) =>
       fmt.indentedElement("figcaption", Options(), caption)
     case (fmt, BlockSequence(content, Id("details"))) =>

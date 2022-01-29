@@ -79,6 +79,16 @@ address {
 
 pre {
     padding: 0;
+    position: relative;
+}
+
+pre button {
+    position: absolute;
+    right: .5rem;
+    font-size: 1.3em;
+    padding: .5rem .7rem;
+    background-color: gray;
+    display: none;
 }
 
 pre code {

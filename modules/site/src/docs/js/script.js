@@ -1,3 +1,7 @@
+// highlight-js
+hljs.configure({ ignoreUnescapedHTML: true });
+hljs.highlightAll();
+
 // progress-bar
 
 window.addEventListener("scroll", e => {

@@ -84,11 +84,17 @@ case object BlogDirectives extends DirectiveRegistry {
       .evalMap(_.left.map(_.message))
   }
 
+  val urlDirective = Templates.create("url") {
+    laika.directive.Templates.dsl.cursor
+      .map(_.target.path.withoutSuffix.toString())
+      .map(TemplateString(_))
+  }
+
   val spanDirectives = Nil
 
   val blockDirectives = List(blogDirective, figureDirective, detailsDirective)
 
-  val templateDirectives = List(dateDirective)
+  val templateDirectives = List(dateDirective, urlDirective)
 
   val linkDirectives = Nil
 

@@ -1,3 +1,7 @@
+// highlight-js
+hljs.configure({ ignoreUnescapedHTML: true });
+hljs.highlightAll();
+
 // progress-bar
 
 window.addEventListener("scroll", e => {
@@ -22,3 +26,24 @@ const text = document.getElementsByTagName("article")[0].innerText;
 const time = Math.ceil(text.trim().split(/\s+/).length / 225);
 
 document.getElementById("time").innerText = lang == 'es' ? `${time} minutos` : `${time} minutes`;
+
+// clipboard-js
+
+document.querySelectorAll("pre").forEach(pre => {
+    pre.addEventListener("mouseover", () => {
+        pre.childNodes[0].style.display = "block";
+    });
+    pre.addEventListener("mouseout", () => {
+        pre.childNodes[0].style.display = "none";
+    }) 
+});
+
+const clipboard = new ClipboardJS('pre button', { target: trigger => trigger.nextElementSibling });
+
+clipboard.on('success', event => {
+    event.trigger.childNodes[0].className = "fas fa-check"
+
+    setTimeout(() => { event.trigger.childNodes[0].className = "far fa-copy" }, 2000);
+
+    event.clearSelection();
+});

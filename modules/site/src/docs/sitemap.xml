@@ -5,33 +5,35 @@
 
   <url>
     <loc>https://alejandrohdezma.com/</loc>
-    <lastmod>2022-01-25T10:58:20+00:00</lastmod>
-    <priority>0.90</priority>
+    <lastmod>2022-01-30T07:05:16+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://alejandrohdezma.com/cv</loc>
+    <lastmod>2022-01-30T07:05:16+00:00</lastmod>
   </url>
   <url>
     <loc>https://alejandrohdezma.com/blog/</loc>
-    <lastmod>2022-01-25T10:58:20+00:00</lastmod>
-    <priority>0.90</priority>
+    <lastmod>2022-01-30T07:05:16+00:00</lastmod>
   </url>
   <url>
     <loc>https://alejandrohdezma.com/es/</loc>
-    <lastmod>2022-01-25T10:58:20+00:00</lastmod>
-    <priority>0.80</priority>
+    <lastmod>2022-01-30T07:05:16+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://alejandrohdezma.com/es/cv</loc>
+    <lastmod>2022-01-30T07:05:16+00:00</lastmod>
   </url>
   <url>
     <loc>https://alejandrohdezma.com/es/blog/</loc>
-    <lastmod>2022-01-25T10:58:20+00:00</lastmod>
-    <priority>0.80</priority>
+    <lastmod>2022-01-30T07:05:16+00:00</lastmod>
   </url>
   <url>
-    <loc>https://alejandrohdezma.com/blog/updating-multiple-repositories-with-scala-steward-and-github-actions.html</loc>
-    <lastmod>2022-01-25T10:58:20+00:00</lastmod>
-    <priority>1.00</priority>
+    <loc>https://alejandrohdezma.com/blog/updating-multiple-repositories-with-scala-steward-and-github-actions</loc>
+    <lastmod>2022-01-30T07:05:16+00:00</lastmod>
   </url>
   <url>
-    <loc>https://alejandrohdezma.com/es/blog/actualizando-multiples-repositorios-con-scala-steward-y-github-actions.html</loc>
-    <lastmod>2022-01-25T10:58:20+00:00</lastmod>
-    <priority>1.00</priority>
+    <loc>https://alejandrohdezma.com/es/blog/actualizando-multiples-repositorios-con-scala-steward-y-github-actions</loc>
+    <lastmod>2022-01-30T07:05:16+00:00</lastmod>
   </url>
 
 

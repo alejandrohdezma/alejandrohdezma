@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="${document.description}">
+    @:if(document.spanish)<link rel="alternate" hreflang="en_US" href="https://www.alejandrohdezma.com/${?document.translation.path}" />@:else<link rel="alternate" hreflang="es_ES" href="https://www.alejandrohdezma.com/es/${?document.translation.path}" />@:@
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
     @:linkCSS
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">

@@ -65,7 +65,7 @@ como yo, te hayas encontrado que no lo es tanto para tu caso. Bien
 porque tu organización no permita el mergeo automático de PR, o quizá
 porque tus PR tienen que seguir un flujo concreto que impide que lleguen
 a la rama por defecto de tu repositorio (comúnmente `main`
-[~o `master`~][no-master]).
+[~~o `master`~~][no-master]).
 
 Para estos casos, te traigo una solución que (al menos en mi equipo)
 está funcionando muy bien. Cómo resumen te diré que consiste en instruir

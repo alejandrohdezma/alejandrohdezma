@@ -87,6 +87,7 @@ case object BlogDirectives extends DirectiveRegistry {
   val urlDirective = Templates.create("url") {
     laika.directive.Templates.dsl.cursor
       .map(_.target.path.withoutSuffix.toString())
+      .map(_.replace("/README", ""))
       .map(TemplateString(_))
   }
 

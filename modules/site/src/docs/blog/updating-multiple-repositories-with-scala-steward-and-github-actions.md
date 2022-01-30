@@ -5,7 +5,7 @@
 	document.spanish = false
     document.header = scala_steward_with_github_badge.png
     document.date = "2022-01-03"
-    document.translation.path = blog/actualizando-multiples-repositorios-con-scala-steward-y-github-actions.html
+    document.translation.path = blog/actualizando-multiples-repositorios-con-scala-steward-y-github-actions
 %}
 
 Under construction...

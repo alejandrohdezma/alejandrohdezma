@@ -30,12 +30,10 @@
 <body>
     <header>
         <img width=2000 height=469 src="@:path(../images/header.webp)">
-        <nav>
-            @:if(document.spanish)<a href="/es/blog/">Volver atrás</a>@:else<a href="/blog/">Go back</a>@:@
-        </nav>
     </header>
-
+    
     <main>
+        @:if(document.spanish)<a style="float: left; margin-left: 1.5rem;" href="/es/blog/"><i class="fas fa-arrow-left"></i> Volver atrás</a>@:else<a style="float: left; margin-left: 1.5rem;" href="/blog/"><i class="fas fa-arrow-left"></i> Go back</a>@:@
         @:include(language.changer.template.html)
         <article style="margin-top: 1rem; margin-bottom: 3rem;">
             <img src="@:if(document.spanish)../@:@../images/${document.header}">

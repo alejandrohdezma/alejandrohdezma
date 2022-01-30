@@ -10,19 +10,32 @@ document.translation.path = blog/updating-multiple-repositories-with-scala-stewa
 
 # Actualizando múltiples repositorios con Scala Steward y GitHub Actions
 
-Si trabajas habitualmente con Scala, probablemente conozcas [Scala Steward]. Si no sabes lo que es, este extracto del propio repositorio lo resume bastante bien:
+Si trabajas habitualmente con Scala, probablemente conozcas [Scala Steward].
+Si no sabes lo que es, este extracto del propio repositorio lo resume
+bastante bien:
 
 > <img src="../../images/scala_steward_avatar.png" width="50" style="float:left; margin: .2em 1em 0 0">
 >
-> *"Scala Steward is a bot that helps you keep your library dependencies, sbt plugins, and Scala and sbt versions up-to-date."*
+> *"Scala Steward is a bot that helps you keep your library
+> dependencies, sbt plugins, and Scala and sbt versions up-to-date."*
 >
-> **Scala Steward es un bot que te ayuda a mantener las dependencias de tus librerías, los plugins de SBT y las versiones de Scala y SBT actualizadas.**
+> **Scala Steward es un bot que te ayuda a mantener las dependencias de
+> tus librerías, los plugins de SBT y las versiones de Scala y SBT
+> actualizadas.**
 
-Se puede utilizar en cualquier proyecto público de Scala hospedado en GitHub, GitLab o BitBucket que utilice [SBT] o [Mill] simplemente añadiendo dicho repositorio a [este archivo][repos.json]. Poco tiempo después empezarás a recibir Pull Requests.
+Se puede utilizar en cualquier proyecto público de Scala hospedado en
+GitHub, GitLab o BitBucket que utilice [SBT] o [Mill] simplemente
+añadiendo dicho repositorio a [este archivo][repos.json]. Poco tiempo después
+empezarás a recibir Pull Requests.
 
-Hay ya más de 1500 repositorios empleando esta instancia pública de Scala Steward que [Frank Thomas] (el creador de Scala Steward) tiene desplegado como un servicio gratuito para todo el ecosistema Open-Source de Scala.
+Hay ya más de 1500 repositorios empleando esta instancia pública de
+Scala Steward que [Frank Thomas] (el creador de Scala Steward) tiene
+desplegado como un servicio gratuito para todo el ecosistema Open-Source
+de Scala.
 
-Pero las posibilidades no se quedan ahí, también se puede lanzar una instancia propia usando [GitHub Actions][scala-steward-action], [Docker] o incluso [Coursier]:
+Pero las posibilidades no se quedan ahí, también se puede lanzar una
+instancia propia usando [GitHub Actions][scala-steward-action], [Docker] o
+incluso [Coursier]:
 
 ``` bash
 cs launch --contrib scala-steward
@@ -30,22 +43,43 @@ cs launch --contrib scala-steward
 
 ## El infierno de las actualizaciones ™️
 
-Seguramente, si trabajas en una organización con múltiples repositorios y con Scala Steward a cargo de mantener todo actualizado, tu equipo habrá descubierto el conocido como "infierno de las actualizaciones". ¿Y qué es esto? Pues no es otra cosa que empezar tu jornada laboral teniendo que revisar, aprobar y mergear cientos de Pull Request de actualizaciones creadas por Scala Steward.
+Seguramente, si trabajas en una organización con múltiples repositorios
+y con Scala Steward a cargo de mantener todo actualizado, tu equipo
+habrá descubierto el conocido como "infierno de las actualizaciones". ¿Y
+qué es esto? Pues no es otra cosa que empezar tu jornada laboral
+teniendo que revisar, aprobar y mergear cientos de Pull Request de
+actualizaciones creadas por Scala Steward.
 
 @:figure(https://media.giphy.com/media/Lopx9eUi34rbq/giphy.gif) {
 caption = "Proporcionado por GIPHY"
 caption-link = "https://giphy.com/gifs/token-Lopx9eUi34rbq"
 }
 
-Si ya has echado un vistazo a las [FAQ] de Scala Steward, habrás visto que una opción para gestionar esto es mergear automáticamente dichas actualizaciones usando apps como [Mergify], GitHub Actions como [esta][merge-dependency-update-prs] o habilitando el [auto-merge] en dichas PR.
+Si ya has echado un vistazo a las [FAQ] de Scala Steward, habrás visto
+que una opción para gestionar esto es mergear automáticamente dichas
+actualizaciones usando apps como [Mergify], GitHub Actions como [esta][merge-dependency-update-prs] o
+habilitando el [auto-merge] en dichas PR.
 
-Aunque el auto-mergeo puede ser una opción muy válida, es probable que, como yo, te hayas encontrado que no lo es tanto para tu caso. Bien porque tu organización no permita el mergeo automático de PR, o quizá porque tus PR tienen que seguir un flujo concreto que impide que lleguen a la rama por defecto de tu repositorio (comúnmente `main` [~o `master`~][no-master]).
+Aunque el auto-mergeo puede ser una opción muy válida, es probable que,
+como yo, te hayas encontrado que no lo es tanto para tu caso. Bien
+porque tu organización no permita el mergeo automático de PR, o quizá
+porque tus PR tienen que seguir un flujo concreto que impide que lleguen
+a la rama por defecto de tu repositorio (comúnmente `main`
+[~o `master`~][no-master]).
 
-Para estos casos, te traigo una solución que (al menos en mi equipo) está funcionando muy bien. Cómo resumen te diré que consiste en instruir a Scala Steward a que actualice una rama distinta a la de por defecto de forma automática (la típica rama `develop`, si sigues [GitFlow]), y crear una PR desde esa rama a tu rama por defecto cada cierto tiempo. Ahora bien, ¿cómo hacemos eso? pues con GitHub Actions.
+Para estos casos, te traigo una solución que (al menos en mi equipo)
+está funcionando muy bien. Cómo resumen te diré que consiste en instruir
+a Scala Steward a que actualice una rama distinta a la de por defecto de
+forma automática (la típica rama `develop`, si sigues [GitFlow]), y
+crear una PR desde esa rama a tu rama por defecto cada cierto tiempo.
+Ahora bien, ¿cómo hacemos eso? pues con GitHub Actions.
 
 ## Scala Steward, olvídate del *main*
 
-El primer paso para huir del infierno de las actualizaciones es decirle a Scala Steward que en vez de actualizar la rama por defecto de nuestro repositorio, actualice una rama distinta. Para ello, tenemos dos opciones, dependiendo de como estemos lanzando Scala Steward.
+El primer paso para huir del infierno de las actualizaciones es decirle
+a Scala Steward que en vez de actualizar la rama por defecto de nuestro
+repositorio, actualice una rama distinta. Para ello, tenemos dos
+opciones, dependiendo de como estemos lanzando Scala Steward.
 
 @:figure(https://media.giphy.com/media/mrBEVU9zQIsZa/giphy.gif) {
 caption = "Proporcionado por GIPHY"
@@ -53,9 +87,11 @@ caption-link = "https://giphy.com/gifs/off-showed-mrBEVU9zQIsZa"
 }
 
 @:details
+
 Si estás usando `repos.json`
 
-Localiza la línea correspondiente a tu repositorio y añade `:rama` detrás.
+Localiza la línea correspondiente a tu repositorio y añade `:rama`
+detrás.
 
 ``` markdown
 - miorganizacion/mirepo:develop
@@ -64,9 +100,11 @@ Localiza la línea correspondiente a tu repositorio y añade `:rama` detrás.
 @:@
 
 @:details
+
 Si estás usando la [GitHub Action de Scala Steward](https://github.com/scala-steward-org/scala-steward-action)
 
-Añade un nuevo parámetro `branches` a la acción con el nombre de la rama a actualizar.
+Añade un nuevo parámetro `branches` a la acción con el nombre de la rama
+a actualizar.
 
 ``` yaml
 - name: Launch Scala Steward
@@ -82,21 +120,32 @@ Añade un nuevo parámetro `branches` a la acción con el nombre de la rama a ac
 
 ## Colega, ¿dónde está mi rama?
 
-Una vez terminado el paso anterior, Scala Steward empezará a enviar PR actualizando esa rama que le hemos indicado, en vez de la rama por defecto del repositorio. El problema está en sí, como es lógico, dicha rama no existe. Para que todo esto funcione, necesitamos asegurarnos de dos cosas:
+Una vez terminado el paso anterior, Scala Steward empezará a enviar PR
+actualizando esa rama que le hemos indicado, en vez de la rama por
+defecto del repositorio. El problema está en sí, como es lógico, dicha
+rama no existe. Para que todo esto funcione, necesitamos asegurarnos de
+dos cosas:
 
 -   Por un lado, que exista una rama `develop`.
--   Por otro, que dicha rama se mantenga actualizada con los últimos cambios en nuestra rama por defecto.
+-   Por otro, que dicha rama se mantenga actualizada con los últimos
+    cambios en nuestra rama por defecto.
 
 @:figure(https://media.giphy.com/media/l0MYBtZdU9ZrOiQCc/giphy.gif) {
 caption = "Proporcionado por GIPHY"
 caption-link = "https://giphy.com/gifs/teamcoco-conan-obrien-ashton-kutcher-l0MYBtZdU9ZrOiQCc"
 }
 
-Pues venga, manos a la obra. Vamos a crear un workflow de GitHub Actions que se encargue de hacer el upsert de la rama `develop`.
+Pues venga, manos a la obra. Vamos a crear un workflow de GitHub Actions
+que se encargue de hacer el upsert de la rama `develop`.
 
-> Si no sabes como funciona la sintaxis de GitHub Actions, [aquí][github-action-docs] tienes toda la documentación necesaria para aprender a utilizarla (en inglés).
+> Si no sabes como funciona la sintaxis de GitHub Actions,
+> [aquí][github-action-docs] tienes toda la documentación necesaria para
+> aprender a utilizarla (en inglés).
 
-Para empezar, creamos un archivo `upsert-develop-branch.yml` en la carpeta `.github/workflows` de nuestro proyecto. Dentro escribiremos el esqueleto de un workflow que reaccione a actualizaciones de la rama `main` (o a como se llame tu rama por defecto).
+Para empezar, creamos un archivo `upsert-develop-branch.yml` en la
+carpeta `.github/workflows` de nuestro proyecto. Dentro escribiremos el
+esqueleto de un workflow que reaccione a actualizaciones de la rama
+`main` (o a como se llame tu rama por defecto).
 
 ``` yaml
 name: Upsert `develop` branch
@@ -115,7 +164,8 @@ jobs:
 
 Ahora añadiremos los pasos.
 
-El primer paso consistirá en asegurarnos que la rama `develop` existe. Para ello vamos a usar la [CLI de GitHub][gh] (`gh`).
+El primer paso consistirá en asegurarnos que la rama `develop` existe.
+Para ello vamos a usar la [CLI de GitHub][gh] (`gh`).
 
 ``` yaml
 - name: Create `develop` branch (if it does not exists)
@@ -129,11 +179,20 @@ El primer paso consistirá en asegurarnos que la rama `develop` existe. Para ell
           echo '`develop` branch already exists on ${{ github.repository }}'
 ```
 
-Creamos una referencia a la rama `develop` en el mismo punto (SHA) en el que esté la rama `main` (que vendrá en el contexto `github.sha`). Si el comando fallase, significa que la rama `develop` ya existe, por lo que avisamos al usuario por pantalla para evitar que el workflow entero falle.
+Creamos una referencia a la rama `develop` en el mismo punto (SHA) en el
+que esté la rama `main` (que vendrá en el contexto `github.sha`). Si el
+comando fallase, significa que la rama `develop` ya existe, por lo que
+avisamos al usuario por pantalla para evitar que el workflow entero
+falle.
 
-> `gh` nos permite hacer múltiples operaciones en GitHub desde la consola, de una forma sencilla y concisa. Si quieres saber más sobre los distintos comandos, te animo a que consultes [su documentación][gh-docs] (en inglés).
+> `gh` nos permite hacer múltiples operaciones en GitHub desde la
+> consola, de una forma sencilla y concisa. Si quieres saber más sobre
+> los distintos comandos, te animo a que consultes [su documentación][gh-docs]
+> (en inglés).
 
-El siguiente paso será hacer checkout de la rama `develop`. Debemos añadir `fetch-depth: 0` para evitar que el workflow haga un [`shallow-clone`][shallow-clone].
+El siguiente paso será hacer checkout de la rama `develop`. Debemos
+añadir `fetch-depth: 0` para evitar que el workflow haga un
+[`shallow-clone`][shallow-clone].
 
 ``` yaml
 - name: Checkout develop branch
@@ -143,7 +202,10 @@ El siguiente paso será hacer checkout de la rama `develop`. Debemos añadir `fe
     fetch-depth: 0
 ```
 
-Por último, añadimos el paso que se encarga de hacer el rebase de la rama `develop`. Si el primer paso creó una rama nueva, este paso no hará nada; si ya existía previamente, este paso la rebaseará a la última posición de `main`.
+Por último, añadimos el paso que se encarga de hacer el rebase de la
+rama `develop`. Si el primer paso creó una rama nueva, este paso no hará
+nada; si ya existía previamente, este paso la rebaseará a la última
+posición de `main`.
 
 ``` yaml
 - name: Rebase `develop` branch to latest `origin/main`
@@ -154,9 +216,12 @@ Por último, añadimos el paso que se encarga de hacer el rebase de la rama `dev
     git push -f -u origin develop
 ```
 
-> Necesitamos establecer las opciones de `user.email` y `user.name` de Git puesto que estas [no se inicializan][checkout-gitconfig-issue] cuando se usa la acción de checkout.
+> Necesitamos establecer las opciones de `user.email` y `user.name` de
+> Git puesto que estas [no se inicializan][checkout-gitconfig-issue] cuando se 
+> usa la acción de checkout.
 
-¡Y ya está! Ya tenemos nuestro primer workflow terminado. Aquí tienes el código completo:
+¡Y ya está! Ya tenemos nuestro primer workflow terminado. Aquí tienes el
+código completo:
 
 @:details
 
@@ -199,9 +264,15 @@ jobs:
 
 @:@
 
-Una vez añadamos este archivo a nuestro repositorio cualquier cambio en la rama `main` provocará que la rama `develop` se cree o actualice.
+Una vez añadamos este archivo a nuestro repositorio cualquier cambio en
+la rama `main` provocará que la rama `develop` se cree o actualice.
 
-A partir de este punto, podemos empezar a recibir PR de Scala Steward a la rama `develop`. Únicamente necesitaremos que dichas PR se mergeen de forma automática. Para ello, como ya se mencionó en la primera sección, podemos usar apps como [Mergify], GitHub Actions como [esta][merge-dependency-update-prs] o habilitar el [auto-merge] en dichas PR usando un nuevo workflow, lo dejo a tu elección.
+A partir de este punto, podemos empezar a recibir PR de Scala Steward a
+la rama `develop`. Únicamente necesitaremos que dichas PR se mergeen de
+forma automática. Para ello, como ya se mencionó en la primera sección,
+podemos usar apps como [Mergify], GitHub Actions como
+[esta][merge-dependency-update-prs] o habilitar el [auto-merge] en dichas PR
+usando un nuevo workflow, lo dejo a tu elección.
 
 @:figure(https://media.giphy.com/media/TbYgHMnICI1A4/giphy.gif) {
 caption = "Proporcionado por Giphy"
@@ -210,13 +281,23 @@ caption-link = "https://giphy.com/gifs/dragon-ball-z-dbz-TbYgHMnICI1A4"
 
 ## El día de la actualización
 
-Llegados a esté punto, tendremos nuestra rama `develop` cargada de actualizaciones. Así que lo único que falta es asegurarnos de que cada cierto tiempo, se cree una PR a nuestra rama por defecto.
+Llegados a esté punto, tendremos nuestra rama `develop` cargada de
+actualizaciones. Así que lo único que falta es asegurarnos de que cada
+cierto tiempo, se cree una PR a nuestra rama por defecto.
 
-¿Y cómo podemos hacer eso? ¡Pues claro! Otra vez usando GitHub Actions. ¡Al lío!
+¿Y cómo podemos hacer eso? ¡Pues claro! Otra vez usando GitHub Actions.
+¡Al lío!
 
-Primero de todo, igual que antes, crearemos un archivo `scheduled-updates-pr.yml` en la carpeta `.github/workflows` de nuestro proyecto. La diferencia con el workflow que escribimos en el paso anterior estará en que en vez de reaccionar a actualizaciones de `main` haremos que este workflow se lance una y otra vez, en los intervalos que designemos usando el evento [`schedule`][schedule].
+Primero de todo, igual que antes, crearemos un archivo
+`scheduled-updates-pr.yml` en la carpeta `.github/workflows` de nuestro
+proyecto. La diferencia con el workflow que escribimos en el paso
+anterior estará en que en vez de reaccionar a actualizaciones de `main`
+haremos que este workflow se lance una y otra vez, en los intervalos que
+designemos usando el evento [`schedule`][schedule].
 
-> En el ejemplo se establece que el workflow se lance semanalmente. Si quieres cambiar esta programación puedes servirte de [esta página][crontab.guru] para calcular tu comando CRON.
+> En el ejemplo se establece que el workflow se lance semanalmente. Si
+> quieres cambiar esta programación puedes servirte de
+> [esta página][crontab.guru] para calcular tu comando CRON.
 
 ``` yaml
 name: Create PR from `develop` to `main`
@@ -240,7 +321,8 @@ caption = "Proporcionado por Giphy"
 caption-link = "https://giphy.com/gifs/bill-murray-groundhog-day-well-its-again-3o7WIQ4FARJdpmUni8"
 }
 
-Y ahora vamos a por la implementación. Consistirá en un único paso que hará lo siguiente:
+Y ahora vamos a por la implementación. Consistirá en un único paso que
+hará lo siguiente:
 
 -   Buscar el SHA de la rama `main`.
 -   Buscar el SHA de la rama `develop`.
@@ -265,7 +347,8 @@ Y ahora vamos a por la implementación. Consistirá en un único paso que hará 
     GITHUB_TOKEN: ${{ github.token }}
 ```
 
-¡Hecho! Nuestro nuevo workflow no necesita nada más. Aquí tienes la versión completa:
+¡Hecho! Nuestro nuevo workflow no necesita nada más. Aquí tienes la
+versión completa:
 
 @:details
 
@@ -302,12 +385,20 @@ jobs:
 
 @:@
 
-Y... ¡listo! Con estos dos workflows que acabamos de crear ya tenemos todo lo necesario para evitar "El infierno de las actualizaciones ™️". Podemos replicar esto mismo en todos los repositorios Scala de nuestra organización y mantenerlos actualizados sin demasiado esfuerzo.
+Y... ¡listo! Con estos dos workflows que acabamos de crear ya tenemos
+todo lo necesario para evitar "El infierno de las actualizaciones ™️".
+Podemos replicar esto mismo en todos los repositorios Scala de nuestra
+organización y mantenerlos actualizados sin demasiado esfuerzo.
 
-Te dejo aquí algunas mejoras que puedes implementar por si te apetece cacharrear con GitHub Actions:
+Te dejo aquí algunas mejoras que puedes implementar por si te apetece
+cacharrear con GitHub Actions:
 
--   Se podría enviar una notificación al Slack (o a la app que uséis en vuestra organización para comunicaros) cuando el rebase automático de la rama `develop` falle.
--   Activar una [protección de rama][branch-protection] sobre la rama `develop` para asegurar que las PR siempre se prueban encima de todas las actualizaciones que ya hayan tenido lugar.
+-   Se podría enviar una notificación al Slack (o a la app que uséis en
+    vuestra organización para comunicaros) cuando el rebase automático
+    de la rama `develop` falle.
+-   Activar una [protección de rama][branch-protection] sobre la rama `develop`
+    para asegurar que las PR siempre se prueban encima de todas las 
+    actualizaciones que ya hayan tenido lugar.
 -   ¿Se te ocurre algo más? ¡Déjame un comentario!
 
 [Scala Steward]: https://github.com/scala-steward-org/scala-steward

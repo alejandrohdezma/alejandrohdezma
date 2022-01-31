@@ -401,6 +401,8 @@ cacharrear con GitHub Actions:
     actualizaciones que ya hayan tenido lugar.
 -   ¿Se te ocurre algo más? ¡Déjame un comentario!
 
+¡Gracias y hasta la próxima!
+
 [Scala Steward]: https://github.com/scala-steward-org/scala-steward
 [SBT]: https://www.scala-sbt.org
 [Mill]: https://com-lihaoyi.github.io/mill/mill/Intro_to_Mill.html

@@ -16,7 +16,7 @@
 
 <i class="fas fa-calendar-alt"></i> _2019 - Presente_
 
-○ Micro-servicios (tanto HTTP como gRPC)
+○ Micro-servicios: APIs HTTP & gRPC y Apache Kafka.
 
 ○ Librerías con las que he trabajado: ecosistema [Typelevel](https://typelevel.org) (cats, http4s, doobie), Tapir, Refined...
 
@@ -24,7 +24,7 @@
 
 ○ Despliegue de proyectos Scala usando tanto Jenkins como GitHub Actions.
 
-○ Desarrollo de automatizaciones con GitHub Actions y Slack para facilitar el día a día de los programadores.
+○ Desarrollo de automatizaciones con GitHub Actions y Slack para facilitar el día a día de los programadores (Bash y TypeScript).
 
 ○ Monitorización de proyectos Scala usando herramientas como Prometheus, Marathon or Grafana.
 

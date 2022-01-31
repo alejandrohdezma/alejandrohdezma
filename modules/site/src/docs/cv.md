@@ -16,7 +16,7 @@
 
 <i class="fas fa-calendar-alt"></i> _2019 - Present_
 
-○ Microservices (both HTTP & gRPC)
+○ Microservices: HTTP & gRPC APIs and Apache Kafka messaging.
 
 ○ Scala libraries: Typelevel ecosystem (cats, http4s, doobie), Tapir, Refined...
 
@@ -24,7 +24,7 @@
 
 ○ Deployment of Scala projects using both Jenkins & Github Actions.
 
-○ Development of automations with GitHub Actions and Slack to facilitate the day-to-day work of programmers.
+○ Development of automations with GitHub Actions and Slack to facilitate the day-to-day work of programmers (Bash & TypeScript).
 
 ○ Monitoring of Scala projects using tools such as Prometheus, Marathon or Grafana.
 

@@ -4,7 +4,7 @@ document.title = Actualizando múltiples repositorios con Scala Steward y GitHub
 document.description = "¿Trabajas habitualmente con Scala Steward y gestionas múltiples repositorios Scala? En este post desarrollo una forma de mantener actualizados tus repositorios Scala usando Scala Steward sin volverte loco en un infierno de Pull Requests."
 document.spanish = true
 document.header = scala_steward_with_github_badge.png
-document.date = "2022-01-03"
+document.date = "2022-01-15"
 document.translation.path = blog/updating-multiple-repositories-with-scala-steward-and-github-actions
 %}
 
@@ -400,6 +400,8 @@ cacharrear con GitHub Actions:
     para asegurar que las PR siempre se prueban encima de todas las 
     actualizaciones que ya hayan tenido lugar.
 -   ¿Se te ocurre algo más? ¡Déjame un comentario!
+
+¡Gracias y hasta la próxima!
 
 [Scala Steward]: https://github.com/scala-steward-org/scala-steward
 [SBT]: https://www.scala-sbt.org

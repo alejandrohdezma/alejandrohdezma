@@ -47,7 +47,304 @@
                 <b>Alejandro Hernández</b><br>
                 January 3, 2022 · <span id="time"></span>
             </p>
-            <p>Under construction...</p>
+            <h1 id="updating-multiple-repositories-with-scala-steward-and-github-actions" class="title">Updating multiple repositories with Scala Steward and GitHub Actions</h1>
+            <p>If you regularly work with Scala, you probably know <a href="https://github.com/scala-steward-org/scala-steward" rel="external" target="_blank">Scala Steward</a>.
+            If you don&#39;t know what it is, this excerpt from the repository itself summarizes it
+            pretty well:</p>
+            <blockquote>
+              <p><img src="../../images/scala_steward_avatar.png" width="50" style="float:left; margin: .2em 1em 0 0"></p>
+              <p><em>&quot;Scala Steward is a bot that helps you keep your library
+              dependencies, sbt plugins, and Scala and sbt versions up-to-date.&quot;</em></p>
+            </blockquote>
+            <p>It can be used on any public Scala project hosted on
+            GitHub, GitLab or BitBucket that uses <a href="https://www.scala-sbt.org" rel="external" target="_blank">SBT</a> or <a href="https://com-lihaoyi.github.io/mill/mill/Intro_to_Mill.html" rel="external" target="_blank">Mill</a> by simply
+            adding said repository to <a href="https://github.com/scala-steward-org/repos/blob/main/repos-github.md" rel="external" target="_blank">this file</a>. Shortly after that
+            you will start receiving Pull Requests.</p>
+            <p>There are already more than 1500 repositories using this public instance of
+            Scala Steward which <a href="https://github.com/fthomas" rel="external" target="_blank">Frank Thomas</a> (the creator of Scala Steward) has
+            deployed as a free service for the entire Scala Open-Source ecosystem.</p>
+            <p>But the possibilities don&#39;t stop there, you can also launch your own instance
+            using <a href="https://github.com/scala-steward-org/scala-steward-action" rel="external" target="_blank">GitHub Actions</a>, <a href="https://hub.docker.com/r/fthomas/scala-steward/" rel="external" target="_blank">Docker</a> or even <a href="https://get-coursier.io" rel="external" target="_blank">Coursier</a>:</p>
+            <pre><button><i class="far fa-copy"></i></button><code class="language-bash">cs launch --contrib scala-steward</code></pre>
+            
+            <h2 id="update-hell" class="section"><em>Update Hell ™️</em></h2>
+            <p>Most likely, if you work in an organization with multiple repositories and
+            Scala Steward in charge of keeping everything up to date, your team will have
+            discovered what is known as <em>Update Hell ™️</em>. And what is this? Well, it&#39;s nothing
+            more than starting your workday having to review, approve and merge hundreds of
+            Pull Requests for updates created by Scala Steward.</p>
+            <figure>
+              <img src="https://media.giphy.com/media/Lopx9eUi34rbq/giphy.gif">
+              <figcaption>
+                <a href="https://giphy.com/gifs/token-Lopx9eUi34rbq" rel="external" target="_blank">Provided by Giphy</a>
+              </figcaption>
+            </figure>
+            <p>If you have already taken a look at the Scala Steward <a href="https://github.com/scala-steward-org/scala-steward/blob/master/docs/faq.md#how-can-scala-stewards-prs-be-merged-automatically" rel="external" target="_blank">FAQ</a>, you may have seen
+            that one option to handle these is to auto-merge such updates using apps like
+            <a href="https://mergify.com" rel="external" target="_blank">Mergify</a>, GitHub Actions like <a href="https://github.com/marketplace/actions/merge-dependency-update-prs" rel="external" target="_blank">this</a> or by
+            enabling <a href="https://docs.github.com/es/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/automatically-merging-a-pull-request" rel="external" target="_blank">auto-merge</a> on those PRs. </p>
+            <p>While auto-merging may be a very valid option, it is likely that, like me, you
+            have encountered that it is not so valid in your case. Either because your
+            organization does not allow auto-merging of PRs, or perhaps because your PRs
+            have to follow a particular flow that prevents them from reaching the default
+            branch of your repository (commonly <code>main</code> <a href="https://twitter.com/mislav/status/1270388510684598272" rel="external" target="_blank"><del>or <code>master</code></del></a>).</p>
+            <p>For these cases, I offer you a solution that (at least in my team) is working
+            very well. As a brief summary, it consists on instructing Scala Steward to
+            update a branch other than the default one automatically (the typical <code>develop</code>
+            branch, if you follow <a href="https://nvie.com/posts/a-successful-git-branching-model/" rel="external" target="_blank">GitFlow</a>), and create a PR from that branch to your
+            default branch periodically. Now, how do we do that? Well, with GitHub Actions.</p>
+            
+            <h2 id="scala-steward-forget-about-main" class="section">Scala Steward, forget about <em>main</em></h2>
+            <p>The first step to escape <em>Update Hell ™️</em> is to tell Scala Steward to use a
+            different branch instead of updating the default branch of our repository. To
+            do this, we have two options, depending on how we are launching Scala Steward.</p>
+            <figure>
+              <img src="https://media.giphy.com/media/mrBEVU9zQIsZa/giphy.gif">
+              <figcaption>
+                <a href="https://giphy.com/gifs/off-showed-mrBEVU9zQIsZa" rel="external" target="_blank">Provided by Giphy</a>
+              </figcaption>
+            </figure>
+            <details>
+              <summary>If you are using <code>repos.json</code></summary>
+              <p>Locate the line corresponding to your repository and add <code>:branch</code> at the end.</p>
+              <pre><button><i class="far fa-copy"></i></button><code class="language-markdown"><span>- myorg/myrepo:develop</span></code></pre>
+            </details>
+            <details>
+              <summary>If you are using <a href="https://github.com/scala-steward-org/scala-steward-action" rel="external" target="_blank">Scala Steward&#39;s GitHub Action</a></summary>
+              <p>Add a new <code>branches</code> parameter to the action&#39;s input with the name of the
+              branch to update.</p>
+              <pre><button><i class="far fa-copy"></i></button><code class="language-yaml"><span>- </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Launch Scala Steward</span><span>
+  </span><span class="attribute-name">uses</span><span>: </span><span class="string-literal">scala-steward-org/scala-steward-action@v2</span><span>
+  </span><span class="attribute-name">with</span><span>:
+    </span><span class="attribute-name">github-token</span><span>: </span><span class="string-literal">${{ github.token }}</span><span>
+    </span><span class="attribute-name">branches</span><span>: </span><span class="string-literal">develop</span></code></pre>
+            </details>
+            <p>And that&#39;s it! You don&#39;t need to do anything else for this step.</p>
+            
+            <h2 id="dude-where-is-my-branch" class="section">Dude, where is my branch?</h2>
+            <p>Once the above step is finished and deployed, Scala Steward will start sending
+            PRs updating the branch we have indicated, instead of the default branch of the
+            repository. The problem is that, as you might expect, such a branch does not
+            exist. For all this to work, we need to ensure two things:</p>
+            <ul>
+              <li>On the one hand, that there is a <code>develop</code> branch.</li>
+              <li>On the other hand, that this branch is kept up to date with the latest
+              changes in our default branch.</li>
+            </ul>
+            <figure>
+              <img src="https://media.giphy.com/media/l0MYBtZdU9ZrOiQCc/giphy.gif">
+              <figcaption>
+                <a href="https://giphy.com/gifs/teamcoco-conan-obrien-ashton-kutcher-l0MYBtZdU9ZrOiQCc" rel="external" target="_blank">Provided by Giphy</a>
+              </figcaption>
+            </figure>
+            <p>Well then, let&#39;s get to work. We are going to create a GitHub Actions workflow
+            that takes care of upserting the <code>develop</code> branch.</p>
+            <blockquote>If you don&#39;t know how GitHub Actions syntax works, <a href="https://docs.github.com/en/actions/quickstart" rel="external" target="_blank">here</a>
+            you have all the necessary documentation to learn how to use it.</blockquote>
+            <p>We start by creating a file named <code>upsert-develop-branch.yml</code> inside the
+            <code>.github/workflows</code> folder of our project. Here we will write the skeleton of
+            a workflow that reacts to updates of the <code>main</code> branch (or whatever your default
+            branch is called).</p>
+            <pre><button><i class="far fa-copy"></i></button><code class="language-yaml"><span class="attribute-name">name</span><span>: </span><span class="string-literal">Upsert `develop` branch</span><span>
+
+</span><span class="attribute-name">on</span><span>:
+  </span><span class="attribute-name">push</span><span>:
+    </span><span class="attribute-name">branches</span><span>: </span><span class="string-literal">main</span><span>
+
+</span><span class="attribute-name">jobs</span><span>:
+  </span><span class="attribute-name">upsert-develop-branch</span><span>:
+    </span><span class="attribute-name">runs-on</span><span>: </span><span class="string-literal">ubuntu-latest</span><span>
+    </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create `develop` branch or rebase it</span><span>
+    </span><span class="attribute-name">steps</span><span>:
+      - </span><span class="attribute-name">run</span><span>: </span><span class="string-literal">echo &quot;Upsert develop branch&quot;</span></code></pre>
+            <p>Now lets add the steps.</p>
+            <p>The first step will consist of making sure that the <code>develop</code> branch exists. To
+            do this we will use the <a href="https://cli.github.com" rel="external" target="_blank">GitHub CLI</a> (<code>gh</code>).</p>
+            <pre><button><i class="far fa-copy"></i></button><code class="language-yaml"><span>- </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create `develop` branch (if it does not exists)</span><span>
+  </span><span class="attribute-name">env</span><span>:
+    </span><span class="attribute-name">GITHUB_TOKEN</span><span>: </span><span class="string-literal">${{ github.token }}</span><span>
+  </span><span class="attribute-name">run</span><span>: </span><span class="string-literal">|</span><span>
+      gh api --silent \
+          /repos/${{ github.repository }}/git/refs \
+          -f ref=&quot;refs/heads/develop&quot; \
+          -f sha=&quot;${{ github.sha}}&quot; ||
+          echo &#39;`develop` branch already exists on ${{ github.repository }}&#39;</span></code></pre>
+            <p>We create a reference to the <code>develop</code> branch at the same spot (SHA) where the
+            <code>main</code> branch is (which will be in the <code>github.sha</code> context). If the command
+            fails, it means that the <code>develop</code> branch already exists, so we warn the user
+            via <code>echo</code> to prevent the whole workflow from failing.</p>
+            <blockquote><code>gh</code> allows us to do multiple operations in GitHub directly from the shell,
+            in a simple and concise way. If you want to know more about the different
+            commands, I recommend you to consult <a href="https://cli.github.com/manual/" rel="external" target="_blank">its documentation</a>.</blockquote>
+            <p>The next step will be to checkout the <code>develop</code> branch. We must add
+            <code>fetch-depth: 0</code> to prevent the workflow from doing a
+            <a href="https://git-scm.com/docs/git-clone#Documentation/git-clone.txt---depthltdepthgt" rel="external" target="_blank"><code>shallow-clone</code></a>.</p>
+            <pre><button><i class="far fa-copy"></i></button><code class="language-yaml"><span>- </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Checkout develop branch</span><span>
+  </span><span class="attribute-name">uses</span><span>: </span><span class="string-literal">actions/checkout@v2</span><span>
+  </span><span class="attribute-name">with</span><span>:
+    </span><span class="attribute-name">ref</span><span>: </span><span class="string-literal">develop</span><span>
+    </span><span class="attribute-name">fetch-depth</span><span>: </span><span class="number-literal">0</span></code></pre>
+            <p>Finally, we add the step that takes care of rebasing the <code>develop</code> branch. If
+            the first step created a new branch, this step will do nothing; if it already
+            exists, this step will rebase it to <code>main</code>&#39;s head.</p>
+            <pre><button><i class="far fa-copy"></i></button><code class="language-yaml"><span>- </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Rebase `develop` branch to latest `origin/main`</span><span>
+  </span><span class="attribute-name">run</span><span>: </span><span class="string-literal">|</span><span>
+    git config user.email &quot;41898282+github-actions[bot]@users.noreply.github.com&quot;
+    git config user.name &quot;github-actions[bot]&quot;
+    git rebase origin/main
+    git push -f -u origin develop</span></code></pre>
+            <blockquote>We need to set Git&#39;s <code>user.email</code> and <code>user.name</code> settings since these
+            <a href="https://github.com/actions/checkout/issues/13#issuecomment-724415212" rel="external" target="_blank">are not initialized</a> when the checkout action
+            is used.</blockquote>
+            <p>And that&#39;s it! We already have completed our first workflow. Here you have the
+            full code:</p>
+            <details>
+              <summary><code>.github/workflows/upsert-develop-branch.yml</code></summary>
+              <pre><button><i class="far fa-copy"></i></button><code class="language-yaml"><span class="attribute-name">name</span><span>: </span><span class="string-literal">Upsert `develop` branch</span><span>
+
+</span><span class="attribute-name">on</span><span>:
+  </span><span class="attribute-name">push</span><span>:
+    </span><span class="attribute-name">branches</span><span>: </span><span class="string-literal">main</span><span>
+
+</span><span class="attribute-name">jobs</span><span>:
+  </span><span class="attribute-name">upsert-develop-branch</span><span>:
+    </span><span class="attribute-name">runs-on</span><span>: </span><span class="string-literal">ubuntu-latest</span><span>
+    </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create `develop` branch or rebase it to latest `main`</span><span>
+    </span><span class="attribute-name">steps</span><span>:
+      - </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create `develop` branch (if it does not exists)</span><span>
+        </span><span class="attribute-name">env</span><span>:
+          </span><span class="attribute-name">GITHUB_TOKEN</span><span>: </span><span class="string-literal">${{ github.token }}</span><span>
+        </span><span class="attribute-name">run</span><span>: </span><span class="string-literal">|</span><span>
+            gh api --silent \
+                /repos/${{ github.repository }}/git/refs \
+                -f ref=&quot;refs/heads/develop&quot; \
+                -f sha=&quot;${{ github.sha}}&quot; ||
+                echo &#39;`develop` branch already exists on ${{ github.repository }}&#39;
+      - </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Checkout develop branch</span><span>
+        </span><span class="attribute-name">uses</span><span>: </span><span class="string-literal">actions/checkout@v2</span><span>
+        </span><span class="attribute-name">with</span><span>:
+          </span><span class="attribute-name">ref</span><span>: </span><span class="string-literal">develop</span><span>
+          </span><span class="attribute-name">fetch-depth</span><span>: </span><span class="number-literal">0</span><span>
+
+      - </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Rebase `develop` branch to latest `origin/main`</span><span>
+        </span><span class="attribute-name">run</span><span>: </span><span class="string-literal">|</span><span>
+            git config user.email &quot;41898282+github-actions[bot]@users.noreply.github.com&quot;
+            git config user.name &quot;github-actions[bot]&quot;
+            git rebase origin/main
+            git push -f -u origin develop</span></code></pre>
+            </details>
+            <p>Once we add this file to our repository any push to the <code>main</code> branch will
+            cause the <code>develop</code> branch to be created or updated.</p>
+            <p>From this point on, we can start receiving PRs from Scala Steward to the
+            <code>develop</code> branch. We will only need to merge those PRs automatically. To do
+            this, as mentioned in the first section, we can use apps like <a href="https://mergify.com" rel="external" target="_blank">Mergify</a>,
+            GitHub Actions like <a href="https://github.com/marketplace/actions/merge-dependency-update-prs" rel="external" target="_blank">this one</a> or enable
+            <a href="https://docs.github.com/es/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/automatically-merging-a-pull-request" rel="external" target="_blank">auto-merge</a> on those PRs using a new workflow, I leave it up to you.</p>
+            <figure>
+              <img src="https://media.giphy.com/media/TbYgHMnICI1A4/giphy.gif">
+              <figcaption>
+                <a href="https://giphy.com/gifs/dragon-ball-z-dbz-TbYgHMnICI1A4" rel="external" target="_blank">Provided by Giphy</a>
+              </figcaption>
+            </figure>
+            
+            <h2 id="update-day" class="section">Update day</h2>
+            <p>By now, we will have our <code>develop</code> branch loaded with updates. So the only thing
+            left to do is to make sure that every so often, a PR is created to our
+            default branch.</p>
+            <p>And how can we do that? Of course! Using GitHub Actions, let&#39;s get to it!</p>
+            <p>First of all, as before, we will create a new file <code>scheduled-updates-pr.yml</code>
+            in the <code>.github/workflows</code> folder. The difference with the previous workflow
+            will be that instead of reacting to pushes to <code>main</code> we will make this workflow
+            launch over and over again, at the intervals we designate using the
+            <a href="https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule" rel="external" target="_blank"><code>schedule</code></a> event.</p>
+            <blockquote>In this example the workflow is set to be launched weekly. If you want to
+            change this schedule you can use <a href="https://crontab.guru" rel="external" target="_blank">this page</a> to calculate your
+            CRON command.</blockquote>
+            <pre><button><i class="far fa-copy"></i></button><code class="language-yaml"><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create PR from `develop` to `main`</span><span>
+
+</span><span class="attribute-name">on</span><span>:
+  </span><span class="attribute-name">schedule</span><span>:
+    - </span><span class="attribute-name">cron</span><span>: </span><span class="string-literal">&quot;0 0 * * MON&quot;</span><span>
+
+</span><span class="attribute-name">jobs</span><span>:
+  </span><span class="attribute-name">create-develop-pr</span><span>:
+    </span><span class="attribute-name">runs-on</span><span>: </span><span class="string-literal">ubuntu-latest</span><span>
+    </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create PR from `develop` to `main`</span><span>
+    </span><span class="attribute-name">steps</span><span>:
+      - </span><span class="attribute-name">run</span><span>: </span><span class="string-literal">echo &quot;Create develop PR&quot;</span></code></pre>
+            <p>This workflow will start every Monday at 00:00.</p>
+            <figure>
+              <img src="https://media.giphy.com/media/3o7WIQ4FARJdpmUni8/giphy-downsized-large.gif">
+              <figcaption>
+                <a href="https://giphy.com/gifs/bill-murray-groundhog-day-well-its-again-3o7WIQ4FARJdpmUni8" rel="external" target="_blank">Provided by Giphy</a>
+              </figcaption>
+            </figure>
+            <p>And now let&#39;s go for the implementation. It will consist of a single step that will do the following:</p>
+            <ul>
+              <li>Search for the <code>main</code> branch SHA.</li>
+              <li>Search for the <code>develop</code> branch SHA.</li>
+              <li>If the SHAs do not match, it will create a PR from <code>develop</code> to <code>main</code>.</li>
+              <li>If the SHA&#39;s match, it will report that there are no updates.</li>
+            </ul>
+            <pre><button><i class="far fa-copy"></i></button><code class="language-yaml"><span>- </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create Pull Request</span><span>
+  </span><span class="attribute-name">run</span><span>: </span><span class="string-literal">|</span><span>
+    develop=$(gh api /repos/$GITHUB_REPOSITORY/commits/refs/heads/develop -q &#39;.sha&#39;)
+    main=$(gh api /repos/$GITHUB_REPOSITORY/commits/refs/heads/main -q &#39;.sha&#39;)
+
+    if [[ $develop != $main ]]; then
+        gh api /repos/$GITHUB_REPOSITORY/pulls \
+          -f title=&quot;Scala Steward Updates&quot; \
+          -f base=main \
+          -f head=develop
+    else
+        echo &quot;There are no updates&quot;
+    fi
+  </span><span class="attribute-name">env</span><span>:
+    </span><span class="attribute-name">GITHUB_TOKEN</span><span>: </span><span class="string-literal">${{ github.token }}</span></code></pre>
+            <p>Done! Our new workflow doesn&#39;t need anything else. Here is the full version:</p>
+            <details>
+              <summary><code>.github/workflows/scheduled-updates-pr.yml</code></summary>
+              <pre><button><i class="far fa-copy"></i></button><code class="language-yaml"><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create PR from `develop` to `main`</span><span>
+
+</span><span class="attribute-name">on</span><span>:
+  </span><span class="attribute-name">schedule</span><span>:
+    - </span><span class="attribute-name">cron</span><span>: </span><span class="string-literal">&quot;0 0 * * MON&quot;</span><span>
+
+</span><span class="attribute-name">jobs</span><span>:
+  </span><span class="attribute-name">create-develop-pr</span><span>:
+    </span><span class="attribute-name">runs-on</span><span>: </span><span class="string-literal">ubuntu-latest</span><span>
+    </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create PR from `develop` to `main`</span><span>
+    </span><span class="attribute-name">steps</span><span>:
+      - </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create Pull Request</span><span>
+        </span><span class="attribute-name">run</span><span>: </span><span class="string-literal">|</span><span>
+          develop=$(gh api /repos/$GITHUB_REPOSITORY/commits/refs/heads/develop -q &#39;.sha&#39;)
+          main=$(gh api /repos/$GITHUB_REPOSITORY/commits/refs/heads/main -q &#39;.sha&#39;)
+
+          if [[ $develop != $main ]]; then
+              gh api /repos/$GITHUB_REPOSITORY/pulls \
+                -f title=&quot;Scala Steward Updates&quot; \
+                -f base=main \
+                -f head=develop
+          else
+              echo &quot;There are no updates&quot;
+          fi
+        </span><span class="attribute-name">env</span><span>:
+          </span><span class="attribute-name">GITHUB_TOKEN</span><span>: </span><span class="string-literal">${{ github.token }}</span></code></pre>
+            </details>
+            <p>And... that&#39;s it! With these two workflows we just created we have everything
+            we need to avoid <em>Update Hell ™️</em>. We can replicate this approach in all of our organization&#39;s Scala repositories and keep them up to date without too much
+            effort.</p>
+            <p>Here are some improvements you can implement in case you feel like playing
+            around with GitHub Actions:</p>
+            <ul>
+              <li>A notification could be sent to Slack (or whatever app your organization
+              uses to communicate) when the automatic rebasing of the <code>develop</code> branch fails.</li>
+              <li>Activate a <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/about-protected-branches#require-status-checks-before-merging" rel="external" target="_blank">branch-protection</a> on the <code>develop</code> branch
+              to ensure that PRs are always tested on top of all updates that have already
+              taken place.</li>
+              <li>Can you think of anything else? Leave me a comment!</li>
+            </ul>
+            <p>Thank you and see you next time!</p>
         </article>
         <p>
         <img width=80 style="float:left; margin-right: 1rem;" src="https://storage.ko-fi.com/cdn/cup-border.png" />

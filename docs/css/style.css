@@ -95,15 +95,8 @@ pre code {
     border-radius: 5px;
 }
 
-footer {
-    border-top: 0;
-}
-
-footer:before {
-    content: "";
-    display: block;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 2rem;
+body > footer {
+    padding: 2rem 0rem 1.5rem 0rem;
 }
 
 footer>img {

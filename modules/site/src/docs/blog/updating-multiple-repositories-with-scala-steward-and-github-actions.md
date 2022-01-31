@@ -21,7 +21,7 @@ pretty well:
 
 It can be used on any public Scala project hosted on
 GitHub, GitLab or BitBucket that uses [SBT] or [Mill] by simply
-adding said repository to [this file][repos.json]. Shortly after that
+adding said repository to [this file][repos.json]. Shortly after that,
 you will start receiving Pull Requests.
 
 There are already more than 1500 repositories using this public instance of
@@ -29,7 +29,7 @@ Scala Steward which [Frank Thomas] (the creator of Scala Steward) has
 deployed as a free service for the entire Scala Open-Source ecosystem.
 
 But the possibilities don't stop there, you can also launch your own instance
-using [GitHub Actions][scala-steward-action], [Docker] or even [Coursier]:
+using [GitHub Actions][scala-steward-action], [Docker], or even [Coursier]:
 
 ``` bash
 cs launch --contrib scala-steward
@@ -50,7 +50,7 @@ caption-link = "https://giphy.com/gifs/token-Lopx9eUi34rbq"
 
 If you have already taken a look at the Scala Steward [FAQ], you may have seen
 that one option to handle these is to auto-merge such updates using apps like
-[Mergify], GitHub Actions like [this][merge-dependency-update-prs] or by
+[Mergify], GitHub Actions like [this][merge-dependency-update-prs], or by
 enabling [auto-merge] on those PRs. 
 
 While auto-merging may be a very valid option, it is likely that, like me, you
@@ -60,9 +60,9 @@ have to follow a particular flow that prevents them from reaching the default
 branch of your repository (commonly `main` [~~or `master`~~][no-master]).
 
 For these cases, I offer you a solution that (at least in my team) is working
-very well. As a brief summary, it consists on instructing Scala Steward to
+very well. As a summary, it consists of instructing Scala Steward to
 update a branch other than the default one automatically (the typical `develop`
-branch, if you follow [GitFlow]), and create a PR from that branch to your
+branch if you follow [GitFlow]), and creating a PR from that branch to your
 default branch periodically. Now, how do we do that? Well, with GitHub Actions.
 
 ## Scala Steward, forget about *main*
@@ -112,11 +112,10 @@ And that's it! You don't need to do anything else for this step.
 Once the above step is finished and deployed, Scala Steward will start sending
 PRs updating the branch we have indicated, instead of the default branch of the
 repository. The problem is that, as you might expect, such a branch does not
-exist. For all this to work, we need to ensure two things:
+exist. For all this to work, we need to ensure that:
 
--   On the one hand, that there is a `develop` branch.
--   On the other hand, that this branch is kept up to date with the latest
-    changes in our default branch.
+-  There is a `develop` branch.
+-  It is kept up to date with the latest changes in our default branch.
 
 @:figure(https://media.giphy.com/media/l0MYBtZdU9ZrOiQCc/giphy.gif) {
 caption = "Provided by Giphy"
@@ -172,7 +171,7 @@ fails, it means that the `develop` branch already exists, so we warn the user
 via `echo` to prevent the whole workflow from failing.
 
 > `gh` allows us to do multiple operations in GitHub directly from the shell,
-> in a simple and concise way. If you want to know more about the different
+> simply and concisely. If you want to know more about the different
 > commands, I recommend you to consult [its documentation][gh-docs].
 
 The next step will be to checkout the `develop` branch. We must add
@@ -302,12 +301,13 @@ caption = "Provided by Giphy"
 caption-link = "https://giphy.com/gifs/bill-murray-groundhog-day-well-its-again-3o7WIQ4FARJdpmUni8"
 }
 
-And now let's go for the implementation. It will consist of a single step that will do the following:
+And now let's go for the implementation. It will consist of a single step that
+will do the following:
 
 -   Search for the `main` branch SHA.
 -   Search for the `develop` branch SHA.
 -   If the SHAs do not match, it will create a PR from `develop` to `main`.
--   If the SHA's match, it will report that there are no updates.
+-   If the SHAs match, it will report that there are no updates.
 
 ``` yaml
 - name: Create Pull Request
@@ -364,8 +364,9 @@ jobs:
 
 @:@
 
-And... that's it! With these two workflows we just created we have everything
-we need to avoid *Update Hell ™️*. We can replicate this approach in all of our organization's Scala repositories and keep them up to date without too much
+And... that's it! With these two workflows, we just created we have everything
+we need to avoid *Update Hell ™️*. We can replicate this approach in all of our
+organization's Scala repositories and keep them up to date without too much
 effort.
 
 Here are some improvements you can implement in case you feel like playing

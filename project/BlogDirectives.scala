@@ -111,7 +111,7 @@ case object BlogDirectives extends DirectiveRegistry {
 
     lazy val formattedDate = date.format(formatter.withLocale(locale))
 
-    def link(span: Span) = SpanLink(Seq(span), InternalTarget(path))
+    def link(span: Span) = SpanLink(Seq(span), InternalTarget(path.withoutSuffix))
 
   }
 

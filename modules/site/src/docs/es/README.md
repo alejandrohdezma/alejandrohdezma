@@ -28,8 +28,9 @@ Si quieres ponerte en contacto conmigo:
 **<i class="fab fa-github"></i> Algunos de mis proyectos Open Source**
 
 - [scala-steward-action](https://github.com/scala-steward-org/scala-steward-action)</a>: Una "Github Action" para lanzar [Scala Steward](https://github.com/scala-steward-org/scala-steward) en tus propios repositorios.
-- [http4s-munit](https://github.com/alejandrohdezma/http4s-munit): Integración entre http4s & MUnit.
+- [http4s-munit](https://github.com/alejandrohdezma/http4s-munit): Integración entre http4s & MUnit (en colaboración con [@gutiory](https://github.com/gutiory)).
+- [tapir-anyof](https://github.com/alejandrohdezma/tapir-anyof): Extension para la librería Tapir que permite simplificar la creación de salidas de error para ASTs.
+- [tapir-golden-openapi-munit](https://github.com/alejandrohdezma/tapir-golden-openapi-munit): Utilidad de "Golden-testing" para endpoints Tapir usando MUnit (en colaboración con [@gutiory](https://github.com/gutiory)).
 - [sbt-github](https://github.com/alejandrohdezma/sbt-github): Plugin SBT para leer "settings" como `license` o `developers` de GitHub.
 - [sbt-fix](https://github.com/alejandrohdezma/sbt-fix): Plugin SBT para mejorar el dúo "scalafix" & "scalafmt".
-- [sbt-modules](https://github.com/alejandrohdezma/sbt-modules): Plugin SBT para simplificar la creación de módulos dentro de un proyecto.
 - [sbt-ci](https://github.com/alejandrohdezma/sbt-ci): Un set de archivos, plantillas de documentación y "workflows" de "GitHub Actions" para librerías Scala.

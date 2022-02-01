@@ -23,10 +23,11 @@ If you want to contact me:
 # :octocat: Some of my Open Source Projects
 
 - [scala-steward-action](https://github.com/scala-steward-org/scala-steward-action): A Github Action to launch [Scala Steward](https://github.com/scala-steward-org/scala-steward) in your repository.
-- [http4s-munit](https://github.com/alejandrohdezma/http4s-munit): Integration between http4s & MUnit.
+- [http4s-munit](https://github.com/alejandrohdezma/http4s-munit): Integration between http4s & MUnit (co-authored with [@gutiory](https://github.com/gutiory)).
+- [tapir-anyof](https://github.com/alejandrohdezma/tapir-anyof): Tapir extension to simplify creating error outputs for sealed traits.
+- [tapir-golden-openapi-munit](https://github.com/alejandrohdezma/tapir-golden-openapi-munit): Golden testing for Tapir endpoints using MUnit (co-authored with [@gutiory](https://github.com/gutiory)).
 - [sbt-github](https://github.com/alejandrohdezma/sbt-github): SBT plugin to read several settings from Github.
 - [sbt-fix](https://github.com/alejandrohdezma/sbt-fix): SBT plugin that enhances scalafix & scalafmt duo.
-- [sbt-modules](https://github.com/alejandrohdezma/sbt-modules): SBT plugin that simplifies modules creation.
 - [sbt-ci](https://github.com/alejandrohdezma/sbt-ci): Default workflow, documentation and root files for scala libraries.
 
 # :green_book: My latest blog posts

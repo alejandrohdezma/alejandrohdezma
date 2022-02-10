@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/atom-one-dark-reasonable.min.css">
     
     <link rel="icon" href="../images/favicon.ico" type="image/icon type">
 </head>
@@ -54,12 +55,36 @@
         <img width=2000 height=405 src="../images/footer.webp">
     </footer>
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
     <script>
         document
             .getElementsByTagName('nav')[0]
             .querySelectorAll('a[href="' + window.location.pathname + '"]')[0]
             .classList
             .add('active')
+
+        if (window.location.href.indexOf("cv") > -1) {
+            const loadButton = document.querySelector('main > pre > button')
+            loadButton.style.display = "block"
+            hljs.highlightElement(loadButton.nextElementSibling)
+
+            loadButton.addEventListener("click", () => {
+                loadButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'
+                setTimeout(() => {
+                    fetch("cv.json").then(response => response.text()).then(text => {
+                        const pre = document.createElement('pre')
+                        const code = document.createElement('code')
+                        code.className = "hljs language-json"
+                        code.style.wordWrap = "break-word"
+                        code.style.whiteSpace = "pre-wrap"
+                        pre.appendChild(code)
+                        
+                        code.innerHTML = hljs.highlight(text, {language: 'json'}).value
+                        loadButton.parentElement.replaceWith(pre)
+                    })
+                }, 2000);
+            })
+        }
     </script>
 </body>
 

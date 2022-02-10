@@ -1,0 +1,87 @@
+{
+  "github": "alejandrohdezma",
+  "full_name": "Alejandro Hernández Malillos",
+  "residence": "España",
+  "experience": [
+    {
+      "company": {
+        "name": "47 Degrees",
+        "url": "https://www.47deg.com/"
+      },
+      "position": "Ingeniero Scala & DevOps",
+      "currently_working": true,
+      "start_year": 2019,
+      "end_year": null,
+      "experiences": [
+        "Micro-servicios: APIs HTTP & gRPC y Apache Kafka.",
+        "Librerías con las que he trabajado: ecosistema Typelevel (cats, http4s, doobie), Tapir, Refined...",        
+        "He trabajo en múltiples talleres y sesiones de aprendizaje internos sobre varios temas: APIs HTTP, SBT (y desarrollo de plugins), Scala 3...",        
+        "Despliegue de proyectos Scala usando tanto Jenkins como GitHub Actions.",        
+        "Desarrollo de automatizaciones con GitHub Actions y Slack para facilitar el día a día de los programadores (Bash y TypeScript).",        
+        "Monitorización de proyectos Scala usando herramientas como Prometheus, Marathon or Grafana.",        
+        "He desarrollado múltiples proyectos Open Source y participado en el desarrollo de algunas librerías internas."
+      ]
+    },
+    {
+      "company": {
+        "name": "Liferay S.L.",
+        "url": "https://www.liferay.com/"
+      },
+      "position": "Ingeniero Backend (Java)",
+      "currently_working": false,
+      "start_year": 2017,
+      "end_year": 2019,
+      "experiences": [
+        "Trabajé en el desarrollo de las primeras REST APIs de la empresa.",
+        "Lideré el desarrollo de \"Apio Architect\", una librería para construir APIs REST Hypermedia.",
+        "Colaboré en el desarrollo del resto de las APIs para el principal producto de la empresa."
+      ]
+    },
+    {
+      "company": {
+        "name": "Liferay S.L.",
+        "url": "https://www.liferay.com/"
+      },
+      "position": "Ingeniero Móvil (Java, Kotlin & Swift)",
+      "currently_working": false,
+      "start_year": 2016,
+      "end_year": 2019,
+      "experiences": [
+        "Contribuí al desarrollo de nuevos componentes para la librería de componentes móviles de la empresa."
+      ]
+    },
+    {
+      "company": {
+        "name": "FunctionalHub.com",
+        "url": "https://www.functionalhub.com/"
+      },
+      "position": "Co-fundador, guionista, y locutor",
+      "currently_working": false,
+      "start_year": "2015",
+      "end_year": "2019",
+      "experiences": [
+        "Co-fundé el lanzamiento de una flataforma online para el aprendizaje de lenguajes funcionales y participé activamente en la escritura de los guiones tanto para cursos presenciales como vídeos. También locuté gran parte de los vídeos."
+      ]
+    }
+  ],
+  "education": [
+    {
+        "name": "Máster universitario en informática móvil",
+        "institution": {
+          "name": "Universidad Pontificia de Salamanca",
+          "url": "https://www.upsa.es"
+        },
+        "start_year": 2015,
+        "end_year": 2016
+    },
+    {
+        "name": "Grado en Ingeniería Informática en Sistemas de Información",
+        "institution": {
+          "name": "Universidad de Salamanca",
+          "url": "https://www.usal.es"
+        },
+        "start_year": 2010,
+        "end_year": 2015
+    }
+  ]
+}

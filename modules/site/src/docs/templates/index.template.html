@@ -59,15 +59,13 @@
                 loadButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'
                 setTimeout(() => {
                     fetch("cv.json").then(response => response.text()).then(text => {
-                        const pre = document.createElement('pre')
-                        const code = document.createElement('code')
+                        const code = loadButton.nextElementSibling
                         code.className = "hljs language-json"
                         code.style.wordWrap = "break-word"
                         code.style.whiteSpace = "pre-wrap"
-                        pre.appendChild(code)
                         
                         code.innerHTML = hljs.highlight(text, {language: 'json'}).value
-                        loadButton.parentElement.replaceWith(pre)
+                        loadButton.remove()
                     })
                 }, 2000);
             })

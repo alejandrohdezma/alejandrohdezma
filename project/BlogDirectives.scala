@@ -14,12 +14,15 @@ import laika.directive.Templates
 import laika.directive.Spans
 import laika.sbt.LaikaPlugin.autoImport._
 import org.apache.batik.svggen.ImageCacher.External
+import laika.config.Config
 
 case object BlogDirectives extends DirectiveRegistry {
 
   /** Use it in templates as `@:blog` to create an `<ul>` with the list of articles in that folder. */
   val blogDirective = Blocks.create("blog") {
     laika.directive.Blocks.dsl.cursor.map { cursor =>
+      val locale = getLocale(cursor.config)
+
       val articles = cursor.parent.allDocuments.toList
         .filter(_.path.basename != "README")
         .map { document =>
@@ -28,8 +31,7 @@ case object BlogDirectives extends DirectiveRegistry {
             header      <- document.config.get[String]("document.header")
             description <- document.config.get[String]("document.description")
             date        <- document.config.get[String]("document.date").map(LocalDate.parse)
-            locale      <- document.config.get[Boolean]("document.spanish").map(if (_) new Locale("es") else Locale.US)
-          } yield Article(document.path, title, header, description, date, locale)
+          } yield Article(document.path, title, header, description, date)
         }
         .mapFilter(_.toOption)
         .sortBy(_.date.toEpochDay())(Ordering.Long.reverse)
@@ -39,7 +41,7 @@ case object BlogDirectives extends DirectiveRegistry {
               BlockSequence(
                 BlockSequence(article.link(Image(AbsoluteInternalTarget(Path(List("images", article.header)))))),
                 Header(3, article.link(Text(article.title.toUpperCase()))),
-                Paragraph(Text(article.formattedDate, Styles("time"))),
+                Paragraph(Text(article.date.format(locale), Styles("time"))),
                 Paragraph(Text(article.description))
               )
             ),
@@ -76,10 +78,7 @@ case object BlogDirectives extends DirectiveRegistry {
     laika.directive.Templates.dsl.cursor
       .map(_.config)
       .map { config =>
-        for {
-          date   <- config.get[String]("document.date").map(LocalDate.parse)
-          locale <- config.get[Boolean]("document.spanish").map(if (_) new Locale("es") else Locale.US)
-        } yield TemplateString(date.format(formatter.withLocale(locale)))
+        config.get[String]("document.date").map(LocalDate.parse(_).format(getLocale(config))).map(TemplateString(_))
       }
       .evalMap(_.left.map(_.message))
   }
@@ -105,16 +104,17 @@ case object BlogDirectives extends DirectiveRegistry {
       title: String,
       header: String,
       description: String,
-      date: LocalDate,
-      locale: Locale
+      date: LocalDate
   ) {
-
-    lazy val formattedDate = date.format(formatter.withLocale(locale))
 
     def link(span: Span) = SpanLink(Seq(span), InternalTarget(path.withoutSuffix))
 
   }
 
-  private val formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
+  private def getLocale(config: Config) = {
+    val locale = config.get[Boolean]("document.spanish").fold(_ => Locale.US, if (_) new Locale("es") else Locale.US)
+
+    DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(locale)
+  }
 
 }

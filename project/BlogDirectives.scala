@@ -90,11 +90,47 @@ case object BlogDirectives extends DirectiveRegistry {
       .map(TemplateString(_))
   }
 
+  val alternateUrlDirective = Templates.create("alternateUrl") {
+    laika.directive.Templates.dsl.cursor.map { document =>
+      val spanish = document.config.get[Boolean]("document.spanish").getOrElse(false)
+
+      val path = document.config
+        .get[String]("document.translation.path")
+        .fold(_ => document.path, document.path.withBasename(_))
+        .withoutSuffix
+        .toString()
+        .replace("/README", "/")
+        .stripSuffix("/")
+
+      if (path.isEmpty() || path == "/es")
+        TemplateString(if (spanish) "/" else s"/es")
+      else
+        TemplateString(if (spanish) path.stripPrefix("/es") else s"/es$path")
+    }
+  }
+
+  val localeDirective = Templates.create("locale") {
+    laika.directive.Templates.dsl.cursor.map { document =>
+      val spanish = document.config.get[Boolean]("document.spanish").getOrElse(false)
+
+      TemplateString(if (spanish) "es_ES" else "en_US")
+    }
+  }
+
+  val alternateLocaleDirective = Templates.create("alternateLocale") {
+    laika.directive.Templates.dsl.cursor.map { document =>
+      val spanish = document.config.get[Boolean]("document.spanish").getOrElse(false)
+
+      TemplateString(if (spanish) "en_US" else "es_ES")
+    }
+  }
+
   val spanDirectives = Nil
 
   val blockDirectives = List(blogDirective, figureDirective, detailsDirective)
 
-  val templateDirectives = List(dateDirective, urlDirective)
+  val templateDirectives =
+    List(dateDirective, urlDirective, alternateUrlDirective, localeDirective, alternateLocaleDirective)
 
   val linkDirectives = Nil
 

@@ -33,14 +33,14 @@
     </header>
     
     <main>
-        @:if(document.spanish)<a style="float: left; margin-left: 1.5rem;" href="/es/blog/"><i class="fas fa-arrow-left"></i> Volver atrás</a>@:else<a style="float: left; margin-left: 1.5rem;" href="/blog/"><i class="fas fa-arrow-left"></i> Go back</a>@:@
+        <a style="float: left; margin-left: 1.5rem;" href="@:k8s(/blog/)"><i class="fas fa-arrow-left"></i> @:k8s(Go back)</a>
         <div style="text-align: right; margin-right: 1.5rem;">
             <a rel="alternate" href="@:alternateUrl" hreflang="@:alternateLocale" lang="@:alternateLocale">
-                @:if(document.spanish) See english version @:else Ver versión en español @:@
+                @:k8s(Ver versión en español)
             </a>
         </div>
         <article style="margin-top: 1rem; margin-bottom: 3rem;">
-            <img src="@:if(document.spanish)../@:@../images/${document.header}">
+            <img src="@:path(../images)/${document.header}">
             <p>
                 <img style="float: left; margin-right: 1rem;" width=60 src="https://avatars.githubusercontent.com/u/9027541?v=4">
                 <b>Alejandro Hernández</b><br>
@@ -50,17 +50,10 @@
         </article>
         <p>
         <img width=80 style="float:left; margin-right: 1rem;" src="https://storage.ko-fi.com/cdn/cup-border.png" />
-        @:if(document.spanish)
-        <i>¿Te ha gustado el artículo?</i><br>
-        <i>Si quieres, <a href="https://ko-fi.com/alejandrohdezma" target="_blank" rel="external">puedes invitarme a un café</a></i>
+        <i>@:k8s(Did you enjoy the article?)</i><br>
+        <i>@:k8s(If you want), <a href="https://ko-fi.com/alejandrohdezma" target="_blank" rel="external">@:k8s(you can buy me a coffee)</a></i>
         </p>
-        <p><i><sub>¿Has encontrado una errata? <a href="https://github.com/alejandrohdezma/alejandrohdezma/edit/main/modules/site/src/docs${cursor.currentDocument.path}" target="_blank" rel="external">¡Envíame una PR!</a></sub></i></p>
-        @:else
-        <i>Did you enjoy the article?</i><br>
-        <i>If you want, <a href="https://ko-fi.com/alejandrohdezma" target="_blank" rel="external">you can buy me a coffee</a></i>
-        </p>
-        <p><i><sub>Did you find any misprint or error? Please, <a href="https://github.com/alejandrohdezma/alejandrohdezma/edit/main/modules/site/src/docs${cursor.currentDocument.path}" target="_blank" rel="external">send me a PR!</a></sub></i></p>
-        @:@
+        <p><i><sub>@:k8s("Did you find any misprint or error? Please,") <a href="https://github.com/alejandrohdezma/alejandrohdezma/edit/main/modules/site/src/docs${cursor.currentDocument.path}" target="_blank" rel="external">@:k8s(send me a PR!)</a></sub></i></p>
         <script async src="https://giscus.app/client.js" data-repo="alejandrohdezma/alejandrohdezma"
             data-repo-id="MDEwOlJlcG9zaXRvcnkzMTY5NDkzOTY=" data-category="Blog" data-category-id="DIC_kwDOEuRDlM4CAfTC"
             data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-theme="preferred_color_scheme"

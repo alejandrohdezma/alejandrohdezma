@@ -174,7 +174,37 @@ case object BlogDirectives extends DirectiveRegistry {
   val alternateLocaleDirective = Templates.create("alternateLocale") {
     laika.directive.Templates.dsl.cursor.map { document =>
       TemplateString(if (isSpanish(document)) "en_US" else "es_ES")
+    }
+  }
 
+  val k8sDirective = Templates.create("k8s") {
+    import laika.directive.Templates.dsl._
+
+    (attribute(0).as[String], cursor).mapN { (key, document) =>
+      val translations = Map(
+        "/blog/"                                      -> "/es/blog/",
+        "Go back"                                     -> "Volver atrás",
+        "Ver versión en español"                      -> "See english version",
+        "../images/"                                  -> "../../images/",
+        "Did you enjoy the article?"                  -> "¿Te ha gustado el artículo?",
+        "If you want"                                 -> "Si quieres",
+        "you can buy me a coffee"                     -> "puedes invitarme a un café",
+        "Did you find any misprint or error? Please," -> "¿Has encontrado una errata?",
+        "send me a PR!"                               -> "¡Envíame una PR!",
+        "/"                                           -> "/es/",
+        "/cv"                                         -> "/es/cv",
+        "/talks/"                                     -> "/es/talks/",
+        "/blog/"                                      -> "/es/blog/",
+        "About me"                                    -> "Sobre mí",
+        "My CV"                                       -> "Mi CV",
+        "My talks"                                    -> "Mis charlas",
+        "Blog"                                        -> "Blog",
+        "header_us.webp"                              -> "header_es.webp"
+      )
+
+      val text = if (document.path.toString().startsWith("/es")) translations(key) else key
+
+      TemplateString(text)
     }
   }
 
@@ -184,7 +214,7 @@ case object BlogDirectives extends DirectiveRegistry {
 
   val templateDirectives =
     List(dateDirective, urlDirective, alternateUrlDirective, localeDirective, shortLocaleDirective,
-      alternateLocaleDirective)
+      alternateLocaleDirective, k8sDirective)
 
   val linkDirectives = Nil
 

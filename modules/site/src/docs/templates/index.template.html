@@ -21,19 +21,19 @@
 
 <body>
     <header>
-        @:if(document.spanish)<img width=2000 heigth=804 src="@:path(../images/header_es.webp)">@:else<img width=2000 height=804 src="@:path(../images/header_us.webp)">@:@
+        <img width=2000 height=804 src="@:path(../images/)/@:k8s(header_us.webp)">
         <nav>
-            @:if(document.spanish)<a href="/es/">Sobre mí</a>@:else<a href="/">About me</a>@:@
-            @:if(document.spanish)<a href="/es/cv">Mi CV</a>@:else<a href="/cv">My CV</a>@:@
-            @:if(document.spanish)<a href="/es/talks/">Mis charlas</a>@:else<a href="/talks/">My talks</a>@:@
-            @:if(document.spanish)<a href="/es/blog/">Blog</a>@:else<a href="/blog/">Blog</a>@:@
+            <a href="@:k8s(/)">@:k8s(About me)</a>
+            <a href="@:k8s(/cv)">@:k8s(My CV)</a>
+            <a href="@:k8s(/talks/)">@:k8s(My talks)</a>
+            <a href="@:k8s(/blog/)">@:k8s(Blog)</a>
         </nav>
     </header>
 
     <main>
         <div style="text-align: right; margin-right: 1.5rem;">
             <a rel="alternate" href="@:alternateUrl" hreflang="@:alternateLocale" lang="@:alternateLocale">
-                @:if(document.spanish) See english version @:else Ver versión en español @:@
+                @:k8s(Ver versión en español)
             </a>
         </div>
         ${cursor.currentDocument.content}

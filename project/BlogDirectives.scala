@@ -162,7 +162,12 @@ case object BlogDirectives extends DirectiveRegistry {
   val localeDirective = Templates.create("locale") {
     laika.directive.Templates.dsl.cursor.map { document =>
       TemplateString(if (isSpanish(document)) "es_ES" else "en_US")
+    }
+  }
 
+  val shortLocaleDirective = Templates.create("shortLocale") {
+    laika.directive.Templates.dsl.cursor.map { document =>
+      TemplateString(if (isSpanish(document)) "es" else "en")
     }
   }
 
@@ -178,7 +183,8 @@ case object BlogDirectives extends DirectiveRegistry {
   val blockDirectives = List(blogDirective, talksDirective, figureDirective, detailsDirective, talkDirective)
 
   val templateDirectives =
-    List(dateDirective, urlDirective, alternateUrlDirective, localeDirective, alternateLocaleDirective)
+    List(dateDirective, urlDirective, alternateUrlDirective, localeDirective, shortLocaleDirective,
+      alternateLocaleDirective)
 
   val linkDirectives = Nil
 

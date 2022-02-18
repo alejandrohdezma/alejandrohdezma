@@ -134,28 +134,21 @@ case object BlogDirectives extends DirectiveRegistry {
   }
 
   val urlDirective = Templates.create("url") {
-    laika.directive.Templates.dsl.cursor
-      .map(_.target.path.withoutSuffix.toString())
-      .map(_.replace("/README", ""))
-      .map(TemplateString(_))
-  }
+    import laika.directive.Templates.dsl._
 
-  val alternateUrlDirective = Templates.create("alternateUrl") {
-    laika.directive.Templates.dsl.cursor.map { document =>
-      val spanish = isSpanish(document)
+    (allAttributes, cursor).mapN { case (attributes, document) =>
+      (attributes.get[Boolean]("alternate").getOrElse(false), isSpanish(document), document.path, document.config)
+    }.map {
+      case (false, _, path, _) => TemplateString(path.withoutSuffix.toString().replace("/README", ""))
+      case (true, spanish, path, config) =>
+        val uri = config
+          .get[String]("document.translation.path")
+          .fold(_ => path, path.withBasename(_))
+          .withoutSuffix
+          .toString()
+          .replace("/README", "/")
 
-      val path = document.config
-        .get[String]("document.translation.path")
-        .fold(_ => document.path, document.path.withBasename(_))
-        .withoutSuffix
-        .toString()
-        .replace("/README", "/")
-        .stripSuffix("/")
-
-      if (path.isEmpty() || path == "/es")
-        TemplateString(if (spanish) "/" else s"/es")
-      else
-        TemplateString(if (spanish) path.stripPrefix("/es") else s"/es$path")
+        TemplateString(if (spanish) uri.stripPrefix("/es") else s"/es$uri")
     }
   }
 
@@ -215,7 +208,7 @@ case object BlogDirectives extends DirectiveRegistry {
 
   val blockDirectives = List(blogDirective, talksDirective, figureDirective, detailsDirective, talkDirective)
 
-  val templateDirectives = List(dateDirective, urlDirective, alternateUrlDirective, localeDirective, k8sDirective)
+  val templateDirectives = List(dateDirective, urlDirective, localeDirective, k8sDirective)
 
   val linkDirectives = Nil
 

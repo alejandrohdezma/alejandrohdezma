@@ -34,7 +34,11 @@
     
     <main>
         @:if(document.spanish)<a style="float: left; margin-left: 1.5rem;" href="/es/blog/"><i class="fas fa-arrow-left"></i> Volver atrás</a>@:else<a style="float: left; margin-left: 1.5rem;" href="/blog/"><i class="fas fa-arrow-left"></i> Go back</a>@:@
-        @:include(language.changer.template.html)
+        <div style="text-align: right; margin-right: 1.5rem;">
+            <a rel="alternate" href="@:alternateUrl" hreflang="@:alternateLocale" lang="@:alternateLocale">
+                @:if(document.spanish) See english version @:else Ver versión en español @:@
+            </a>
+        </div>
         <article style="margin-top: 1rem; margin-bottom: 3rem;">
             <img src="@:if(document.spanish)../@:@../images/${document.header}">
             <p>

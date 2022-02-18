@@ -30,7 +30,11 @@
     </header>
 
     <main>
-        @:include(language.changer.template.html)
+        <div style="text-align: right; margin-right: 1.5rem;">
+            <a rel="alternate" href="@:alternateUrl" hreflang="@:alternateLocale" lang="@:alternateLocale">
+                @:if(document.spanish) See english version @:else Ver versión en español @:@
+            </a>
+        </div>
         ${cursor.currentDocument.content}
     </main>
 

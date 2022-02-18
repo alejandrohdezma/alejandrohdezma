@@ -5,7 +5,7 @@ document.description = "¿Trabajas habitualmente con Scala Steward y gestionas m
 document.spanish = true
 document.header = scala_steward_with_github_badge.png
 document.date = "2022-01-15"
-document.translation.path = blog/updating-multiple-repositories-with-scala-steward-and-github-actions
+document.translation.path = updating-multiple-repositories-with-scala-steward-and-github-actions
 %}
 
 # Actualizando múltiples repositorios con Scala Steward y GitHub Actions

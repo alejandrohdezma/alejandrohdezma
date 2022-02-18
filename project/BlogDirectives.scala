@@ -142,7 +142,7 @@ case object BlogDirectives extends DirectiveRegistry {
 
   val alternateUrlDirective = Templates.create("alternateUrl") {
     laika.directive.Templates.dsl.cursor.map { document =>
-      val spanish = document.config.get[Boolean]("document.spanish").getOrElse(false)
+      val spanish = isSpanish(document)
 
       val path = document.config
         .get[String]("document.translation.path")
@@ -161,17 +161,15 @@ case object BlogDirectives extends DirectiveRegistry {
 
   val localeDirective = Templates.create("locale") {
     laika.directive.Templates.dsl.cursor.map { document =>
-      val spanish = document.config.get[Boolean]("document.spanish").getOrElse(false)
+      TemplateString(if (isSpanish(document)) "es_ES" else "en_US")
 
-      TemplateString(if (spanish) "es_ES" else "en_US")
     }
   }
 
   val alternateLocaleDirective = Templates.create("alternateLocale") {
     laika.directive.Templates.dsl.cursor.map { document =>
-      val spanish = document.config.get[Boolean]("document.spanish").getOrElse(false)
+      TemplateString(if (isSpanish(document)) "en_US" else "es_ES")
 
-      TemplateString(if (spanish) "en_US" else "es_ES")
     }
   }
 

@@ -22,7 +22,7 @@ case object BlogDirectives extends DirectiveRegistry {
   /** Use it in templates as `@:blog` to create an `<ul>` with the list of articles in that folder. */
   val blogDirective = Blocks.create("blog") {
     laika.directive.Blocks.dsl.cursor.map { cursor =>
-      val locale = getLocale(cursor.config)
+      val locale = getLocale(cursor)
 
       val articles = cursor.parent.allDocuments.toList
         .filter(_.path.basename != "README")
@@ -57,7 +57,7 @@ case object BlogDirectives extends DirectiveRegistry {
   /** Use it in templates as `@:talks` to create an `<ul>` with the list of talks in that folder. */
   val talksDirective = Blocks.create("talks") {
     laika.directive.Blocks.dsl.cursor.map { cursor =>
-      val locale = getLocale(cursor.config)
+      val locale = getLocale(cursor)
 
       val talks = cursor.parent.allDocuments.toList
         .filter(_.path.basename != "README")
@@ -125,12 +125,12 @@ case object BlogDirectives extends DirectiveRegistry {
 
   /** Use it in templates as `@:date` to create a text span with the article's localized date. */
   val dateDirective = Templates.create("date") {
-    laika.directive.Templates.dsl.cursor
-      .map(_.config)
-      .map { config =>
-        config.get[String]("document.date").map(LocalDate.parse(_).format(getLocale(config))).map(TemplateString(_))
-      }
-      .evalMap(_.left.map(_.message))
+    laika.directive.Templates.dsl.cursor.map { document =>
+      document.config
+        .get[String]("document.date")
+        .map(LocalDate.parse(_).format(getLocale(document)))
+        .map(TemplateString(_))
+    }.evalMap(_.left.map(_.message))
   }
 
   val urlDirective = Templates.create("url") {
@@ -197,10 +197,12 @@ case object BlogDirectives extends DirectiveRegistry {
 
   }
 
-  private def getLocale(config: Config) = {
-    val locale = config.get[Boolean]("document.spanish").fold(_ => Locale.US, if (_) new Locale("es") else Locale.US)
+  private def getLocale(document: DocumentCursor) = {
+    val locale = if (isSpanish(document)) new Locale("es") else Locale.US
 
     DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(locale)
   }
+
+  private def isSpanish(document: DocumentCursor) = document.path.toString().startsWith("/es")
 
 }

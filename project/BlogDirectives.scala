@@ -32,18 +32,19 @@ case object BlogDirectives extends DirectiveRegistry {
             header      <- document.config.get[String]("document.header")
             description <- document.config.get[String]("document.description")
             date        <- document.config.get[String]("document.date").map(LocalDate.parse)
-          } yield Article(document.path, title, header, description, date)
+          } yield (document.path, title, header, description, date)
         }
         .mapFilter(_.toOption)
-        .sortBy(_.date.toEpochDay())(Ordering.Long.reverse)
-        .map { article =>
+        .sortBy(_._5.toEpochDay())(Ordering.Long.reverse)
+        .map { case (path, title, header, description, date) =>
+          val link = (span: Span) => SpanLink(Seq(span), InternalTarget(path.withoutSuffix))
           BulletListItem(
             List(
               BlockSequence(
-                BlockSequence(article.link(Image(AbsoluteInternalTarget(Path(List("images", article.header)))))),
-                Header(3, article.link(Text(article.title.toUpperCase()))),
-                Paragraph(Text(article.date.format(locale), Styles("time"))),
-                Paragraph(Text(article.description))
+                BlockSequence(link(Image(AbsoluteInternalTarget(Path(List("images", header)))))),
+                Header(3, link(Text(title.toUpperCase()))),
+                Paragraph(Text(date.format(locale), Styles("time"))),
+                Paragraph(Text(description))
               )
             ),
             StringBullet("")
@@ -105,7 +106,6 @@ case object BlogDirectives extends DirectiveRegistry {
     (attribute(0).as[String].widen, attribute("caption").as[String], attribute("caption-link").as[String]).mapN {
       (src, caption, captionLink) =>
         Figure(Image(ExternalTarget(src)), Seq(SpanLink(Seq(Text(caption)), ExternalTarget(captionLink))), Nil)
-
     }
   }
 
@@ -211,19 +211,6 @@ case object BlogDirectives extends DirectiveRegistry {
   val templateDirectives = List(dateDirective, urlDirective, localeDirective, k8sDirective)
 
   val linkDirectives = Nil
-
-  /** Represents a blog article */
-  final case class Article(
-      path: Path,
-      title: String,
-      header: String,
-      description: String,
-      date: LocalDate
-  ) {
-
-    def link(span: Span) = SpanLink(Seq(span), InternalTarget(path.withoutSuffix))
-
-  }
 
   private def getLocale(document: DocumentCursor) = {
     val locale = if (isSpanish(document)) new Locale("es") else Locale.US

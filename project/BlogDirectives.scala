@@ -160,21 +160,24 @@ case object BlogDirectives extends DirectiveRegistry {
   }
 
   val localeDirective = Templates.create("locale") {
-    laika.directive.Templates.dsl.cursor.map { document =>
-      TemplateString(if (isSpanish(document)) "es_ES" else "en_US")
-    }
-  }
+    import laika.directive.Templates.dsl._
 
-  val shortLocaleDirective = Templates.create("shortLocale") {
-    laika.directive.Templates.dsl.cursor.map { document =>
-      TemplateString(if (isSpanish(document)) "es" else "en")
-    }
-  }
-
-  val alternateLocaleDirective = Templates.create("alternateLocale") {
-    laika.directive.Templates.dsl.cursor.map { document =>
-      TemplateString(if (isSpanish(document)) "en_US" else "es_ES")
-    }
+    (allAttributes, cursor).mapN { case (attributes, document) =>
+      (
+        attributes.get[Boolean]("short").getOrElse(false),
+        attributes.get[Boolean]("alternate").getOrElse(false),
+        isSpanish(document)
+      )
+    }.map {
+      case (true, true, true)    => "us"
+      case (false, false, true)  => "es-ES"
+      case (false, true, true)   => "en-US"
+      case (true, false, true)   => "es"
+      case (true, true, false)   => "es"
+      case (false, false, false) => "en-US"
+      case (false, true, false)  => "es-ES"
+      case (true, false, false)  => "en"
+    }.map(TemplateString(_))
   }
 
   val k8sDirective = Templates.create("k8s") {
@@ -212,9 +215,7 @@ case object BlogDirectives extends DirectiveRegistry {
 
   val blockDirectives = List(blogDirective, talksDirective, figureDirective, detailsDirective, talkDirective)
 
-  val templateDirectives =
-    List(dateDirective, urlDirective, alternateUrlDirective, localeDirective, shortLocaleDirective,
-      alternateLocaleDirective, k8sDirective)
+  val templateDirectives = List(dateDirective, urlDirective, alternateUrlDirective, localeDirective, k8sDirective)
 
   val linkDirectives = Nil
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="@:shortLocale">
+<html lang="@:locale{short=true}">
 <head>
     <title>${document.title}</title>
     <meta charset="UTF-8">
@@ -9,7 +9,7 @@
     <meta property="og:url" content="https://www.alejandrohdezma.com@:url" />
     <meta property="og:description" content="${document.description}">
     <meta property="og:type" content="profile" />
-    <link rel="alternate" hreflang="@:alternateLocale" href="https://www.alejandrohdezma.com@:alternateUrl" />
+    <link rel="alternate" hreflang="@:locale{alternate=true}" href="https://www.alejandrohdezma.com@:alternateUrl" />
     <meta property="og:locale" content="@:locale" />
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
     @:linkCSS
@@ -32,7 +32,7 @@
 
     <main>
         <div style="text-align: right; margin-right: 1.5rem;">
-            <a rel="alternate" href="@:alternateUrl" hreflang="@:alternateLocale" lang="@:alternateLocale">
+            <a rel="alternate" href="@:alternateUrl" hreflang="@:locale{alternate=true}" lang="@:locale{alternate=true}">
                 @:k8s(Ver versión en español)
             </a>
         </div>

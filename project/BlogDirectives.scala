@@ -2,6 +2,7 @@ import laika.directive.DirectiveRegistry
 
 import laika.directive.Blocks
 import laika.ast._
+import cats.data.NonEmptySet
 import cats.syntax.all._
 import laika.rst.ast._
 import laika.render.FOFormatter
@@ -53,6 +54,51 @@ case object BlogDirectives extends DirectiveRegistry {
     }
   }
 
+  /** Use it in templates as `@:talks` to create an `<ul>` with the list of talks in that folder. */
+  val talksDirective = Blocks.create("talks") {
+    laika.directive.Blocks.dsl.cursor.map { cursor =>
+      val locale = getLocale(cursor.config)
+
+      val talks = cursor.parent.allDocuments.toList
+        .filter(_.path.basename != "README")
+        .mapFilter { document =>
+          for {
+            title       <- document.config.get[String]("document.title").toOption
+            header      <- document.config.get[String]("document.header").toOption
+            description <- document.config.get[String]("document.description").toOption
+            date        <- document.config.get[String]("document.date").map(LocalDate.parse).toOption
+            github      <- document.config.get[String]("document.github.link").toOption
+            youtube     <- document.config.get[String]("document.youtube.link").toOption
+          } yield (document.path, title, header, description, date, github, youtube)
+        }
+        .sortBy(_._5.toEpochDay())(Ordering.Long.reverse)
+        .map { case (path, title, header, description, date, github, youtube) =>
+          val youtubeLink = SpanLink.external(youtube)
+
+          BulletListItem(
+            List(
+              BlockSequence(
+                BlockSequence(youtubeLink(Image(AbsoluteInternalTarget(Path(List("images", header)))))),
+                Header(3, youtubeLink(Text(title.toUpperCase()))),
+                Paragraph(Text(date.format(locale), Styles("time"))),
+                Paragraph(Text(description)),
+                BlockSequence(
+                  SpanLink.external(github)(IconStyle("fab fa-github"), Text(" GitHub")),
+                  SpanLink.internal(path.withoutSuffix)(IconStyle("fab fa-slideshare"), Text(" Slides"))
+                )
+              )
+            ),
+            StringBullet("")
+          )
+        }
+
+      if (talks.size > 0)
+        BulletList(talks, StringBullet(""), Id("talks"))
+      else
+        Paragraph(Seq(Text("No talks available in this language")))
+    }
+  }
+
   val figureDirective = Blocks.create("figure") {
     import Blocks.dsl._
 
@@ -71,6 +117,10 @@ case object BlogDirectives extends DirectiveRegistry {
         Right(BlockSequence(Paragraph(summary, Id("summary")) +: content, Id("details")))
       case _ => Left("A details block must contains two inner blocks: the summary (header) and the content (body).")
     }
+  }
+
+  val talkDirective = Blocks.create("talk") {
+    Blocks.dsl.rawBody.map(RawContent(NonEmptySet.of("html"), _))
   }
 
   /** Use it in templates as `@:date` to create a text span with the article's localized date. */
@@ -127,7 +177,7 @@ case object BlogDirectives extends DirectiveRegistry {
 
   val spanDirectives = Nil
 
-  val blockDirectives = List(blogDirective, figureDirective, detailsDirective)
+  val blockDirectives = List(blogDirective, talksDirective, figureDirective, detailsDirective, talkDirective)
 
   val templateDirectives =
     List(dateDirective, urlDirective, alternateUrlDirective, localeDirective, alternateLocaleDirective)

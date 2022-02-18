@@ -1,13 +1,15 @@
----
-css: style.css
-theme: blood
-highlightTheme: vs2015
-verticalSeparator: "///"
-revealOptions:
-  width: 700
-  transition: "fade"
-  controls: false
----
+{%
+	laika.template = ../../templates/talk.template.html
+	document.title = "Tu futuro test-framework favorito: MUnit"
+  document.description = "“¡Hey! ¿Quieres conocer el nuevo test-framework para Scala del que todo el mundo está hablando?“, “¡Estarás de broma! ¿Otro test-framework en Scala? ¿cuántos llevamos ya? ¿42?“, “Para nada es una broma, se trata de MUnit, y está desarrollado por el excelente equipo detrás de Metals, Scalameta, Coursier o Scala.js”, “¡Wow! Esa si que es una buena carta de presentación, ¿y qué vamos a ver?“, “Pues veremos todo lo que permite hacer la librería, desde un test sencillo, hasta combinaciones mas complicadas con otras librerías como testcontainers o scalacheck, así como las principales diferencias (y los puntos donde destaca) con otras librerías de testing”, “¡Vale, pues me has convencido! ¡No me lo perderé!”"
+	document.spanish = true
+  document.header = talks/munit.jpg
+  document.date = "2020-12-21"
+  document.github.link = "https://github.com/alejandrohdezma/alejandrohdezma/tree/main/modules/munit"
+  document.youtube.link = "https://www.youtube.com/watch?v=1Veu6QX6oDE"
+%}
+
+@:talk
 
 # MUnit
 
@@ -43,12 +45,11 @@ Dependency-free
 
 ### Alejandro Hernández
 
-47 Degrees
-
 Senior Scala developer
 
 Available at:
 
+- [alejandrohdezma.com](https://alejandrohdezma.com)
 - [info@alejandrohdezma.com](mailto:info@alejandrohdezma.com)
 - [github.com/alejandrohdezma](https://github.com/alejandrohdezma)
 - [twitter.com/alejandrohdezma](https://twitter.com/alejandrohdezma)
@@ -139,3 +140,5 @@ When searching for failed tests in CI logs...
 ---
 
 ![](https://media.giphy.com/media/KJ1f5iTl4Oo7u/giphy.gif)
+
+@:@

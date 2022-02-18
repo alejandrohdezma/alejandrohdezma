@@ -49,22 +49,22 @@ a:hover {
     color: var(--accent);
 }
 
-#blog-posts {
+#blog-posts, #talks {
     padding: 0;
     list-style-type: none;
 }
 
-#blog-posts>li {
+#blog-posts>li, #talks>li {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     padding: 2rem;
     margin-bottom: 2rem;
 }
 
-#blog-posts>li .time {
+#blog-posts>li .time, #talks>li .time {
     font-weight: 500;
 }
 
-#blog-posts a {
+#blog-posts a, #talks a {
     text-decoration: none;
 }
 

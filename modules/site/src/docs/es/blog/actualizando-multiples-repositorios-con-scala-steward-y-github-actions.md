@@ -1,6 +1,5 @@
 {%
 laika.template = ../../templates/article.template.html
-document.title = Actualizando múltiples repositorios con Scala Steward y GitHub Actions
 document.description = "¿Trabajas habitualmente con Scala Steward y gestionas múltiples repositorios Scala? En este post desarrollo una forma de mantener actualizados tus repositorios Scala usando Scala Steward sin volverte loco en un infierno de Pull Requests."
 document.header = scala_steward_with_github_badge.png
 document.date = "2022-01-15"

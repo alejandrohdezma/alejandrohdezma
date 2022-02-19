@@ -26,15 +26,14 @@ case object BlogDirectives extends DirectiveRegistry {
 
       val articles = cursor.parent.allDocuments.toList
         .filter(_.path.basename != "README")
-        .map { document =>
+        .mapFilter { document =>
           for {
-            title       <- document.config.get[String]("document.title")
-            header      <- document.config.get[String]("document.header")
-            description <- document.config.get[String]("document.description")
-            date        <- document.config.get[String]("document.date").map(LocalDate.parse)
+            title       <- document.target.title
+            header      <- document.config.get[String]("document.header").toOption
+            description <- document.config.get[String]("document.description").toOption
+            date        <- document.config.get[String]("document.date").map(LocalDate.parse).toOption
           } yield (document.path, title, header, description, date)
         }
-        .mapFilter(_.toOption)
         .sortBy(_._5.toEpochDay())(Ordering.Long.reverse)
         .map { case (path, title, header, description, date) =>
           val link = (span: Span) => SpanLink(Seq(span), InternalTarget(path.withoutSuffix))
@@ -42,7 +41,7 @@ case object BlogDirectives extends DirectiveRegistry {
             List(
               BlockSequence(
                 BlockSequence(link(Image(AbsoluteInternalTarget(Path(List("images", header)))))),
-                Header(3, link(Text(title.toUpperCase()))),
+                Header(3, link(title)),
                 Paragraph(Text(date.format(locale), Styles("time"))),
                 Paragraph(Text(description))
               )
@@ -80,7 +79,7 @@ case object BlogDirectives extends DirectiveRegistry {
             List(
               BlockSequence(
                 BlockSequence(youtubeLink(Image(AbsoluteInternalTarget(Path(List("images", header)))))),
-                Header(3, youtubeLink(Text(title.toUpperCase()))),
+                Header(3, youtubeLink(Text(title))),
                 Paragraph(Text(date.format(locale), Styles("time"))),
                 Paragraph(Text(description)),
                 BlockSequence(

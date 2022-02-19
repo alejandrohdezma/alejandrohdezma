@@ -1,7 +1,5 @@
 {%
 	laika.template = templates/index.template.html
-	document.title = "Alex's Blog - Scala, Tooling, DevOps..."
-	document.description = "Hi everyone! Welcome to my blog! My name is Alex and this is my personal space where you can find articles about Scala, tooling, DevOps... and much more!"
 %}
 
 I'm an enthusiast of functional programming working mainly in Scala now. I work at [47 Degrees](https://www.47deg.com) as a Senior Scala Developer and make some Open Source around [here](https://github.com/alejandrohdezma?tab=repositories). I'm very interested in tooling, particularly SBT and GitHub Actions.

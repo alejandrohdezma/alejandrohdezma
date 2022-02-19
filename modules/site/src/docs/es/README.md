@@ -1,7 +1,5 @@
 {%
 	laika.template = ../templates/index.template.html
-	document.title = "El Blog de Alex - Scala, Tooling, DevOps..."
-	document.description = "¡Hola a todos! ¡Bienvenidos a mi blog! Me llamo Alex y este es mi espacio personal donde podréis encontrar artículos sobre Scala, "tooling", DevOps... ¡y mucho más!"
 %}
 
 Soy un entusiasta de la programación funcional, trabajando ahora principalmente en Scala. Trabajo en [47 Degrees](https://www.47deg.com) como Desarrollador Scala Senior y hago algo de Open Source por [aquí](https://github.com/alejandrohdezma?tab=repositories). También estoy interesado en todo el mundillo del "tooling" para desarrolladores, especialmente en SBT y GitHub Actions.

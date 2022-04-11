@@ -24,7 +24,7 @@
         <img width=2000 height=804 src="../images/header_es.webp">
         <nav>
             <a href="/es/">Sobre mí</a>
-            <a href="/es/cv">Mi CV</a>
+            <a rel="external" target="_blank" href="https://www.getmanfred.com/profile/alejandrohdezma">Mi CV</a>
             <a href="/es/talks/">Mis charlas</a>
             <a href="/es/blog/">Blog</a>
         </nav>
@@ -36,7 +36,7 @@
                 See english version
             </a>
         </div>
-        <p>Soy un entusiasta de la programación funcional, trabajando ahora principalmente en Scala. Trabajo en <a href="https://www.47deg.com" rel="external" target="_blank">47 Degrees</a> como Desarrollador Scala Senior y hago algo de Open Source por <a href="https://github.com/alejandrohdezma?tab=repositories" rel="external" target="_blank">aquí</a>. También estoy interesado en todo el mundillo del &quot;tooling&quot; para desarrolladores, especialmente en SBT y GitHub Actions.</p>
+        <p>Soy un entusiasta de la programación funcional, trabajando ahora principalmente en Scala. Trabajo en <a href="https://permutive.com" rel="external" target="_blank">Permutive</a> como Desarrollador Scala Senior y hago algo de Open Source por <a href="https://github.com/alejandrohdezma?tab=repositories" rel="external" target="_blank">aquí</a>. También estoy interesado en todo el mundillo del &quot;tooling&quot; para desarrolladores, especialmente en SBT y GitHub Actions.</p>
         <p>Algunos datos sobre mí:</p>
         <ul>
           <li>Me encantan los juegos de mesa <i class="fas fa-dice-d20"></i></li>
@@ -79,27 +79,6 @@
             .querySelectorAll('a[href="' + window.location.pathname + '"]')[0]
             .classList
             .add('active')
-
-        if (window.location.href.indexOf("cv") > -1) {
-            const loadButton = document.querySelector('main > pre > button')
-            loadButton.style.display = "block"
-            hljs.highlightElement(loadButton.nextElementSibling)
-
-            loadButton.addEventListener("click", () => {
-                loadButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'
-                setTimeout(() => {
-                    fetch("cv.json").then(response => response.text()).then(text => {
-                        const code = loadButton.nextElementSibling
-                        code.className = "hljs language-json"
-                        code.style.wordWrap = "break-word"
-                        code.style.whiteSpace = "pre-wrap"
-                        
-                        code.innerHTML = hljs.highlight(text, {language: 'json'}).value
-                        loadButton.remove()
-                    })
-                }, 2000);
-            })
-        }
     </script>
 </body>
 

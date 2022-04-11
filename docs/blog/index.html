@@ -24,7 +24,7 @@
         <img width=2000 height=804 src="../images/header_us.webp">
         <nav>
             <a href="/">About me</a>
-            <a href="/cv">My CV</a>
+            <a rel="external" target="_blank" href="https://www.getmanfred.com/profile/alejandrohdezma">My CV</a>
             <a href="/talks/">My talks</a>
             <a href="/blog/">Blog</a>
         </nav>
@@ -36,15 +36,7 @@
                 Ver versión en español
             </a>
         </div>
-        <ul id="blog-posts">
-          <li>
-            <p><a href="updating-multiple-repositories-with-scala-steward-and-github-actions"><img src="../images/scala_steward_with_github_badge.png"></a></p>
-            
-            <h3><a href="updating-multiple-repositories-with-scala-steward-and-github-actions">Updating multiple repositories with Scala Steward and GitHub Actions</a></h3>
-            <p><span class="time">January 15, 2022</span></p>
-            <p>Do you regularly work with Scala Steward and manage multiple Scala repositories? In this post I describe a way to keep your Scala repositories up to date using Scala Steward without going crazy in a hell of Pull Requests.</p>
-          </li>
-        </ul>
+        
     </main>
 
     <footer>
@@ -62,27 +54,6 @@
             .querySelectorAll('a[href="' + window.location.pathname + '"]')[0]
             .classList
             .add('active')
-
-        if (window.location.href.indexOf("cv") > -1) {
-            const loadButton = document.querySelector('main > pre > button')
-            loadButton.style.display = "block"
-            hljs.highlightElement(loadButton.nextElementSibling)
-
-            loadButton.addEventListener("click", () => {
-                loadButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'
-                setTimeout(() => {
-                    fetch("cv.json").then(response => response.text()).then(text => {
-                        const code = loadButton.nextElementSibling
-                        code.className = "hljs language-json"
-                        code.style.wordWrap = "break-word"
-                        code.style.whiteSpace = "pre-wrap"
-                        
-                        code.innerHTML = hljs.highlight(text, {language: 'json'}).value
-                        loadButton.remove()
-                    })
-                }, 2000);
-            })
-        }
     </script>
 </body>
 

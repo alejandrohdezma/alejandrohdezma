@@ -2,7 +2,7 @@
 	laika.template = ../templates/index.template.html
 %}
 
-Soy un entusiasta de la programación funcional, trabajando ahora principalmente en Scala. Trabajo en [47 Degrees](https://www.47deg.com) como Desarrollador Scala Senior y hago algo de Open Source por [aquí](https://github.com/alejandrohdezma?tab=repositories). También estoy interesado en todo el mundillo del "tooling" para desarrolladores, especialmente en SBT y GitHub Actions.
+Soy un entusiasta de la programación funcional, trabajando ahora principalmente en Scala. Trabajo en [Permutive](https://permutive.com) como Desarrollador Scala Senior y hago algo de Open Source por [aquí](https://github.com/alejandrohdezma?tab=repositories). También estoy interesado en todo el mundillo del "tooling" para desarrolladores, especialmente en SBT y GitHub Actions.
 
 Algunos datos sobre mí:
 

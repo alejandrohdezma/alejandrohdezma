@@ -24,7 +24,7 @@
         <img width=2000 height=804 src="@:path(../images/)/@:k8s(header_us.webp)">
         <nav>
             <a href="@:k8s(/)">@:k8s(About me)</a>
-            <a href="@:k8s(/cv)">@:k8s(My CV)</a>
+            <a rel="external" target="_blank" href="https://www.getmanfred.com/profile/alejandrohdezma">@:k8s(My CV)</a>
             <a href="@:k8s(/talks/)">@:k8s(My talks)</a>
             <a href="@:k8s(/blog/)">@:k8s(Blog)</a>
         </nav>
@@ -54,27 +54,6 @@
             .querySelectorAll('a[href="' + window.location.pathname + '"]')[0]
             .classList
             .add('active')
-
-        if (window.location.href.indexOf("cv") > -1) {
-            const loadButton = document.querySelector('main > pre > button')
-            loadButton.style.display = "block"
-            hljs.highlightElement(loadButton.nextElementSibling)
-
-            loadButton.addEventListener("click", () => {
-                loadButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'
-                setTimeout(() => {
-                    fetch("cv.json").then(response => response.text()).then(text => {
-                        const code = loadButton.nextElementSibling
-                        code.className = "hljs language-json"
-                        code.style.wordWrap = "break-word"
-                        code.style.whiteSpace = "pre-wrap"
-                        
-                        code.innerHTML = hljs.highlight(text, {language: 'json'}).value
-                        loadButton.remove()
-                    })
-                }, 2000);
-            })
-        }
     </script>
 </body>
 

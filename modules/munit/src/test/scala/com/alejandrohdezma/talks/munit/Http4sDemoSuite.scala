@@ -20,9 +20,6 @@ import cats.effect.IO
 
 import munit._
 import org.http4s._
-import org.http4s.client.dsl.io._
-import org.http4s.dsl.io._
-import org.http4s.syntax.all._
 
 class Http4sDemoSuite extends Http4sHttpRoutesSuite {
 

@@ -172,7 +172,7 @@ case object BlogDirectives extends DirectiveRegistry {
     }.map(TemplateString(_))
   }
 
-  val k8sDirective = Templates.create("k8s") {
+  val i18nDirective = Templates.create("i18n") {
     import laika.directive.Templates.dsl._
 
     (attribute(0).as[String], cursor).mapN { (key, document) =>
@@ -207,7 +207,7 @@ case object BlogDirectives extends DirectiveRegistry {
 
   val blockDirectives = List(blogDirective, talksDirective, figureDirective, detailsDirective, talkDirective)
 
-  val templateDirectives = List(dateDirective, urlDirective, localeDirective, k8sDirective)
+  val templateDirectives = List(dateDirective, urlDirective, localeDirective, i18nDirective)
 
   val linkDirectives = Nil
 

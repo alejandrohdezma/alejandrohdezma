@@ -21,19 +21,19 @@
 
 <body>
     <header>
-        <img width=2000 height=804 src="@:path(../images/)/@:k8s(header_us.webp)">
+        <img width=2000 height=804 src="@:path(../images/)/@:i18n(header_us.webp)">
         <nav>
-            <a href="@:k8s(/)">@:k8s(About me)</a>
-            <a rel="external" target="_blank" href="https://www.getmanfred.com/profile/alejandrohdezma">@:k8s(My CV)</a>
-            <a href="@:k8s(/talks/)">@:k8s(My talks)</a>
-            <a href="@:k8s(/blog/)">@:k8s(Blog)</a>
+            <a href="@:i18n(/)">@:i18n(About me)</a>
+            <a rel="external" target="_blank" href="https://www.getmanfred.com/profile/alejandrohdezma">@:i18n(My CV)</a>
+            <a href="@:i18n(/talks/)">@:i18n(My talks)</a>
+            <a href="@:i18n(/blog/)">@:i18n(Blog)</a>
         </nav>
     </header>
 
     <main>
         <div style="text-align: right; margin-right: 1.5rem;">
             <a rel="alternate" href="@:url{alternate=true}" hreflang="@:locale{alternate=true}" lang="@:locale{alternate=true}">
-                @:k8s(Ver versión en español)
+                @:i18n(Ver versión en español)
             </a>
         </div>
         ${cursor.currentDocument.content}

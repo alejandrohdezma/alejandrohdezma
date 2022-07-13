@@ -103,8 +103,21 @@
                 <a href="https://giphy.com/gifs/off-showed-mrBEVU9zQIsZa" rel="external" target="_blank">Provided by Giphy</a>
               </figcaption>
             </figure>
-            
-            
+            <details>
+              <summary>If you are using <code>repos.json</code></summary>
+              <p>Locate the line corresponding to your repository and add <code>:branch</code> at the end.</p>
+              <pre><button><i class="far fa-copy"></i></button><code class="language-markdown"><span>- myorg/myrepo:develop</span></code></pre>
+            </details>
+            <details>
+              <summary>If you are using <a href="https://github.com/scala-steward-org/scala-steward-action" rel="external" target="_blank">Scala Steward&#39;s GitHub Action</a></summary>
+              <p>Add a new <code>branches</code> parameter to the action&#39;s input with the name of the
+              branch to update.</p>
+              <pre><button><i class="far fa-copy"></i></button><code class="language-yaml"><span>- </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Launch Scala Steward</span><span>
+  </span><span class="attribute-name">uses</span><span>: </span><span class="string-literal">scala-steward-org/scala-steward-action@v2</span><span>
+  </span><span class="attribute-name">with</span><span>:
+    </span><span class="attribute-name">github-token</span><span>: </span><span class="string-literal">${{ github.token }}</span><span>
+    </span><span class="attribute-name">branches</span><span>: </span><span class="string-literal">develop</span></code></pre>
+            </details>
             <p>And that&#39;s it! You don&#39;t need to do anything else for this step.</p>
             
             <h2 id="dude-where-is-my-branch" class="section">Dude, where is my branch?</h2>
@@ -183,7 +196,41 @@
             is used.</blockquote>
             <p>And that&#39;s it! We already have completed our first workflow. Here you have the
             full code:</p>
-            
+            <details>
+              <summary><code>.github/workflows/upsert-develop-branch.yml</code></summary>
+              <pre><button><i class="far fa-copy"></i></button><code class="language-yaml"><span class="attribute-name">name</span><span>: </span><span class="string-literal">Upsert `develop` branch</span><span>
+
+</span><span class="attribute-name">on</span><span>:
+  </span><span class="attribute-name">push</span><span>:
+    </span><span class="attribute-name">branches</span><span>: </span><span class="string-literal">main</span><span>
+
+</span><span class="attribute-name">jobs</span><span>:
+  </span><span class="attribute-name">upsert-develop-branch</span><span>:
+    </span><span class="attribute-name">runs-on</span><span>: </span><span class="string-literal">ubuntu-latest</span><span>
+    </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create `develop` branch or rebase it to latest `main`</span><span>
+    </span><span class="attribute-name">steps</span><span>:
+      - </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create `develop` branch (if it does not exists)</span><span>
+        </span><span class="attribute-name">env</span><span>:
+          </span><span class="attribute-name">GITHUB_TOKEN</span><span>: </span><span class="string-literal">${{ github.token }}</span><span>
+        </span><span class="attribute-name">run</span><span>: </span><span class="string-literal">|</span><span>
+            gh api --silent \
+                /repos/${{ github.repository }}/git/refs \
+                -f ref=&quot;refs/heads/develop&quot; \
+                -f sha=&quot;${{ github.sha}}&quot; ||
+                echo &#39;`develop` branch already exists on ${{ github.repository }}&#39;
+      - </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Checkout develop branch</span><span>
+        </span><span class="attribute-name">uses</span><span>: </span><span class="string-literal">actions/checkout@v2</span><span>
+        </span><span class="attribute-name">with</span><span>:
+          </span><span class="attribute-name">ref</span><span>: </span><span class="string-literal">develop</span><span>
+          </span><span class="attribute-name">fetch-depth</span><span>: </span><span class="number-literal">0</span><span>
+
+      - </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Rebase `develop` branch to latest `origin/main`</span><span>
+        </span><span class="attribute-name">run</span><span>: </span><span class="string-literal">|</span><span>
+            git config user.email &quot;41898282+github-actions[bot]@users.noreply.github.com&quot;
+            git config user.name &quot;github-actions[bot]&quot;
+            git rebase origin/main
+            git push -f -u origin develop</span></code></pre>
+            </details>
             <p>Once we add this file to our repository any push to the <code>main</code> branch will
             cause the <code>develop</code> branch to be created or updated.</p>
             <p>From this point on, we can start receiving PRs from Scala Steward to the
@@ -254,7 +301,35 @@
   </span><span class="attribute-name">env</span><span>:
     </span><span class="attribute-name">GITHUB_TOKEN</span><span>: </span><span class="string-literal">${{ github.token }}</span></code></pre>
             <p>Done! Our new workflow doesn&#39;t need anything else. Here is the full version:</p>
-            
+            <details>
+              <summary><code>.github/workflows/scheduled-updates-pr.yml</code></summary>
+              <pre><button><i class="far fa-copy"></i></button><code class="language-yaml"><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create PR from `develop` to `main`</span><span>
+
+</span><span class="attribute-name">on</span><span>:
+  </span><span class="attribute-name">schedule</span><span>:
+    - </span><span class="attribute-name">cron</span><span>: </span><span class="string-literal">&quot;0 0 * * MON&quot;</span><span>
+
+</span><span class="attribute-name">jobs</span><span>:
+  </span><span class="attribute-name">create-develop-pr</span><span>:
+    </span><span class="attribute-name">runs-on</span><span>: </span><span class="string-literal">ubuntu-latest</span><span>
+    </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create PR from `develop` to `main`</span><span>
+    </span><span class="attribute-name">steps</span><span>:
+      - </span><span class="attribute-name">name</span><span>: </span><span class="string-literal">Create Pull Request</span><span>
+        </span><span class="attribute-name">run</span><span>: </span><span class="string-literal">|</span><span>
+          develop=$(gh api /repos/$GITHUB_REPOSITORY/commits/refs/heads/develop -q &#39;.sha&#39;)
+          main=$(gh api /repos/$GITHUB_REPOSITORY/commits/refs/heads/main -q &#39;.sha&#39;)
+
+          if [[ $develop != $main ]]; then
+              gh api /repos/$GITHUB_REPOSITORY/pulls \
+                -f title=&quot;Scala Steward Updates&quot; \
+                -f base=main \
+                -f head=develop
+          else
+              echo &quot;There are no updates&quot;
+          fi
+        </span><span class="attribute-name">env</span><span>:
+          </span><span class="attribute-name">GITHUB_TOKEN</span><span>: </span><span class="string-literal">${{ github.token }}</span></code></pre>
+            </details>
             <p>And... that&#39;s it! With these two workflows, we just created we have everything
             we need to avoid <em>Update Hell ™️</em>. We can replicate this approach in all of our
             organization&#39;s Scala repositories and keep them up to date without too much

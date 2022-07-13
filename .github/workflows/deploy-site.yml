@@ -19,12 +19,15 @@ jobs:
           fetch-depth: 0
           ref: main
           token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+          
+      - uses: actions/setup-java@2c7a4878f5d120bd643426d54ae1209b29cc01a3 # v3.4.1
+        with:
+          distribution: "liberica"
+          java-version: "17"
+          cache: "sbt"
 
       - name: Run `sbt laikaSite`
-        uses: alejandrohdezma/actions/scala@v1
-        with:
-          jvm: openjdk:1.17
-          task: laikaSite
+        run: sbt laikaSite
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GIT_DEPLOY_KEY: ${{ secrets.GIT_DEPLOY_KEY }}

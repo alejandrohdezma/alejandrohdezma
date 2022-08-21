@@ -105,6 +105,10 @@ main {
         display: none;
     }
 
+    address {
+        display: none;
+    }
+
     main {
         margin: 0 auto;
         width: 90%;
@@ -173,9 +177,8 @@ div.secondary-links>a {
     text-decoration: none;
 }
 
-address {
-    text-align: center;
-    font-size: 2em;
+address>a {
+    text-decoration: none;
 }
 
 pre {

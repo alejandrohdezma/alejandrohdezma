@@ -25,7 +25,7 @@ case object BlogDirectives extends DirectiveRegistry {
       val locale = getLocale(cursor)
 
       val articles = cursor.parent.allDocuments.toList
-        .filter(_.path.basename != "README")
+        .filter(_.path.isSubPath(cursor.path.parent / "blog"))
         .mapFilter { document =>
           for {
             title       <- document.target.title
@@ -177,9 +177,8 @@ case object BlogDirectives extends DirectiveRegistry {
 
     (attribute(0).as[String], cursor).mapN { (key, document) =>
       val translations = Map(
-        "/blog/"                                      -> "/es/blog/",
         "Go back"                                     -> "Volver atrás",
-        "Ver versión en español"                      -> "See english version",
+        "🇪🇸 Ver versión en español"                 -> "🇺🇸 See english version",
         "../images/"                                  -> "../../images/",
         "Did you enjoy the article?"                  -> "¿Te ha gustado el artículo?",
         "If you want"                                 -> "Si quieres",
@@ -187,14 +186,10 @@ case object BlogDirectives extends DirectiveRegistry {
         "Did you find any misprint or error? Please," -> "¿Has encontrado una errata?",
         "send me a PR!"                               -> "¡Envíame una PR!",
         "/"                                           -> "/es/",
-        "/cv"                                         -> "/es/cv",
         "/talks/"                                     -> "/es/talks/",
-        "/blog/"                                      -> "/es/blog/",
-        "About me"                                    -> "Sobre mí",
         "My CV"                                       -> "Mi CV",
         "My talks"                                    -> "Mis charlas",
-        "Blog"                                        -> "Blog",
-        "header_us.webp"                              -> "header_es.webp"
+        "Blog"                                        -> "Blog"
       )
 
       val text = if (document.path.toString().startsWith("/es")) translations(key) else key

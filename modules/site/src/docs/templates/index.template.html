@@ -21,40 +21,34 @@
 
 <body>
     <header>
-        <img width=2000 height=804 src="@:path(../images/)/@:i18n(header_us.webp)">
-        <nav>
-            <a href="@:i18n(/)">@:i18n(About me)</a>
-            <a rel="external" target="_blank" href="https://www.getmanfred.com/profile/alejandrohdezma">@:i18n(My CV)</a>
-            <a href="@:i18n(/talks/)">@:i18n(My talks)</a>
-            <a href="@:i18n(/blog/)">@:i18n(Blog)</a>
-        </nav>
+        <a href="@:i18n(/)"><b>Alejandro Hernández</b></a></br>
+        <i>Scala & Tooling</i>
     </header>
 
+    <aside>
+        <img width=110 src="https://avatars.githubusercontent.com/u/9027541?v=4"></br>
+        <p class="author">Alejandro Hernández</p>
+        <p>Scala developer</p>
+        <nav>
+            <a rel="external" target="_blank" href="https://www.getmanfred.com/profile/alejandrohdezma"><i class="far fa-fw fa-file"></i><span> @:i18n(My CV)</span></a>
+            <a href="@:i18n(/talks/)"><i class="fas fa-fw fa-chalkboard-teacher"></i><span> @:i18n(My talks)</span></a>
+            <a href="@:i18n(/)"><i class="fas fa-fw fa-rss-square"></i><span> @:i18n(Blog)</span></a>
+            <a target="_blank" rel="external" title="Twitter" href="https://twitter.com/alejandrohdezma"><i class="fab fa-fw fa-twitter-square"></i><span> Twitter</span></a>
+            <a target="_blank" rel="external" title="GitHub" href="https://github.com/alejandrohdezma"><i class="fab fa-fw fa-github-square"></i><span> GitHub</span></a>
+            <a target="_blank" rel="external" title="Ko-fi" href="https://ko-fi.com/alejandrohdezma"><i class="fas fa-fw fa-coffee"></i><span> Ko-fi</span></a>
+        </nav>
+    </aside>
+
     <main>
-        <div style="text-align: right; margin-right: 1.5rem;">
+        <div class="secondary-links">
             <a rel="alternate" href="@:url{alternate=true}" hreflang="@:locale{alternate=true}" lang="@:locale{alternate=true}">
-                @:i18n(Ver versión en español)
+                @:i18n(🇪🇸 Ver versión en español)
             </a>
         </div>
         ${cursor.currentDocument.content}
     </main>
 
-    <footer>
-        <p>&copy; 2021 Alejandro Hernández</p>
-        <a target="_blank" rel="external" title="Twitter" href="https://twitter.com/alejandrohdezma"><i class="fab fa-twitter"></i></a>
-        <a target="_blank" rel="external" title="GitHub" href="https://github.com/alejandrohdezma"><i class="fab fa-github"></i></a>
-        <a target="_blank" rel="external" title="Ko-fi" href="https://ko-fi.com/alejandrohdezma"><i class="fas fa-coffee"></i></i></a>
-        <img width=2000 height=405 src="@:path(../images/footer.webp)">
-    </footer>
-
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-    <script>
-        document
-            .getElementsByTagName('nav')[0]
-            .querySelectorAll('a[href="' + window.location.pathname + '"]')[0]
-            .classList
-            .add('active')
-    </script>
 </body>
 
 </html>

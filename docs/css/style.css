@@ -1,47 +1,118 @@
 :root {
     --accent-bg: transparent;
-    --base-fontsize: 18px;
+    --accent: rgb(168, 168, 168);
 }
 
-body > header {
-    grid-column: 2;
+body {
+    font-size: 1.30rem;
+    gap: 1em;
+    margin: 0 auto;
+}
+
+body>header {
+    grid-area: header;
     padding: 1rem 0rem;
-    border-bottom: 0;
+    text-align: left;
 }
 
-header>img {
-    width: 100%;
-    height: auto;
-    opacity: 1;
+body>aside {
+    grid-area: aside;
+    font-size: 1.10rem;
+    border: 0;
 }
 
-header>nav {
-    text-align: right;
-    font-size: 1.1em;
+body>aside>img {
+    padding: 5px;
+    border: 1px solid #f2f3f3;
+    max-width: 110px;
+    border-radius: 50%;
+}
+
+body>aside>p.author {
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+nav>a {
+    text-decoration: none;
+}
+
+main {
+    grid-area: main;
 }
 
 @media only screen and (min-width: 750px) {
-    nav>a.active, nav>a.active:hover, nav>a.active:focus, nav>a.active:active {
-        background-color: var(--accent);
-        color: #FFFFFF !important;
-        pointer-events: none;
-        cursor: default;
-        text-decoration: none;
-        opacity: 0.75;
+
+    body {
+        grid-template-areas:
+            "header header header"
+            "aside main main";
+        grid-template-columns: minmax(300px, 1fr) 1fr 1fr;
+        max-width: 1000px;
     }
+
+    body>aside {
+        max-height: calc(100vh - 2em - 2em);
+        position: sticky;
+        top: 2em;
+        padding: 0;
+        opacity: 0.75;
+        transition: opacity 0.2s ease-in-out;
+        width: unset;
+    }
+
+    body>aside:hover {
+        opacity: 1;
+    }
+
+    body>aside>nav {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    body>aside>nav>a {
+        text-decoration: none;
+        margin-top: 0.5rem;
+    }
+
 }
 
 @media only screen and (max-width: 750px) {
-    nav>a.active, nav>a.active:hover, nav>a.active:focus, nav>a.active:active {
-        color: var(--accent-light) !important;
-        pointer-events: none;
-        cursor: default;
-        text-decoration: none;
-        opacity: 0.75;
+
+    body {
+        grid-template-areas: "header""aside""main";
+        grid-template-columns: 100%;
+        width: 90%;
     }
+
+    body>aside {
+        width: 100%;
+        text-align: center;
+    }
+
+    body>aside>p {
+        margin: 0.5em;
+    }
+
+    body>aside>nav>a {
+        font-size: 2em;
+    }
+
+    body>aside>nav>a>span {
+        display: none;
+    }
+
+    main {
+        margin: 0 auto;
+        width: 90%;
+    }
+
 }
 
-a, a:visited {
+a,
+a:visited {
     color: var(--text);
 }
 
@@ -49,27 +120,56 @@ a:hover {
     color: var(--accent);
 }
 
-#blog-posts, #talks {
+#blog-posts,
+#talks {
     padding: 0;
     list-style-type: none;
 }
 
-#blog-posts>li, #talks>li {
+#blog-posts>li,
+#talks>li {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     padding: 2rem;
     margin-bottom: 2rem;
 }
 
-#blog-posts>li .time, #talks>li .time {
+#blog-posts>li>p:first-child,
+#talks>li>p:first-child {
+    margin-top: 0;
+}
+
+#blog-posts>li>p:last-child,
+#talks>li>p:last-child {
+    margin-bottom: 0;
+}
+
+#blog-posts>li .time,
+#talks>li .time {
     font-weight: 500;
 }
 
-#blog-posts a, #talks a {
+#blog-posts a,
+#talks a {
     text-decoration: none;
 }
 
 #time {
     font-style: italic;
+}
+
+article {
+    border: 0;
+}
+
+div.secondary-links {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+div.secondary-links>a {
+    text-decoration: none;
 }
 
 address {
@@ -93,19 +193,6 @@ pre button {
 
 pre code {
     border-radius: 5px;
-}
-
-body > footer {
-    padding: 2rem 0rem 1.5rem 0rem;
-}
-
-footer>img {
-    width: 100%;
-    height: auto;
-}
-
-footer>a {
-    font-size: 2em;
 }
 
 .progress-wrapper {

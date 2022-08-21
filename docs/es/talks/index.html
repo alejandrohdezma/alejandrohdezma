@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>El Blog de Alex - Scala, Tooling, DevOps...</title>
+    <title>Alejandro Hernández - Desarrollador Scala</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="¡Hola a todos! ¡Bienvenidos a mi blog! Me llamo Alex y este es mi espacio personal donde podréis encontrar artículos sobre Scala, "tooling", DevOps... ¡y mucho más!">
-    <meta property="og:title" content="El Blog de Alex - Scala, Tooling, DevOps..." />
+    <meta property="og:title" content="Alejandro Hernández - Desarrollador Scala" />
     <meta property="og:url" content="https://www.alejandrohdezma.com/es/talks" />
     <meta property="og:description" content="¡Hola a todos! ¡Bienvenidos a mi blog! Me llamo Alex y este es mi espacio personal donde podréis encontrar artículos sobre Scala, "tooling", DevOps... ¡y mucho más!">
     <meta property="og:type" content="profile" />
@@ -21,19 +21,28 @@
 
 <body>
     <header>
-        <img width=2000 height=804 src="../../images/header_es.webp">
-        <nav>
-            <a href="/es/">Sobre mí</a>
-            <a rel="external" target="_blank" href="https://www.getmanfred.com/profile/alejandrohdezma">Mi CV</a>
-            <a href="/es/talks/">Mis charlas</a>
-            <a href="/es/blog/">Blog</a>
-        </nav>
+        <a href="/es/"><b>Alejandro Hernández</b></a></br>
+        <i>Scala & Tooling</i>
     </header>
 
+    <aside>
+        <img width=110 src="https://avatars.githubusercontent.com/u/9027541?v=4"></br>
+        <p class="author">Alejandro Hernández</p>
+        <p>Scala developer</p>
+        <nav>
+            <a rel="external" target="_blank" href="https://www.getmanfred.com/profile/alejandrohdezma"><i class="far fa-fw fa-file"></i><span> Mi CV</span></a>
+            <a href="/es/talks/"><i class="fas fa-fw fa-chalkboard-teacher"></i><span> Mis charlas</span></a>
+            <a href="/es/"><i class="fas fa-fw fa-rss-square"></i><span> Blog</span></a>
+            <a target="_blank" rel="external" title="Twitter" href="https://twitter.com/alejandrohdezma"><i class="fab fa-fw fa-twitter-square"></i><span> Twitter</span></a>
+            <a target="_blank" rel="external" title="GitHub" href="https://github.com/alejandrohdezma"><i class="fab fa-fw fa-github-square"></i><span> GitHub</span></a>
+            <a target="_blank" rel="external" title="Ko-fi" href="https://ko-fi.com/alejandrohdezma"><i class="fas fa-fw fa-coffee"></i><span> Ko-fi</span></a>
+        </nav>
+    </aside>
+
     <main>
-        <div style="text-align: right; margin-right: 1.5rem;">
+        <div class="secondary-links">
             <a rel="alternate" href="/talks/" hreflang="en-US" lang="en-US">
-                See english version
+                🇺🇸 See english version
             </a>
         </div>
         <ul id="talks">
@@ -49,22 +58,7 @@
         </ul>
     </main>
 
-    <footer>
-        <p>&copy; 2021 Alejandro Hernández</p>
-        <a target="_blank" rel="external" title="Twitter" href="https://twitter.com/alejandrohdezma"><i class="fab fa-twitter"></i></a>
-        <a target="_blank" rel="external" title="GitHub" href="https://github.com/alejandrohdezma"><i class="fab fa-github"></i></a>
-        <a target="_blank" rel="external" title="Ko-fi" href="https://ko-fi.com/alejandrohdezma"><i class="fas fa-coffee"></i></i></a>
-        <img width=2000 height=405 src="../../images/footer.webp">
-    </footer>
-
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-    <script>
-        document
-            .getElementsByTagName('nav')[0]
-            .querySelectorAll('a[href="' + window.location.pathname + '"]')[0]
-            .classList
-            .add('active')
-    </script>
 </body>
 
 </html>

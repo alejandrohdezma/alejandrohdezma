@@ -40,6 +40,7 @@ nav>a {
 
 main {
     grid-area: main;
+    margin-bottom: 2em;
 }
 
 @media only screen and (min-width: 750px) {

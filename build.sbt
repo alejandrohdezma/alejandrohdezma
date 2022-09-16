@@ -15,8 +15,8 @@ lazy val `munit` = module
   .settings(libraryDependencies += "com.dimafeng" %% "testcontainers-scala-munit" % "0.40.10" % Test)
   .settings(libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.4.1" % Test)
   .settings(libraryDependencies += "org.http4s" %% "http4s-async-http-client" % "0.23.11" % Test)
-  .settings(libraryDependencies += "org.http4s" %% "http4s-client" % "0.23.15" % Test)
-  .settings(libraryDependencies += "org.http4s" %% "http4s-dsl" % "0.23.15" % Test)
+  .settings(libraryDependencies += "org.http4s" %% "http4s-client" % "0.23.16" % Test)
+  .settings(libraryDependencies += "org.http4s" %% "http4s-dsl" % "0.23.16" % Test)
 
 lazy val site = module
   .enablePlugins(LaikaPlugin)

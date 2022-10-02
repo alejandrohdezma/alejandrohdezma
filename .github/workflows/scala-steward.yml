@@ -16,6 +16,9 @@ jobs:
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.repository != 'all'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout project
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v3.0.3
+
       - name: Get the GitHub App installation token
         uses: alejandrohdezma/actions/github-app-token@v1
         id: github_app
@@ -35,6 +38,9 @@ jobs:
     if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.repository == 'all')
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout project
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v3.0.3
+
       - name: Get the GitHub App installation token
         uses: alejandrohdezma/actions/github-app-token@v1
         id: github_app

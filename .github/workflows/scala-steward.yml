@@ -32,6 +32,7 @@ jobs:
           github-repository: alejandrohdezma/${{ github.event.inputs.repository }}
           author-email: 80571129+alejandrohdezma-steward[bot]@users.noreply.github.com
           author-name: alejandrohdezma-steward[bot]
+          scala-steward-version: "0.15.0-140-fc0e27df-SNAPSHOT"
 
   run-scala-steward-all-repos:
     name: Run Scala Steward in all the repositories managed by the GitHub App
@@ -61,3 +62,4 @@ jobs:
           author-email: 80571129+alejandrohdezma-steward[bot]@users.noreply.github.com
           author-name: alejandrohdezma-steward[bot]
           repos-file: repos.md
+          scala-steward-version: "0.15.0-140-fc0e27df-SNAPSHOT"

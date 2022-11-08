@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       type:
-        description: "Type of sync to perform: `labels`, `settings`, `secrets` or `all`"
+        description: "Type of sync to perform: `settings`, `secrets` or `all`"
         required: false
         default: "all"
       repository:
@@ -89,13 +89,6 @@ jobs:
           }'
         env:
           GITHUB_TOKEN: ${{ steps.github_app.outputs.token }}
-
-      - name: Initialize labels in ${{ matrix.repo }}
-        if: github.event.inputs.type == 'labels' || github.event.inputs.type == 'all'
-        uses: alejandrohdezma/actions/init-labels@v1
-        with:
-          github-token: ${{ steps.github_app.outputs.token }}
-          target-repo: ${{ matrix.repo }}
 
       - name: Sync secrets to ${{ matrix.repo }}
         if: github.event.inputs.type == 'secrets' || github.event.inputs.type == 'all'

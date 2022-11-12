@@ -3,9 +3,8 @@ ThisBuild / organization := "com.alejandrohdezma"
 
 addCommandAlias("ci-test", "fix --check; test")
 
-Global / filesToGenerate := (Global / filesToGenerate).value
-  .filterNot(_.startsWith("docs"))
-  .filterNot(_.contains("release"))
+ThisBuild / excludedFiles += "docs/**"
+ThisBuild / excludedFiles += "**/*release*"
 
 lazy val `munit` = module
   .settings(libraryDependencies += "org.scalameta" %% "munit" % "0.7.29" % Test)

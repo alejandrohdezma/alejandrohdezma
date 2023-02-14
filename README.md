@@ -1,4 +1,4 @@
-![](docs/images/header_us.webp)
+![](.github/images/header_us.webp)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y36YX1J)
 
@@ -36,4 +36,4 @@ If you want to contact me:
   href="https://alejandrohdezma.com/blog/updating-multiple-repositories-with-scala-steward-and-github-actions"
   target="_self" rel="noopener">:robot: Updating multiple repos with Scala Steward and GitHub Actions</a>
 
-![](docs/images/footer.webp)
+![](.github/images/footer.webp)

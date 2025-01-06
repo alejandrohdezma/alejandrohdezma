@@ -7,15 +7,15 @@ ThisBuild / excludedFiles += "docs/**"
 ThisBuild / excludedFiles += "**/*release*"
 
 lazy val `munit` = module
-  .settings(libraryDependencies += "org.scalameta" %% "munit" % "1.0.2" % Test)
+  .settings(libraryDependencies += "org.scalameta" %% "munit" % "1.0.3" % Test)
   .settings(libraryDependencies += "org.scalameta" %% "munit-scalacheck" % "1.0.0" % Test)
   .settings(libraryDependencies += "org.typelevel" %% "munit-cats-effect" % "2.0.0" % Test)
   .settings(libraryDependencies += "com.alejandrohdezma" %% "http4s-munit" % "1.1.0" % Test)
-  .settings(libraryDependencies += "com.dimafeng" %% "testcontainers-scala-munit" % "0.41.4" % Test)
-  .settings(libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.5.12" % Test)
+  .settings(libraryDependencies += "com.dimafeng" %% "testcontainers-scala-munit" % "0.41.5" % Test)
+  .settings(libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.5.16" % Test)
   .settings(libraryDependencies += "org.http4s" %% "http4s-async-http-client" % "0.23.12" % Test)
-  .settings(libraryDependencies += "org.http4s" %% "http4s-client" % "0.23.29" % Test)
-  .settings(libraryDependencies += "org.http4s" %% "http4s-dsl" % "0.23.29" % Test)
+  .settings(libraryDependencies += "org.http4s" %% "http4s-client" % "0.23.30" % Test)
+  .settings(libraryDependencies += "org.http4s" %% "http4s-dsl" % "0.23.30" % Test)
 
 lazy val site = module
   .enablePlugins(LaikaPlugin)

@@ -1,4 +1,4 @@
-ThisBuild / scalaVersion := "2.13.15"
+ThisBuild / scalaVersion := "2.13.16"
 ThisBuild / organization := "com.alejandrohdezma"
 
 addCommandAlias("ci-test", "fix --check; test")
@@ -7,11 +7,11 @@ ThisBuild / excludedFiles += "docs/**"
 ThisBuild / excludedFiles += "**/*release*"
 
 lazy val `munit` = module
-  .settings(libraryDependencies += "org.scalameta" %% "munit" % "1.0.4" % Test)
-  .settings(libraryDependencies += "org.scalameta" %% "munit-scalacheck" % "1.0.0" % Test)
+  .settings(libraryDependencies += "org.scalameta" %% "munit" % "1.1.0" % Test)
+  .settings(libraryDependencies += "org.scalameta" %% "munit-scalacheck" % "1.1.0" % Test)
   .settings(libraryDependencies += "org.typelevel" %% "munit-cats-effect" % "2.0.0" % Test)
   .settings(libraryDependencies += "com.alejandrohdezma" %% "http4s-munit" % "1.1.0" % Test)
-  .settings(libraryDependencies += "com.dimafeng" %% "testcontainers-scala-munit" % "0.41.5" % Test)
+  .settings(libraryDependencies += "com.dimafeng" %% "testcontainers-scala-munit" % "0.41.8" % Test)
   .settings(libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.5.16" % Test)
   .settings(libraryDependencies += "org.http4s" %% "http4s-async-http-client" % "0.23.12" % Test)
   .settings(libraryDependencies += "org.http4s" %% "http4s-client" % "0.23.30" % Test)

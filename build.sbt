@@ -7,7 +7,7 @@ ThisBuild / excludedFiles += "docs/**"
 ThisBuild / excludedFiles += "**/*release*"
 
 lazy val `munit` = module
-  .settings(libraryDependencies += "org.scalameta" %% "munit" % "1.0.4" % Test)
+  .settings(libraryDependencies += "org.scalameta" %% "munit" % "1.1.0" % Test)
   .settings(libraryDependencies += "org.scalameta" %% "munit-scalacheck" % "1.0.0" % Test)
   .settings(libraryDependencies += "org.typelevel" %% "munit-cats-effect" % "2.0.0" % Test)
   .settings(libraryDependencies += "com.alejandrohdezma" %% "http4s-munit" % "1.1.0" % Test)

@@ -1,4 +1,4 @@
-ThisBuild / scalaVersion := "2.13.16"
+ThisBuild / scalaVersion := "2.13.18"
 ThisBuild / organization := "com.alejandrohdezma"
 
 addCommandAlias("ci-test", "fix --check; test")

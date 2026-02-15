@@ -138,7 +138,7 @@ case object BlogDirectives extends DirectiveRegistry {
     (allAttributes, cursor).mapN { case (attributes, document) =>
       (attributes.get[Boolean]("alternate").getOrElse(false), isSpanish(document), document.path, document.config)
     }.map {
-      case (false, _, path, _) => TemplateString(path.withoutSuffix.toString().replace("/README", ""))
+      case (false, _, path, _)           => TemplateString(path.withoutSuffix.toString().replace("/README", ""))
       case (true, spanish, path, config) =>
         val uri = config
           .get[String]("document.translation.path")

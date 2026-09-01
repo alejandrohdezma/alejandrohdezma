@@ -17,7 +17,7 @@
 package com.alejandrohdezma.talks.munit
 
 import cats.effect.IO
-import cats.effect.SyncIO
+import cats.effect.Resource
 
 import munit._
 import org.http4s._
@@ -25,13 +25,13 @@ import org.http4s.client.Client
 
 class Http4sDemoSuite extends Http4sSuite {
 
-  override def http4sMUnitClientFixture: SyncIO[FunFixture[Client[IO]]] = HttpRoutes
+  override def http4sMUnitClientResource: Resource[IO, Client[IO]] = HttpRoutes
     .of[IO] {
       case GET -> Root / "hello"        => Ok("Hi")
       case GET -> Root / "hello" / name => Ok(s"Hi $name")
     }
     .orFail
-    .asFixture
+    .asClient
 
   test(GET(uri"/hello" / "gutiory")) { response =>
     assertIO(response.as[String], "Hi gutiory")

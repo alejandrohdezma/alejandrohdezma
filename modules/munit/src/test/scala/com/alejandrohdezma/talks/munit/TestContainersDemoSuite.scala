@@ -43,8 +43,9 @@ object DummyHttpContainer {
       extends GenericContainer.Def[DummyHttpContainer](
         new DummyHttpContainer(
           GenericContainer(
-            dockerImage = "briceburg/ping-pong",
+            dockerImage = "busybox:1.37",
             exposedPorts = Seq(80),
+            command = Seq("sh", "-c", "mkdir -p /www && printf pong > /www/ping && httpd -f -p 80 -h /www"),
             waitStrategy = Wait.forHttp("/ping")
           )
         )
